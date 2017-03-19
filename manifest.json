@@ -1,0 +1,26 @@
+{
+  "browser_action": {
+    "browser_style": true,
+    "default_title": "Delete cookies",
+    "default_icon": {
+      "32": "icons/scale-32.png",
+      "64": "icons/scale-64.png"
+    }
+  },
+
+  "background": {
+    "scripts": ["lowcarb.js"]
+  },
+
+  "description": "no desc for now",
+  "icons": {
+    "16": "icons/scale-16.png",
+    "32": "icons/scale-32.png",
+    "64": "icons/scale-64.png"
+  },
+  "homepage_url": "none for now",
+  "manifest_version": 2,
+  "name": "lowcarb",
+  "version": "1.0",
+  "permissions": ["cookies","<all_urls>","tabs"]
+}
