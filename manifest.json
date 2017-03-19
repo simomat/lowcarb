@@ -1,7 +1,7 @@
 {
   "browser_action": {
     "browser_style": true,
-    "default_title": "Delete cookies",
+    "default_title": "Remove cookies",
     "default_icon": {
       "32": "icons/scale-32.png",
       "64": "icons/scale-64.png"
@@ -12,15 +12,15 @@
     "scripts": ["lowcarb.js"]
   },
 
-  "description": "no desc for now",
+  "description": "Remove unwanted cookies",
   "icons": {
     "16": "icons/scale-16.png",
     "32": "icons/scale-32.png",
     "64": "icons/scale-64.png"
   },
-  "homepage_url": "http://example.org",
+  "homepage_url": "https://github.com/simomat/lowcarb",
   "manifest_version": 2,
   "name": "lowcarb",
-  "version": "1.0",
+  "version": "0.1",
   "permissions": ["cookies", "<all_urls>"]
 }
