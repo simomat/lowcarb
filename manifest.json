@@ -21,5 +21,6 @@
   "homepage_url": "http://example.org",
   "manifest_version": 2,
   "name": "lowcarb",
-  "version": "1.0"
+  "version": "1.0",
+  "permissions": ["cookies", "<all_urls>"]
 }
