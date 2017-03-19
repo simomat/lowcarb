@@ -1,53 +1,97 @@
 "use strict";
 
-function getUrlFromCookie(cookie) {
-    if ('url' in cookie) {
-        return cookie.url;
+class Cookie {
+    constructor(cookieDef) {
+        this.cookieDef = cookieDef;
     }
 
-    let url = 'http://';
-    if (cookie.secure) {
-        url = 'https://'
+    get url() {
+        if ('url' in this.cookieDef) {
+            return this.cookieDef.url;
+        }
+
+        let url = 'http://';
+        if (this.cookieDef.secure) {
+            url = 'https://'
+        }
+        if (this.cookieDef.domain.startsWith('.')) {
+            url += this.cookieDef.domain.substr(1);
+        } else {
+            url += this.cookieDef.domain;
+        }
+        url += this.cookieDef.path;
+        return url;
     }
-    if (cookie.domain.startsWith('.')) {
-        url += cookie.domain.substr(1);
-    } else {
-        url += cookie.domain;
+
+    get domain() {
+        return this.cookieDef.domain;
     }
-    url += cookie.path;
-    return url;
+
+    toRemoveParameter()  {
+        return {
+            "url": this.url,
+            "storeId": this.cookieDef.storeId,
+            "name": this.cookieDef.name
+        };
+    }
+
+    remove() {
+        let removeParam = this.toRemoveParameter()
+        console.log('removing cookie: ' + JSON.stringify(removeParam));
+
+        let removed = browser.cookies.remove(removeParam);
+        if (removed === null) {
+            console.log('could not remove: ' + removed.domain);
+        }
+    }
 }
 
-function toRemoveParameter(cookie)  {
-    return {
-        "url": getUrlFromCookie(cookie),
-        "storeId": cookie.storeId,
-        "name": cookie.name
-    };
-}
+class WhitelistFilter {
+    constructor() {
+        this.whitelistedDomains = ['heise.de'];
+    }
 
-function removeCookie(cookie) {
-    let removeParam = toRemoveParameter(cookie)
-    console.log('remove cookie: ' + JSON.stringify(removeParam));
-    let removed = browser.cookies.remove(removeParam);
-    if (removed === null) {
-        console.log('couldnt remove: ' + removed.domain);
+    *filterCookies(cookies) {
+        for (let cookie of cookies) {
+            for (let whitelisted of this.whitelistedDomains) {
+                if (! this.domainMatches(cookie.domain, whitelisted)) {
+                    yield cookie;
+                }
+            }
+        }
+    }
+
+    domainMatches(domain, pattern) {
+        if (domain == pattern) {
+            return true;
+        }
+
+        return domain.endsWith(pattern) && domain.substr(0, domain.length - pattern.length).endsWith('.');
     }
 }
 
 function removeCookies(cookies) {
     for (let cookie of cookies) {
         try {
-            removeCookie(cookie);
+            cookie.remove();
         } catch (e) {
             console.log("error on removing cookie from '" + cookie.domain + "': " + e);
         }
     }
 }
 
+function* toCookieObjects(cookies) {
+    for (let cookie of cookies) {
+        yield new Cookie(cookie);
+    }
+}
+
 browser.browserAction.onClicked.addListener((tab) => {
     browser.cookies
         .getAll({})
-        .then(removeCookies)
+        .then((cookies) => {
+            let filteredCookies = new WhitelistFilter().filterCookies(toCookieObjects(cookies));
+            removeCookies(filteredCookies);
+        });
 });
 
