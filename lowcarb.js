@@ -5,6 +5,16 @@ class Cookie {
         this.cookieDef = cookieDef;
     }
 
+    remove() {
+        let removeParam = this.toRemoveParameter()
+        console.log('removing cookie: ' + JSON.stringify(removeParam));
+
+        let removed = browser.cookies.remove(removeParam);
+        if (removed === null) {
+            console.log('could not remove: ' + removed.domain);
+        }
+    }
+
     get url() {
         if ('url' in this.cookieDef) {
             return this.cookieDef.url;
@@ -33,16 +43,6 @@ class Cookie {
             "storeId": this.cookieDef.storeId,
             "name": this.cookieDef.name
         };
-    }
-
-    remove() {
-        let removeParam = this.toRemoveParameter()
-        console.log('removing cookie: ' + JSON.stringify(removeParam));
-
-        let removed = browser.cookies.remove(removeParam);
-        if (removed === null) {
-            console.log('could not remove: ' + removed.domain);
-        }
     }
 }
 
@@ -90,7 +90,8 @@ browser.browserAction.onClicked.addListener((tab) => {
     browser.cookies
         .getAll({})
         .then((cookies) => {
-            let filteredCookies = new WhitelistFilter().filterCookies(toCookieObjects(cookies));
+            let cookieObjects = toCookieObjects(cookies);
+            let filteredCookies = new WhitelistFilter().filterCookies(cookieObjects);
             removeCookies(filteredCookies);
         });
 });
