@@ -18,9 +18,8 @@
     "32": "icons/scale-32.png",
     "64": "icons/scale-64.png"
   },
-  "homepage_url": "none for now",
+  "homepage_url": "http://example.org",
   "manifest_version": 2,
   "name": "lowcarb",
-  "version": "1.0",
-  "permissions": ["cookies","<all_urls>","tabs"]
+  "version": "1.0"
 }
