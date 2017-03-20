@@ -86,13 +86,16 @@ function* toCookieObjects(cookies) {
     }
 }
 
-browser.browserAction.onClicked.addListener((tab) => {
-    browser.cookies
-        .getAll({})
-        .then((cookies) => {
-            let cookieObjects = toCookieObjects(cookies);
-            let filteredCookies = new WhitelistFilter().filterCookies(cookieObjects);
-            removeCookies(filteredCookies);
-        });
+browser.runtime.onMessage.addListener(message => {
+    if (message.command === 'removeCookies') { // TODO: right?
+        browser.cookies
+                .getAll({})
+                .then((cookies) => {
+                    let cookieObjects = toCookieObjects(cookies);
+                    let filteredCookies = new WhitelistFilter().filterCookies(cookieObjects);
+                    removeCookies(filteredCookies);
+                });
+    } else {
+        console.log('unknown message: ' + JSON.stringify(message))
+    }
 });
-
