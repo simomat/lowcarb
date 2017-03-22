@@ -23,5 +23,5 @@
   "manifest_version": 2,
   "name": "lowcarb",
   "version": "0.1",
-  "permissions": ["cookies", "<all_urls>"]
+  "permissions": ["cookies", "<all_urls>", "storage"]
 }
