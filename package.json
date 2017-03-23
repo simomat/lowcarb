@@ -1,0 +1,31 @@
+{
+  "name": "lowcarb",
+  "version": "1.0.0",
+  "description": " A Firefox Plugin to remove unwanted cookies",
+  "main": "index.js",
+  "dependencies": {
+    "jasmine": "^2.5.3",
+    "webpack": "^2.3.1"
+  },
+  "scripts": {
+    "build": "gulp",
+    "start": "web-ext run -s extension/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simomat/lowcarb.git"
+  },
+  "author": "Matthias Simon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simomat/lowcarb/issues"
+  },
+  "homepage": "https://github.com/simomat/lowcarb#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "rollup-stream": "^1.19.0",
+    "vinyl-source-stream": "^1.1.0",
+    "web-ext": "^1.8.1"
+  }
+}
