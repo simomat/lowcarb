@@ -1,8 +1,8 @@
 "use strict";
 
-import { Cookie } from 'cookies';
-import { Domain } from 'domain';
-import { CookieFilter } from 'filter';
+import { Cookie } from './cookie';
+import { Domain } from './domain';
+import { CookieFilter } from './filter';
 
 
 function removeCookies(cookies) {
