@@ -19,5 +19,56 @@ describe("Cookie", function () {
 
         expect(cookie.url).toBe('foo');
     });
+
+    it("builds the right cookie from cookie def when url is not given", function () {
+        let webExtApi = buildObjects('webext.cookies.remove', (_) => {});
+        const Cookie = proxyquire('../src/cookie', {'./webExtApi': webExtApi}).Cookie;
+
+        let cookie = new Cookie({
+            domain: 'example.com',
+            secure: false,
+            path: '/baz'
+        });
+
+        expect(cookie.url).toBe('http://example.com/baz');
+    });
+
+    it("builds the right cookie from cookie def when url is not given and host starts with dot", function () {
+        let webExtApi = buildObjects('webext.cookies.remove', (_) => {});
+        const Cookie = proxyquire('../src/cookie', {'./webExtApi': webExtApi}).Cookie;
+
+        let cookie = new Cookie({
+            domain: '.example.com',
+            secure: true,
+            path: '/'
+        });
+
+        expect(cookie.url).toBe('https://example.com/');
+    });
+
+    it("has domain equal to cooki def's domain", function () {
+        let webExtApi = buildObjects('webext.cookies.remove', (_) => {});
+        const Cookie = proxyquire('../src/cookie', {'./webExtApi': webExtApi}).Cookie;
+
+        let domain = 'example.com';
+        let cookie = new Cookie({domain: domain});
+
+        expect(cookie.domain).toBe(domain);
+    });
+
+    it("remove calls api with right parameter", function () {
+        let webExtApi = buildObjects('webext.cookies.remove', (_) => {});
+        const Cookie = proxyquire('../src/cookie', {'./webExtApi': webExtApi}).Cookie;
+
+        spyOn(webExtApi.webext.cookies, 'remove');
+
+        let domain = 'example.com';
+        let cookie = new Cookie({domain: domain, path: '/', name: 'sck', storeId: '5'});
+        cookie.remove();
+
+        expect(webExtApi.webext.cookies.remove).toHaveBeenCalledWith({url: cookie.url, name: 'sck', storeId: '5'});
+    });
+
+
 });
 
