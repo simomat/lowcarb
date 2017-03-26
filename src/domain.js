@@ -1,4 +1,3 @@
-'use strict';
 
 class Domain {
     constructor(domain) {
@@ -20,4 +19,5 @@ class Domain {
     }
 }
 
-export { Domain };
+exports.Domain = Domain;
+

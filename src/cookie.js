@@ -1,4 +1,5 @@
-'use struct';
+
+const webext = require('./webExtApi').webext;
 
 class Cookie {
     constructor(cookieDef) {
@@ -9,7 +10,7 @@ class Cookie {
         let removeParam = this.toRemoveParameter();
         console.log('removing cookie: ' + JSON.stringify(removeParam));
 
-        let removed = browser.cookies.remove(removeParam);
+        let removed = webext.cookies.remove(removeParam);
         if (removed === null) {
             console.log('could not remove: ' + removed.domain);
         }
@@ -50,5 +51,4 @@ class Cookie {
     }
 }
 
-
-export { Cookie };
+exports.Cookie = Cookie;

@@ -1,4 +1,3 @@
-'use strict';
 
 class CookieFilter {
     constructor(domains) {
@@ -28,4 +27,4 @@ class CookieFilter {
     }
 }
 
-export { CookieFilter };
+exports.CookieFilter = CookieFilter;

@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "description": " A Firefox Plugin to remove unwanted cookies",
   "main": "index.js",
-  "dependencies": {
-    "jasmine": "^2.5.3",
-    "webpack": "^2.3.1"
-  },
+  "dependencies": {},
   "scripts": {
     "build": "gulp",
     "start": "web-ext run -s extension/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -24,6 +21,9 @@
   "homepage": "https://github.com/simomat/lowcarb#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "jasmine": "^2.5.3",
+    "proxyquire": "^1.7.11",
+    "rollup-plugin-commonjs": "^8.0.2",
     "rollup-stream": "^1.19.0",
     "vinyl-source-stream": "^1.1.0",
     "web-ext": "^1.8.1"

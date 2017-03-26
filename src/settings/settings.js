@@ -1,7 +1,9 @@
-"use strict";
+
+const webext = require('../webExtApi').webext;
+
 
 function removeCookies() {
-    browser.runtime.sendMessage({"command": "removeCookies"}).catch((reason) => {
+    webext.sendMessage({"command": "removeCookies"}).catch((reason) => {
         console.log('sending message was rejected: ' + reason);
     });
 }

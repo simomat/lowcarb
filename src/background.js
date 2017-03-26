@@ -1,8 +1,7 @@
-"use strict";
 
-import { Cookie } from './cookie';
-import { Domain } from './domain';
-import { CookieFilter } from './filter';
+const Cookie = require('./cookie').Cookie;
+const Domain = require('./domain').Domain;
+const CookieFilter = require('./filter').CookieFilter;
 
 
 function removeCookies(cookies) {
