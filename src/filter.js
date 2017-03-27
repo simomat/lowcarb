@@ -22,7 +22,7 @@ class CookieFilter {
 
     matches(cookie) {
         return this.domains.some((domain) => {
-            domain.matches(cookie.domain);
+            return domain.matches(cookie.domain);
         });
     }
 }

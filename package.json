@@ -6,6 +6,7 @@
   "dependencies": {},
   "scripts": {
     "build": "gulp",
+    "clean": "gulp clean",
     "start": "web-ext run -s extension/",
     "test": "jasmine"
   },
