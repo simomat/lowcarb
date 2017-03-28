@@ -2,6 +2,7 @@
 const Cookie = require('./cookie').Cookie;
 const Domain = require('./domain').Domain;
 const CookieFilter = require('./filter').CookieFilter;
+const webExt = require('./webExtApi');
 
 
 function removeCookies(cookies) {
@@ -27,11 +28,11 @@ function filterAndRemove(cookies, storage) {
     removeCookies(filteredCookies);
 }
 
-browser.runtime.onMessage.addListener(message => {
+webExt.addMessageListener(message => {
     if (message.command === 'removeCookies') { // TODO: right?
         Promise.all([
-            browser.cookies.getAll({}),
-            browser.storage.local.get('whitelistDomains')])
+            webExt.getAllCookies({}),
+            webExt.getStorage('whitelistDomains')])
                 .then((results) => {
                     filterAndRemove.apply(null, results);
                 });
@@ -41,8 +42,8 @@ browser.runtime.onMessage.addListener(message => {
 });
 
 function prepareStorage() {
-    browser.storage.local.clear();
-    browser.storage.local.set({
+    webExt.clearStorage();
+    webExt.setStorage({
         "whitelistDomains": ["heise.de", "google.com"]
     });
 }

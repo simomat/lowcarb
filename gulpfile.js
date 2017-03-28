@@ -6,10 +6,7 @@ const commonjs = require('rollup-plugin-commonjs');
 
 const dist = './dist';
 
-gulp.task('default', [
-    // 'clean',
-    // 'copyStaticFiles',
-    'build']);
+gulp.task('default', ['build']);
 
 gulp.task('clean', function () {
     return del(dist + '/**/*');
@@ -20,7 +17,7 @@ gulp.task("copyStaticFiles", function () {
         .pipe(gulp.dest("./dist"));
 });
 
-gulp.task('build', ['buildBackground', 'buildsettings']);
+gulp.task('build', ['copyStaticFiles', 'buildBackground', 'buildsettings']);
 
 gulp.task('buildBackground', function () {
     return rollup({
@@ -41,5 +38,5 @@ gulp.task('buildsettings', function () {
         plugins: [commonjs()]
     })
         .pipe(source('settings.js'))
-        .pipe(gulp.dest(dist));
+        .pipe(gulp.dest(dist + '/settings'));
 });

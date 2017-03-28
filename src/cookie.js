@@ -10,7 +10,7 @@ class Cookie {
         let removeParam = this.toRemoveParameter();
         console.log('removing cookie: ' + JSON.stringify(removeParam));
 
-        let removed = webext.cookies.remove(removeParam);
+        let removed = webext.removeCookie(removeParam);
         if (removed === null) {
             console.log('could not remove: ' + removed.domain);
         }
