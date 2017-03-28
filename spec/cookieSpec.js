@@ -57,16 +57,16 @@ describe("Cookie", function () {
     });
 
     it("remove calls api with right parameter", function () {
-        let webExtApi = buildObjects('webext.cookies.remove', (_) => {});
+        let webExtApi = buildObjects('webext.removeCookie', (_) => {});
         const Cookie = proxyquire('../src/cookie', {'./webExtApi': webExtApi}).Cookie;
 
-        spyOn(webExtApi.webext.cookies, 'remove');
+        spyOn(webExtApi.webext, 'removeCookie');
 
         let domain = 'example.com';
         let cookie = new Cookie({domain: domain, path: '/', name: 'sck', storeId: '5'});
         cookie.remove();
 
-        expect(webExtApi.webext.cookies.remove).toHaveBeenCalledWith({url: cookie.url, name: 'sck', storeId: '5'});
+        expect(webExtApi.webext.removeCookie).toHaveBeenCalledWith({url: cookie.url, name: 'sck', storeId: '5'});
     });
 
 

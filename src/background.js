@@ -2,7 +2,7 @@
 const Cookie = require('./cookie').Cookie;
 const Domain = require('./domain').Domain;
 const CookieFilter = require('./filter').CookieFilter;
-const webExt = require('./webExtApi');
+const webExt = require('./webExtApi').webext;
 
 
 function removeCookies(cookies) {
@@ -24,7 +24,7 @@ function* toCookieObjects(cookies) {
 function filterAndRemove(cookies, storage) {
     let whitelistedDomains = storage.whitelistDomains.map((domain) => {return new Domain(domain);});
     let whitelistFilter = new CookieFilter(whitelistedDomains);
-    let filteredCookies = whitelistFilter.filterDomainMatches(toCookieObjects(cookies));
+    let filteredCookies = whitelistFilter.filterDomainNotMatches(toCookieObjects(cookies));
     removeCookies(filteredCookies);
 }
 

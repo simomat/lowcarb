@@ -1,6 +1,6 @@
 const webext = {};
 webext.removeCookie = browser.cookies.remove;
-webext.getAllCookies = browser.cookies.getAll;
+webext.getAllCookies = function () { return browser.cookies.getAll({}); };
 
 webext.sendMessage = browser.runtime.sendMessage;
 webext.addMessageListener = browser.runtime.onMessage.addListener;

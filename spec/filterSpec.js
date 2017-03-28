@@ -44,6 +44,22 @@ describe("CookieFilter", function () {
         expect(filtered).not.toContainCookieWith('blue');
     });
 
+    it("filterDomainNotMatches returns cookies with domains not stored in filter", function () {
+        let cookieFilter = new CookieFilter([domainFor('foo'), domainFor('baz')]);
 
+        let filtered = cookieFilter.filterDomainNotMatches([{domain:'foo'}, {domain:'blue'}]);
+        filtered = Array.from(filtered);
+
+        expect(filtered).toContainCookieWith('blue');
+    });
+
+    it("filterDomainNotMatches leave out cookies with domains stored in filter", function () {
+        let cookieFilter = new CookieFilter([domainFor('foo'), domainFor('baz')]);
+
+        let filtered = cookieFilter.filterDomainNotMatches([{domain:'blue'}]);
+        filtered = Array.from(filtered);
+
+        expect(filtered).toContainCookieWith('blue');
+    });
 });
 

@@ -10,7 +10,7 @@
   },
 
   "background": {
-    "scripts": ["background/background.js"]
+    "scripts": ["background.js"]
   },
 
   "description": "Remove unwanted cookies",
