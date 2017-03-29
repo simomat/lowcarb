@@ -1,16 +1,41 @@
-console.log('####### SETTINGS');
 
 const webext = require('../webExtApi').webext;
+const SelectorList = require('./selectorlist').SelectorList;
+
+
+class WhilteListModel {
+
+    getItems() {
+        return webext.getStorage('whitelistDomains')
+            .then((storage) => {
+                return webext.getAllCookies()
+                    .then((cookies) => {
+                        return new Promise((resolve, reject) => {
+                            function* iterItems() {
+                                for (let domain of storage.whitelistDomains) {
+                                    yield {value: domain, isApplied: true};
+                                }
+                                for (let cookie of cookies) {
+                                    yield {value: cookie.domain, isApplied: false};
+                                }
+
+                            }
+                            resolve(iterItems());
+                        });
+                    })
+
+            });
+    }
+}
+
+new SelectorList(document.getElementById('whitelist'), new WhilteListModel())
+    .reload();
 
 
 function removeCookies() {
     webext.sendMessage({"command": "removeCookies"}).catch((reason) => {
         console.log('sending message was rejected: ' + reason);
     });
-}
-
-function addWhitelistDomain() {
-
 }
 
 function logCookies() {
@@ -25,19 +50,5 @@ function logCookies() {
 }
 
 document.getElementById('removeCookies').addEventListener('click', removeCookies);
-document.getElementById('addWhitelistDomain').addEventListener('click', addWhitelistDomain);
-
 document.getElementById('logCookies').addEventListener('click', logCookies);
 
-function reload() {
-    webext.getStorage('whitelistDomains').then((storage) => {
-        let wlDomains = document.getElementById('whitelist');
-        for (let domain of storage.whitelistDomains) {
-            let li = document.createElement('li');
-            li.innerHTML = domain;
-            wlDomains.appendChild(li);
-        }
-    });
-}
-
-reload();
