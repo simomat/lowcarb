@@ -1,34 +1,11 @@
 
 const webext = require('../webExtApi').webext;
 const SelectorList = require('./selectorlist').SelectorList;
+const WhilteListModel = require('./whitelistmodel').WhilteListModel;
 
-
-class WhilteListModel {
-
-    getItems() {
-        return webext.getStorage('whitelistDomains')
-            .then((storage) => {
-                return webext.getAllCookies()
-                    .then((cookies) => {
-                        return new Promise((resolve, reject) => {
-                            function* iterItems() {
-                                for (let domain of storage.whitelistDomains) {
-                                    yield {value: domain, isApplied: true};
-                                }
-                                for (let cookie of cookies) {
-                                    yield {value: cookie.domain, isApplied: false};
-                                }
-
-                            }
-                            resolve(iterItems());
-                        });
-                    })
-
-            });
-    }
-}
-
-new SelectorList(document.getElementById('whitelist'), new WhilteListModel())
+new SelectorList(
+        document.getElementById('whitelist'),
+        new WhilteListModel())
     .reload();
 
 
