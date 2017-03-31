@@ -4,6 +4,7 @@ class SelectorList {
     constructor(parentElem, model) {
         this.parentElem = parentElem;
         this.model = model;
+        this.bindListener();
         this.reload();
     }
 
@@ -22,9 +23,9 @@ class SelectorList {
     createListElement(item) {
         let element = document.createElement('div');
         element.appendChild(document.createTextNode(item.value));
-        element.dataset.item = item;
+        element.classList.add('item');
         if (item.isApplied) {
-            element.classList.add('itemSelected');
+            element.classList.add('selected');
         }
         return element;
     }
@@ -34,6 +35,12 @@ class SelectorList {
         while (this.parentElem.firstChild) {
             this.parentElem.removeChild(this.parentElem.firstChild);
         }
+    }
+
+    bindListener() {
+        this.parentElem.addEventListener('click', (event) => {
+            event.target.classList.toggle('selected');
+        })
     }
 }
 

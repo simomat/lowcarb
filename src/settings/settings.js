@@ -12,6 +12,7 @@ function removeCookies() {
     webext.sendMessage({"command": "removeCookies"}).catch((reason) => {
         console.log('sending message was rejected: ' + reason);
     });
+    // TODO: reload nach löschen
 }
 
 function logCookies() {
