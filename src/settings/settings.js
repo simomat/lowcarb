@@ -5,8 +5,7 @@ const WhilteListModel = require('./whitelistmodel').WhilteListModel;
 
 new SelectorList(
         document.getElementById('whitelist'),
-        new WhilteListModel())
-    .reload();
+        new WhilteListModel());
 
 
 function removeCookies() {

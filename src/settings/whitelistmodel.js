@@ -59,19 +59,14 @@ function* createListItems(storage, cookies) {
 class WhilteListModel {
 
     getItems() {
-        console.log('WhilteListModel.getItems()');
-        return webext.getStorage('whitelistDomains')
-            .then((storage) => {
-                console.log('WhilteListModel.getItems() with storage: ' + JSON.stringify(storage));
-                return webext.getAllCookies()
-                    .then((cookies) => {
-                        console.log('WhilteListModel.getItems() with cookies: ' + JSON.stringify(cookies));
-                        return new Promise((resolve, reject) => {
-                            resolve(createListItems(storage, cookies));
-                        });
-                    })
-
+        return Promise.all([
+            webext.getStorage('whitelistDomains'),
+            webext.getAllCookies()]
+        ).then((storageAndCookies) => {
+            return new Promise((resolve, reject) => {
+                resolve(createListItems(...storageAndCookies));
             });
+        });
     }
 }
 
