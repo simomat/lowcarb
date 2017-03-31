@@ -24,7 +24,107 @@ describe("createListItems", function () {
         new WhilteListModel().getItems()
             .then((items) => {
                 let array = Array.from(items);
-                expect(array).toEqual([{value:'heise.de', isApplied:true}, {value:'google.com', isApplied:true}]);
+                expect(array).toEqual([{value:'google.com', isApplied:true}, {value:'heise.de', isApplied:true}]);
+                done();
+            });
+    });
+
+    it("creates list items for cookies ordered backwards", function (done) {
+        let webext = {
+            getStorage: (_) => {
+                return asPromise({whitelistDomains: []});
+            },
+            getAllCookies: () => {
+                return asPromise([{domain:'aaa.xxx.zzz'},{domain:'mmm.kkk.xxx.ccc'}]);
+            }
+        };
+
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+
+        new WhilteListModel().getItems()
+            .then((items) => {
+                let array = Array.from(items);
+                expect(array).toEqual([{value:'mmm.kkk.xxx.ccc', isApplied:false}, {value:'aaa.xxx.zzz', isApplied:false}]);
+                done();
+            });
+    });
+
+    it("creates list items for cookies with normalized domain", function (done) {
+        let webext = {
+            getStorage: (_) => {
+                return asPromise({whitelistDomains: []});
+            },
+            getAllCookies: () => {
+                return asPromise([{domain:'.aAa.XxX.zZz'}]);
+            }
+        };
+
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+
+        new WhilteListModel().getItems()
+            .then((items) => {
+                let array = Array.from(items);
+                expect(array).toEqual([{value:'aaa.xxx.zzz', isApplied:false}]);
+                done();
+            });
+    });
+
+    it("creates list items for cookies that has no duplicates", function (done) {
+        let webext = {
+            getStorage: (_) => {
+                return asPromise({whitelistDomains: []});
+            },
+            getAllCookies: () => {
+                return asPromise([{domain:'aaa.xxx.zzz'}, {domain:'aaa.xxx.zzz'}]);
+            }
+        };
+
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+
+        new WhilteListModel().getItems()
+            .then((items) => {
+                let array = Array.from(items);
+                expect(array).toEqual([{value:'aaa.xxx.zzz', isApplied:false}]);
+                done();
+            });
+    });
+
+    it("creates list items for whitelist domains before cookie domains, if not in cookie domains", function (done) {
+        let webext = {
+            getStorage: (_) => {
+                return asPromise({whitelistDomains: ['zzz.zzz']});
+            },
+            getAllCookies: () => {
+                return asPromise([{domain:'aaa.aaa'}]);
+            }
+        };
+
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+
+        new WhilteListModel().getItems()
+            .then((items) => {
+                let array = Array.from(items);
+                expect(array).toEqual([{value:'aaa.aaa', isApplied:false},{value:'zzz.zzz', isApplied:true}]);
+                done();
+            });
+    });
+
+    it("creates list items for whitelist domains activated within cookie domains, if domains is equal", function (done) {
+        let webext = {
+            getStorage: (_) => {
+                return asPromise({whitelistDomains: ['zZz.Zzz']});
+            },
+            getAllCookies: () => {
+                return asPromise([{domain:'aaa.aaa'},{domain:'zzz.zzz'},{domain:'.zZz.ZzZ'}]);
+            }
+        };
+
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+
+        new WhilteListModel().getItems()
+            .then((items) => {
+                let array = Array.from(items);
+                expect(array).toEqual([{value:'aaa.aaa', isApplied:false},{value:'zzz.zzz', isApplied:true}]);
                 done();
             });
     });

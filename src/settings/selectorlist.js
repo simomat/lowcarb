@@ -9,10 +9,13 @@ class SelectorList {
 
     reload() {
         this.clear();
-        this.model.getItems().then((items) => {
-            for (let item of items) {
-                this.parentElem.appendChild(this.createListElement(item));
-            }
+        this.model
+            .getItems()
+            .then((items) => {
+                items = Array.from(items);
+                for (let item of items) {
+                    this.parentElem.appendChild(this.createListElement(item));
+                }
         });
     }
 
