@@ -1,11 +1,10 @@
-
-const webext = require('../webExtApi').webext;
-const SelectorList = require('./selectorlist').SelectorList;
-const WhiteListModel = require('./whitelistmodel').WhiteListModel;
+import {webext} from '../webExtApi';
+import {SelectorList} from './selectorlist';
+import {WhiteListModel} from './whitelistmodel';
 
 let selectorList = new SelectorList(
-        document.getElementById('whitelist'),
-        new WhiteListModel());
+    document.getElementById('whitelist'),
+    new WhiteListModel());
 
 
 function removeCookies() {

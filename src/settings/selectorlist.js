@@ -1,5 +1,5 @@
 
-class SelectorList {
+export class SelectorList {
 
     constructor(parentElem, model) {
         this.parentElem = parentElem;
@@ -55,5 +55,3 @@ class SelectorList {
         return this.model.saveItems(items);
     }
 }
-
-exports.SelectorList = SelectorList;

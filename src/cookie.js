@@ -1,7 +1,6 @@
+import {webext} from './webExtApi';
 
-const webext = require('./webExtApi').webext;
-
-class Cookie {
+export class Cookie {
     constructor(cookieDef) {
         this.cookieDef = cookieDef;
     }
@@ -42,7 +41,7 @@ class Cookie {
         return this.cookieDef.domain;
     }
 
-    toRemoveParameter()  {
+    toRemoveParameter() {
         return {
             "url": this.url,
             "storeId": this.cookieDef.storeId,
@@ -50,5 +49,3 @@ class Cookie {
         };
     }
 }
-
-exports.Cookie = Cookie;

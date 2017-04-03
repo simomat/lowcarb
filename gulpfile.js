@@ -23,8 +23,7 @@ gulp.task('buildBackground', function () {
     return rollup({
         entry: './src/background.js',
         format: 'es',
-        // exports: 'none',
-        plugins: [commonjs()]
+        exports: 'none'
     })
         .pipe(source('background.js'))
         .pipe(gulp.dest(dist));
@@ -34,8 +33,7 @@ gulp.task('buildsettings', function () {
     return rollup({
         entry: './src/settings/settings.js',
         format: 'es',
-        // exports: 'none',
-        plugins: [commonjs()]
+        exports: 'none'
     })
         .pipe(source('settings.js'))
         .pipe(gulp.dest(dist + '/settings'));

@@ -1,12 +1,10 @@
-const webext = {};
-webext.removeCookie = browser.cookies.remove;
-webext.getAllCookies = function () { return browser.cookies.getAll({}); };
+export const webext = {
+    removeCookie: browser.cookies.remove,
+    getAllCookies: () => { return browser.cookies.getAll({}); },
+    sendMessage: browser.runtime.sendMessage,
+    addMessageListener: browser.runtime.onMessage.addListener,
 
-webext.sendMessage = browser.runtime.sendMessage;
-webext.addMessageListener = browser.runtime.onMessage.addListener;
-
-webext.clearStorage = browser.storage.local.clear;
-webext.setStorage = browser.storage.local.set;
-webext.getStorage = browser.storage.local.get;
-
-exports.webext = webext;
+    clearStorage: browser.storage.local.clear,
+    setStorage: browser.storage.local.set,
+    getStorage: browser.storage.local.get
+};

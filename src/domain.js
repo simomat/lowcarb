@@ -1,5 +1,4 @@
-
-class Domain {
+export class Domain {
     constructor(domain) {
         this.domain = domain;
         this.pattern = new RegExp('^\.?' + this.domain + '$', 'i');
@@ -9,6 +8,3 @@ class Domain {
         return this.pattern.test(domainExpression);
     }
 }
-
-exports.Domain = Domain;
-

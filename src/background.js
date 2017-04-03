@@ -1,9 +1,7 @@
-
-const Cookie = require('./cookie').Cookie;
-const Domain = require('./domain').Domain;
-const CookieFilter = require('./filter').CookieFilter;
-const webExt = require('./webExtApi').webext;
-
+import {Cookie} from './cookie';
+import {Domain} from './domain';
+import {CookieFilter} from './filter';
+import {webext as webExt} from './webExtApi';
 
 function removeCookies(cookies) {
     for (let cookie of cookies) {
@@ -22,7 +20,9 @@ function* toCookieObjects(cookies) {
 }
 
 function filterAndRemove(cookies, storage) {
-    let whitelistedDomains = storage.whitelistDomains.map((domain) => {return new Domain(domain);});
+    let whitelistedDomains = storage.whitelistDomains.map((domain) => {
+        return new Domain(domain);
+    });
     let whitelistFilter = new CookieFilter(whitelistedDomains);
     let filteredCookies = whitelistFilter.filterDomainNotMatches(toCookieObjects(cookies));
     removeCookies(filteredCookies);
@@ -33,9 +33,9 @@ webExt.addMessageListener(message => {
         Promise.all([
             webExt.getAllCookies({}),
             webExt.getStorage('whitelistDomains')])
-                .then((results) => {
-                    filterAndRemove.apply(null, results);
-                });
+            .then((results) => {
+                filterAndRemove.apply(null, results);
+            });
     } else {
         console.log('unknown message: ' + JSON.stringify(message))
     }

@@ -1,5 +1,4 @@
-
-class CookieFilter {
+export class CookieFilter {
     constructor(domains) {
         this.domains = domains;
     }
@@ -26,5 +25,3 @@ class CookieFilter {
         });
     }
 }
-
-exports.CookieFilter = CookieFilter;

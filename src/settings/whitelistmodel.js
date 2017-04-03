@@ -1,6 +1,4 @@
-
-const webext = require('../webExtApi').webext;
-
+import {webext} from '../webExtApi';
 
 function normalizeDomain(domain) {
     domain = domain.toLowerCase();
@@ -56,7 +54,7 @@ function* createListItems(storage, cookies) {
 }
 
 
-class WhiteListModel {
+export class WhiteListModel {
 
     getItems() {
         return Promise.all([
@@ -77,5 +75,3 @@ class WhiteListModel {
         return webext.setStorage({whitelistDomains: newWhitelistedDomains});
     }
 }
-
-exports.WhiteListModel = WhiteListModel;
