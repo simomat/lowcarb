@@ -1,19 +1,25 @@
 
 const webext = require('../webExtApi').webext;
 const SelectorList = require('./selectorlist').SelectorList;
-const WhilteListModel = require('./whitelistmodel').WhilteListModel;
+const WhiteListModel = require('./whitelistmodel').WhiteListModel;
 
-new SelectorList(
+let selectorList = new SelectorList(
         document.getElementById('whitelist'),
-        new WhilteListModel());
+        new WhiteListModel());
 
 
 function removeCookies() {
+    selectorList.save();
     webext.sendMessage({"command": "removeCookies"}).catch((reason) => {
         console.log('sending message was rejected: ' + reason);
     });
     // TODO: reload nach löschen
 }
+
+window.addEventListener('unload', (event) => {
+    selectorList.save();
+});
+
 
 function logCookies() {
     console.log('# Cookiiiiis #');

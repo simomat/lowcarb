@@ -42,6 +42,18 @@ class SelectorList {
             event.target.classList.toggle('selected');
         })
     }
+
+    save() {
+        let items = Array.from(this.parentElem.children)
+            .map((elem) => {
+                return {
+                    value: elem.textContent.trim(),
+                    isApplied: elem.classList.contains('selected')
+                };
+        });
+
+        return this.model.saveItems(items);
+    }
 }
 
 exports.SelectorList = SelectorList;

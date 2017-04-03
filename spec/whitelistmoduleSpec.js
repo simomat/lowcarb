@@ -7,9 +7,9 @@ function asPromise(data) {
     });
 }
 
-describe("createListItems", function () {
+describe("WhiteListModel", function () {
 
-    it("creates list item for whitelist domains from storage", function (done) {
+    it("getItems() creates list item for whitelist domains from storage", function (done) {
         let webext = {
             getStorage: (_) => {
                 return asPromise({whitelistDomains: ['heise.de', 'google.com']});
@@ -19,7 +19,7 @@ describe("createListItems", function () {
             }
         };
 
-        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhiteListModel;
 
         new WhilteListModel().getItems()
             .then((items) => {
@@ -29,7 +29,7 @@ describe("createListItems", function () {
             });
     });
 
-    it("creates list items for cookies ordered backwards", function (done) {
+    it("getItems() creates list items for cookies ordered backwards", function (done) {
         let webext = {
             getStorage: (_) => {
                 return asPromise({whitelistDomains: []});
@@ -39,7 +39,7 @@ describe("createListItems", function () {
             }
         };
 
-        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhiteListModel;
 
         new WhilteListModel().getItems()
             .then((items) => {
@@ -49,7 +49,7 @@ describe("createListItems", function () {
             });
     });
 
-    it("creates list items for cookies with normalized domain", function (done) {
+    it("getItems() creates list items for cookies with normalized domain", function (done) {
         let webext = {
             getStorage: (_) => {
                 return asPromise({whitelistDomains: []});
@@ -59,7 +59,7 @@ describe("createListItems", function () {
             }
         };
 
-        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhiteListModel;
 
         new WhilteListModel().getItems()
             .then((items) => {
@@ -69,7 +69,7 @@ describe("createListItems", function () {
             });
     });
 
-    it("creates list items for cookies that has no duplicates", function (done) {
+    it("getItems() creates list items for cookies that has no duplicates", function (done) {
         let webext = {
             getStorage: (_) => {
                 return asPromise({whitelistDomains: []});
@@ -79,7 +79,7 @@ describe("createListItems", function () {
             }
         };
 
-        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhiteListModel;
 
         new WhilteListModel().getItems()
             .then((items) => {
@@ -89,7 +89,7 @@ describe("createListItems", function () {
             });
     });
 
-    it("creates list items for whitelist domains before cookie domains, if not in cookie domains", function (done) {
+    it("getItems() creates list items for whitelist domains before cookie domains, if not in cookie domains", function (done) {
         let webext = {
             getStorage: (_) => {
                 return asPromise({whitelistDomains: ['zzz.zzz']});
@@ -99,7 +99,7 @@ describe("createListItems", function () {
             }
         };
 
-        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhiteListModel;
 
         new WhilteListModel().getItems()
             .then((items) => {
@@ -109,7 +109,7 @@ describe("createListItems", function () {
             });
     });
 
-    it("creates list items for whitelist domains activated within cookie domains, if domains is equal", function (done) {
+    it("getItems() creates list items for whitelist domains activated within cookie domains, if domains is equal", function (done) {
         let webext = {
             getStorage: (_) => {
                 return asPromise({whitelistDomains: ['zZz.Zzz']});
@@ -119,7 +119,7 @@ describe("createListItems", function () {
             }
         };
 
-        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhilteListModel;
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhiteListModel;
 
         new WhilteListModel().getItems()
             .then((items) => {
@@ -127,5 +127,18 @@ describe("createListItems", function () {
                 expect(array).toEqual([{value:'aaa.aaa', isApplied:false},{value:'zzz.zzz', isApplied:true}]);
                 done();
             });
+    });
+
+    it("setItems() saves 'applied' items as new whitelist", function (done) {
+        let webext = {
+            setStorage: (whitelistDomains) => {
+                expect(whitelistDomains).toEqual({whitelistDomains:['ccc.ddd']});
+                done();
+            }
+        };
+
+        const WhilteListModel = proxyquire('../src/settings/whitelistmodel', {'../webExtApi': {webext:webext}}).WhiteListModel;
+
+        new WhilteListModel().saveItems([{value:'aaa.bbb', isApplied:false}, {value:'ccc.ddd', isApplied:true}]);
     });
 });

@@ -56,7 +56,7 @@ function* createListItems(storage, cookies) {
 }
 
 
-class WhilteListModel {
+class WhiteListModel {
 
     getItems() {
         return Promise.all([
@@ -68,6 +68,14 @@ class WhilteListModel {
             });
         });
     }
+
+    saveItems(items) {
+        let newWhitelistedDomains = items
+            .filter((item) => { return item.isApplied;})
+            .map((item) => { return item.value.trim(); });
+
+        return webext.setStorage({whitelistDomains: newWhitelistedDomains});
+    }
 }
 
-exports.WhilteListModel = WhilteListModel;
+exports.WhiteListModel = WhiteListModel;
