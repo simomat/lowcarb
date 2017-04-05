@@ -2,7 +2,6 @@ const gulp = require('gulp');
 const source = require("vinyl-source-stream");
 const rollup = require('rollup-stream');
 const del = require('del');
-const commonjs = require('rollup-plugin-commonjs');
 
 const dist = './dist';
 
