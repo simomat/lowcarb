@@ -4,7 +4,7 @@ import {WhiteListModel} from './whitelistmodel';
 
 let selectorList = new SelectorList(
     document.getElementById('whitelist'),
-    new WhiteListModel());
+    new WhiteListModel(webext));
 
 
 function removeCookies() {

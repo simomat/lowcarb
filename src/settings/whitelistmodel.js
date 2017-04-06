@@ -1,5 +1,3 @@
-import {webext} from '../webExtApi';
-
 function normalizeDomain(domain) {
     domain = domain.toLowerCase();
     if (domain.startsWith('.')) {
@@ -56,10 +54,14 @@ function* createListItems(storage, cookies) {
 
 export class WhiteListModel {
 
+    constructor(api) {
+        this.api = api;
+    }
+
     getItems() {
         return Promise.all([
-            webext.getStorage('whitelistDomains'),
-            webext.getAllCookies()]
+            this.api.getStorage('whitelistDomains'),
+            this.api.getAllCookies()]
         ).then((storageAndCookies) => {
             return new Promise((resolve, reject) => {
                 resolve(createListItems(...storageAndCookies));
@@ -72,6 +74,6 @@ export class WhiteListModel {
             .filter((item) => { return item.isApplied;})
             .map((item) => { return item.value.trim(); });
 
-        return webext.setStorage({whitelistDomains: newWhitelistedDomains});
+        return this.api.setStorage({whitelistDomains: newWhitelistedDomains});
     }
 }
