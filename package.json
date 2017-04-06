@@ -8,7 +8,7 @@
     "build": "gulp",
     "clean": "gulp clean",
     "start": "web-ext run -s extension/",
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "mocha --require ./test/helper.js --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
