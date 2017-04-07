@@ -4,6 +4,7 @@ import {Cookie} from '../src/cookie';
 import {assertThat, is, contains, FeatureMatcher, not} from 'hamjest';
 
 describe("Cookie", function () {
+
     it("builds the right cookie from cookie def with given url", function () {
 
         let cookie = new Cookie({url: 'foo', domain: 'bar'});
@@ -38,19 +39,25 @@ describe("Cookie", function () {
         assertThat(cookie.domain, is(domain));
     });
 
-    // it("remove calls api with right parameter", function () {
-    //     let webExtApi = buildObjects('webext.removeCookie', (_) => {});
-    //     const Cookie = proxyquire('../src/cookie', {'./webExtApi': webExtApi}).Cookie;
-    //
-    //     spyOn(webExtApi.webext, 'removeCookie');
-    //
-    //     let domain = 'example.com';
-    //     let cookie = new Cookie({domain: domain, path: '/', name: 'sck', storeId: '5'});
-    //     cookie.remove();
-    //
-    //     expect(webExtApi.webext.removeCookie).toHaveBeenCalledWith({url: cookie.url, name: 'sck', storeId: '5'});
-    // });
+    it("remove calls api with right parameter", function () {
+        let removeCookieArgs = null;
+        mockGlobal('browser.cookies.remove', function () {
+            removeCookieArgs = arguments;
+        };
 
+
+        let domain = 'example.com';
+        let cookie = new Cookie({domain: domain, path: '/', name: 'sck', storeId: '5'});
+
+        cookie.remove();
+
+        assertThat(removeCookieArgs, is({url: cookie.url, name: 'sck', storeId: '5'}));
+
+
+    });
+
+    after(uninstallMocks);
 
 });
+
 
