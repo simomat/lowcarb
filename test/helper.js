@@ -1,6 +1,6 @@
 
 function createProxy() {
-    return new Proxy({}, {
+    return new Proxy({isProxy:true}, {
         get: (target, name) => {
             let value = target[name];
             if (value === undefined) {
@@ -19,26 +19,34 @@ function createProxy() {
 global.browser = createProxy();
 
 
-let globalMocks = {};
+let globalMocks = [];
 
 global.mockGlobal = function (name, value) {
 
-    let mockDescriptor = {};
-
-    let root = global[val];
-    mockDescriptor.oldValue = root;
-    if (root === undefined) {
-        root = createProxy();
+    function installMock(parent, nameParts) {
+        let [name, ...restNames] = nameParts;
+        parent[name] = restNames.reduceRight((tail, namePart) => {
+            let newTail = createProxy();
+            newTail[namePart] = tail;
+        }, value);
     }
 
-    let tail = root;
-    name.split('.').reduce((acc, val) => {
-        let oldValue = tail[val];
-    }, tail);
+    function installOnLastDefined(current, nameChain) {
+        let [name, ...restNames] = nameChain;
+        if (name === undefined) {
+            return null; // all
+        }
 
+        let object = currentParent[name];
+        if (object === undefined) {
+            installMock(current, nameChain);
+        } else {
+            installOnLastDefined(object, restNames);
+        }
+    }
 
+    installOnLastDefined(global, name.split('.'));
 
-    globalMocks
 };
 
 global.uninstallMocks = function () {
