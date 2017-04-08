@@ -7,7 +7,7 @@
   "scripts": {
     "build": "gulp",
     "clean": "gulp clean",
-    "start": "web-ext run -s extension/",
+    "start": "web-ext run -s dist/ --start-url about:debugging",
     "test": "mocha --require ./test/test-helper.js --compilers js:babel-core/register"
   },
   "repository": {
