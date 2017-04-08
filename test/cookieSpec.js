@@ -5,6 +5,8 @@ import {assertThat, is, contains, FeatureMatcher, not} from 'hamjest';
 
 describe("Cookie", function () {
 
+    afterEach(uninstallMocks);
+
     it("builds the right cookie from cookie def with given url", function () {
 
         let cookie = new Cookie({url: 'foo', domain: 'bar'});
@@ -41,9 +43,9 @@ describe("Cookie", function () {
 
     it("remove calls api with right parameter", function () {
         let removeCookieArgs = null;
-        mockGlobal('browser.cookies.remove', function () {
-            removeCookieArgs = arguments;
-        };
+        mockGlobal('browser.cookies.remove', function (param) {
+            removeCookieArgs = param;
+        });
 
 
         let domain = 'example.com';
@@ -56,7 +58,6 @@ describe("Cookie", function () {
 
     });
 
-    after(uninstallMocks);
 
 });
 

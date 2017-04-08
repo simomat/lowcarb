@@ -1,54 +1,70 @@
 
-function createProxy() {
-    return new Proxy({isProxy:true}, {
-        get: (target, name) => {
-            let value = target[name];
-            if (value === undefined) {
-                value = createProxy();
-                target[name] = value;
-            }
-            return value;
-        },
-        set: (target, name, value) => {
-            target[name] = value;
-            return true;
-        }
-    })
-}
-
-global.browser = createProxy();
-
-
 let globalMocks = [];
 
-global.mockGlobal = function (name, value) {
+function mockWebextApi() {
 
-    function installMock(parent, nameParts) {
-        let [name, ...restNames] = nameParts;
-        parent[name] = restNames.reduceRight((tail, namePart) => {
-            let newTail = createProxy();
-            newTail[namePart] = tail;
-        }, value);
+    let apiObjects = [
+        'browser.cookies.remove',
+        'browser.cookies.getAll',
+        'browser.runtime.sendMessage',
+        'browser.runtime.onMessage.addListener',
+        'browser.storage.local.clear',
+        'browser.storage.local.set',
+        'browser.storage.local.get'
+    ];
+
+    for (let apiObject of apiObjects) {
+        createMock(apiObject, () => {});
+    }
+}
+mockWebextApi();
+
+function createMock(name, mock) {
+
+    function proxyChainInstall(nameParts) {
+        return nameParts.reduceRight((tail, namePart) => {
+            let newHead = {};
+            newHead[namePart] = tail;
+            return newHead;
+        }, mock);
     }
 
-    function installOnLastDefined(current, nameChain) {
+    function installOnLastDefined(currentParent, nameChain) {
         let [name, ...restNames] = nameChain;
-        if (name === undefined) {
-            return null; // all
+        let object = currentParent[name];
+
+        if (object !== undefined && restNames.length > 0) {
+            return installOnLastDefined(object, restNames);
         }
 
-        let object = currentParent[name];
         if (object === undefined) {
-            installMock(current, nameChain);
+            currentParent[name] = proxyChainInstall(restNames);
+
         } else {
-            installOnLastDefined(object, restNames);
+            currentParent[name] = mock;
         }
+
+        return {
+            parent: currentParent,
+            childName: name,
+            originalChild: object
+        };
     }
 
-    installOnLastDefined(global, name.split('.'));
+    return installOnLastDefined(global, name.split('.'));
+}
 
+
+global.mockGlobal = function (name, mock) {
+    let mockInfo = createMock(name, mock);
+    globalMocks.push(()=>{
+        mockInfo.parent[mockInfo.childName] = mockInfo.originalChild;
+    });
 };
 
+
 global.uninstallMocks = function () {
-    console.log('uninstall');
+    for (let mockUndoAction of globalMocks) {
+        mockUndoAction();
+    }
 };

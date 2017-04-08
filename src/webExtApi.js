@@ -1,5 +1,6 @@
 export const webext = {
-    removeCookie: browser.cookies.remove,
+    removeCookie: function() {
+        return browser.cookies.remove(...arguments);},
     getAllCookies: () => { return browser.cookies.getAll({}); },
     sendMessage: browser.runtime.sendMessage,
     addMessageListener: browser.runtime.onMessage.addListener,
