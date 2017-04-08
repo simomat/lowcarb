@@ -2,10 +2,11 @@
 import 'babel-polyfill'
 import {Cookie} from '../src/cookie';
 import {assertThat, is, contains, FeatureMatcher, not} from 'hamjest';
+import sinon from 'sinon';
 
 describe("Cookie", function () {
 
-    afterEach(uninstallMocks);
+    afterEach(uninstallGlobalMocks);
 
     it("builds the right cookie from cookie def with given url", function () {
 
@@ -42,18 +43,15 @@ describe("Cookie", function () {
     });
 
     it("remove calls api with right parameter", function () {
-        let removeCookieArgs = null;
-        mockGlobal('browser.cookies.remove', function (param) {
-            removeCookieArgs = param;
-        });
-
+        let apiMock = sinon.spy();
+        installGlobalMock('browser.cookies.remove', apiMock);
 
         let domain = 'example.com';
         let cookie = new Cookie({domain: domain, path: '/', name: 'sck', storeId: '5'});
 
         cookie.remove();
 
-        assertThat(removeCookieArgs, is({url: cookie.url, name: 'sck', storeId: '5'}));
+        assertThat(apiMock.calledWith({url: cookie.url, name: 'sck', storeId: '5'}), is(true));
 
 
     });

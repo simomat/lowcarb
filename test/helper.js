@@ -55,7 +55,7 @@ function createMock(name, mock) {
 }
 
 
-global.mockGlobal = function (name, mock) {
+global.installGlobalMock = function (name, mock) {
     let mockInfo = createMock(name, mock);
     globalMocks.push(()=>{
         mockInfo.parent[mockInfo.childName] = mockInfo.originalChild;
@@ -63,7 +63,7 @@ global.mockGlobal = function (name, mock) {
 };
 
 
-global.uninstallMocks = function () {
+global.uninstallGlobalMocks = function () {
     for (let mockUndoAction of globalMocks) {
         mockUndoAction();
     }
