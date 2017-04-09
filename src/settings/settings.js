@@ -1,4 +1,5 @@
 import {webext} from '../webExtApi';
+import {Cookie} from '../cookie';
 import {SelectorList} from './selectorlist';
 import {WhiteListModel} from './whitelistmodel';
 
@@ -7,22 +8,38 @@ let selectorList = new SelectorList(
     new WhiteListModel(webext));
 
 
-function removeCookies() {
-    selectorList.save();
-    webext.sendMessage({"command": "removeCookies"}).catch((reason) => {
-        console.log('sending message was rejected: ' + reason);
-    });
-    // TODO: reload nach löschen
+function sendCommandRemoveCookies() {
+    return webext.sendMessage({"command": "removeCookies"});
 }
 
-window.addEventListener('unload', (event) => {
-    selectorList.save();
+function removeCookies() {
+    selectorList.save()
+        .then(sendCommandRemoveCookies)
+        .catch(reason => {
+            console.log('save&send was rejected: ' + reason);
+        });
+}
+
+function handleMessage(message, sender, sendResponse) {
+    if (message.event === 'cookiesRemoved') {
+        console.log('reload after cookiesRemoved()');
+        return selectorList.reload();
+    }
+
+    throw 'unknown message';
+}
+
+webext.addMessageListener(handleMessage);
+
+window.addEventListener('unload', event => {
+    webext.removeMessageListener(handleMessage);
+    selectorList.save()
+        .catch(console.log);
 });
 
 
 function logCookies() {
     console.log('# Cookiiiiis #');
-    let Cookie = require('../cookie').Cookie;
     webext.getAllCookies().then((cookies) => {
         for (let cookieDef of cookies) {
             let cookie = new Cookie(cookieDef);

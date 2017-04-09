@@ -10,9 +10,9 @@ export class SelectorList {
 
     reload() {
         this.clear();
-        this.model
+        return this.model
             .getItems()
-            .then((items) => {
+            .then(items => {
                 items = Array.from(items);
                 for (let item of items) {
                     this.parentElem.appendChild(this.createListElement(item));
@@ -38,7 +38,7 @@ export class SelectorList {
     }
 
     bindListener() {
-        this.parentElem.addEventListener('click', (event) => {
+        this.parentElem.addEventListener('click', event => {
             event.target.classList.toggle('selected');
         })
     }

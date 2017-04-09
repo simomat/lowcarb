@@ -7,7 +7,7 @@ function normalizeDomain(domain) {
 }
 
 function toListItem(isApplied) {
-    return (domain) => {
+    return domain => {
         return {value: domain, isApplied: isApplied};
     };
 }
@@ -71,8 +71,8 @@ export class WhiteListModel {
 
     saveItems(items) {
         let newWhitelistedDomains = items
-            .filter((item) => { return item.isApplied;})
-            .map((item) => { return item.value.trim(); });
+            .filter(item => { return item.isApplied;})
+            .map(item => { return item.value.trim(); });
 
         return this.api.setStorage({whitelistDomains: newWhitelistedDomains});
     }
