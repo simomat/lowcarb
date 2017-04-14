@@ -1,7 +1,6 @@
-import 'babel-polyfill'
-import {assertThat, is, contains, FeatureMatcher, not} from 'hamjest';
-import {WhitelistDomainRepository} from '../src/settings/domainrepo';
+import {assertThat, contains} from 'hamjest';
 import {spy, wasCalled} from 'spyjest';
+import {WhitelistDomainRepository} from '../src/settings/domainrepo';
 
 function installDomains(domains) {
     installGlobalMock('browser.storage.local.get', () => new Promise(res => res({whitelistDomains: domains})));
@@ -18,7 +17,8 @@ describe("WhitelistDomainRepository", function () {
             .then(repo => {
                 assertThat(repo.getDomains(), contains('foo'));
                 done();
-            });
+            })
+            .catch(e => done(e));
     });
 
     it("saves domains provided by storage", function (done) {
@@ -33,7 +33,8 @@ describe("WhitelistDomainRepository", function () {
             .then(() => {
                 assertThat(set, wasCalled());
                 done();
-            });
+            })
+            .catch(e => done(e));
     });
 });
 

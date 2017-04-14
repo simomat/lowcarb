@@ -1,7 +1,5 @@
-
-import 'babel-polyfill'
+import {assertThat, is} from 'hamjest';
 import {spy, wasCalledWith} from 'spyjest';
-import {assertThat, is, contains, FeatureMatcher, not} from 'hamjest';
 import {Cookie} from '../src/cookie';
 
 describe("Cookie", function () {
