@@ -2,10 +2,11 @@ import {webext} from '../webExtApi';
 import {Cookie} from '../cookie';
 import {SelectorList} from './selectorlist';
 import {WhiteListModel} from './whitelistmodel';
+import {WhitelistDomainRepository} from './domainrepo.js';
 
 let selectorList = new SelectorList(
     document.getElementById('whitelist'),
-    new WhiteListModel(webext));
+    new WhiteListModel(webext, new WhitelistDomainRepository()));
 
 
 function sendCommandRemoveCookies() {
@@ -15,9 +16,7 @@ function sendCommandRemoveCookies() {
 function removeCookies() {
     selectorList.save()
         .then(sendCommandRemoveCookies)
-        .catch(reason => {
-            console.log('save&send was rejected: ' + reason);
-        });
+        .catch(reason => console.log('save&send was rejected: ' + reason));
 }
 
 function handleMessage(message, sender, sendResponse) {
@@ -40,7 +39,7 @@ window.addEventListener('unload', event => {
 
 function logCookies() {
     console.log('# Cookiiiiis #');
-    webext.getAllCookies().then((cookies) => {
+    webext.getAllCookies().then(cookies => {
         for (let cookieDef of cookies) {
             let cookie = new Cookie(cookieDef);
             console.log(`# Cookie: ${cookie.url} :: ${cookie.cookieDef.name} :: ${cookie.cookieDef.value}`);

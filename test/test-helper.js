@@ -22,12 +22,14 @@ mockWebextApi();
 
 function createMock(name, mock) {
 
-    function proxyChainInstall(nameParts) {
-        return nameParts.reduceRight((tail, namePart) => {
-            let newHead = {};
-            newHead[namePart] = tail;
-            return newHead;
-        }, mock);
+    function composeObject(inner, name) {
+        let result = {};
+        result[name] = inner;
+        return result;
+    }
+
+    function createProxyChainToMock(nameParts) {
+        return nameParts.reduceRight(composeObject, mock);
     }
 
     function installOnLastDefined(currentParent, nameChain) {
@@ -39,8 +41,7 @@ function createMock(name, mock) {
         }
 
         if (object === undefined) {
-            currentParent[name] = proxyChainInstall(restNames);
-
+            currentParent[name] = createProxyChainToMock(restNames);
         } else {
             currentParent[name] = mock;
         }

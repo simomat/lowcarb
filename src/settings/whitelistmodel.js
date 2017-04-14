@@ -7,9 +7,7 @@ function normalizeDomain(domain) {
 }
 
 function toListItem(isApplied) {
-    return domain => {
-        return {value: domain, isApplied: isApplied};
-    };
+    return domain => ({value: domain, isApplied: isApplied})
 }
 
 function getDomain(cookie) {
@@ -31,7 +29,7 @@ function reverseDomainSort(domains) {
         .map(splitReverseJoin)
 }
 
-function* createListItems(storage, cookies) {
+function* createListItems(whitelistDomains, cookies) {
 
     let itemListMap = cookies
         .map(getDomain)
@@ -39,7 +37,7 @@ function* createListItems(storage, cookies) {
         .map(toListItem(false))
         .reduce(domainToListItem, new Map());
 
-    itemListMap = storage.whitelistDomains
+    itemListMap = whitelistDomains
         .map(normalizeDomain)
         .map(toListItem(true))
         .reduce(domainToListItem, itemListMap);
@@ -53,27 +51,23 @@ function* createListItems(storage, cookies) {
 
 
 export class WhiteListModel {
-
-    constructor(api) {
-        this.api = api;
+    constructor(cookiesRepo, whitelistRepo) {
+        this.cookiesRepo = cookiesRepo;
+        this.whitelistDomainRepo = whitelistRepo;
     }
 
     getItems() {
         return Promise.all([
-            this.api.getStorage('whitelistDomains'),
-            this.api.getAllCookies()]
-        ).then((storageAndCookies) => {
-            return new Promise((resolve, reject) => {
-                resolve(createListItems(...storageAndCookies));
-            });
-        });
+            this.whitelistDomainRepo.getDomains(),
+            this.cookiesRepo.getAllCookies()]
+        ).then(domainsAndCookies => Promise.resolve(createListItems(...domainsAndCookies)));
     }
 
     saveItems(items) {
         let newWhitelistedDomains = items
-            .filter(item => { return item.isApplied;})
-            .map(item => { return item.value.trim(); });
+            .filter(item => item.isApplied)
+            .map(item => item.value.trim());
 
-        return this.api.setStorage({whitelistDomains: newWhitelistedDomains});
+        return this.cookiesRepo.setStorage({whitelistDomains: newWhitelistedDomains});
     }
 }

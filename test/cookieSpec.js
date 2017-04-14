@@ -1,8 +1,8 @@
 
 import 'babel-polyfill'
-import {Cookie} from '../src/cookie';
+import {spy, wasCalledWith} from 'spyjest';
 import {assertThat, is, contains, FeatureMatcher, not} from 'hamjest';
-import sinon from 'sinon';
+import {Cookie} from '../src/cookie';
 
 describe("Cookie", function () {
 
@@ -42,21 +42,23 @@ describe("Cookie", function () {
         assertThat(cookie.domain, is(domain));
     });
 
-    it("remove calls api with right parameter", function () {
-        let apiMock = sinon.spy();
-        installGlobalMock('browser.cookies.remove', apiMock);
-
+    it("remove calls cookiesRepo with right parameter", function () {
+        let remove = spy(_ => _);
+        installGlobalMock('browser.cookies.remove', remove);
         let domain = 'example.com';
         let cookie = new Cookie({domain: domain, path: '/', name: 'sck', storeId: '5'});
 
         cookie.remove();
 
-        assertThat(apiMock.calledWith({url: cookie.url, name: 'sck', storeId: '5'}), is(true));
-
-
+        assertThat(remove, wasCalledWith(objectWithUrlOf(cookie)));
     });
 
 
+});
+
+let objectWithUrlOf = cookie => ({
+    matches: obj => obj.url === cookie.url,
+    describeTo: desc => desc.append(`object with url ${cookie.url}`)
 });
 
 
