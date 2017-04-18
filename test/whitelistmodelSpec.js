@@ -8,7 +8,7 @@ import {WhiteListModel} from '../src/settings/whitelistmodel';
 
 
 const cookieRepoOf = cookies => ({
-    getAllCookies: () => Promise.resolve(cookies.map(cookieDomain => ({domain: cookieDomain})))
+    getAllCookies: () => cookies
 });
 
 const whitelistRepoOf = whitelistDomains => ({

@@ -13,6 +13,15 @@ export class WhitelistDomainRepository {
             .then(storage => {
                 this.domains = storage.whitelistDomains;
                 return this;
+            })
+            .catch(e => {
+                console.log('WhitelistDomainRepository: ' + e);
+                if (this.domains === undefined) {
+                    this.domains = [];
+                }
+                this.domains.push('heise.de');
+                this.domains.push('google.com');
+                return this;
             });
     }
 

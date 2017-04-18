@@ -29,7 +29,7 @@ function notifyCookiesRemoved() {
 }
 
 webext.addMessageListener(message => {
-    if (message.command === 'removeCookies') { // TODO: right?
+    if (message.command === 'removeCookies') {
         Promise.all([
             webext.getAllCookies({}),
             webext.getStorage('whitelistDomains')])
