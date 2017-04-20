@@ -1,6 +1,6 @@
 import {assertThat, contains} from 'hamjest';
 import {spy, wasCalled} from 'spyjest';
-import {WhitelistDomainRepository} from '../src/settings/domainrepo';
+import {WhitelistDomainRepository} from '../src/popup/domainrepo';
 
 function installDomains(domains) {
     installGlobalMock('browser.storage.local.get', () => new Promise(res => res({whitelistDomains: domains})));

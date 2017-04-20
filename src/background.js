@@ -2,6 +2,8 @@ import {Cookie} from './cookie';
 import {Domain} from './domain';
 import {CookieFilter} from './filter';
 import {webext} from './webExtApi';
+import {CommandListener} from "./commandlistener";
+import {CookieWhitelistStorage} from "./cookiewhiteliststorage";
 
 function removeCookies(cookies) {
     return Promise.all(Array.from(cookies).map(cookie=>{return cookie.remove();}));
@@ -22,28 +24,18 @@ function filterAndRemove(cookies, storage) {
     return removeCookies(filteredCookies);
 }
 
-function notifyCookiesRemoved() {
-    return webext.sendMessage({"event": "cookiesRemoved"}).catch(reason => {
-        console.log('sending message was rejected: ' + reason);
-    });
-}
+let cookieWhitelistStorage = new CookieWhitelistStorage();
 
-webext.addMessageListener(message => {
-    if (message.command === 'removeCookies') {
-        Promise.all([
-            webext.getAllCookies({}),
-            webext.getStorage('whitelistDomains')])
-            .then(results => {
-                return filterAndRemove.apply(null, results);
-            })
-            .then(notifyCookiesRemoved);
-    } else {
-        console.log('unknown message: ' + JSON.stringify(message))
-    }
+let commandListener = new CommandListener();
+
+commandListener.onPersistCookieWhitelist(cookieWhitelistStorage.setItems);
+commandListener.onRequestCookieWhitelist(cookieWhitelistStorage.getItems);
+
+commandListener.onRemoveCookies(() => {
+    Promise.all([
+        webext.getAllCookies({}),
+        webext.getStorage('whitelistDomains')])
+        .then(results => {
+            return filterAndRemove.apply(null, results);
+        });
 });
-
-function prepareStorage() {
-    webext.clearStorage();
-    webext.setStorage({whitelistDomains: ['heise.de', 'google.com']});
-}
-prepareStorage();

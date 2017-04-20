@@ -2,7 +2,7 @@
   "browser_action": {
     "browser_style": true,
     "default_title": "Remove cookies",
-    "default_popup": "settings/settings.html",
+    "default_popup": "popup/popup.html",
     "default_icon": {
       "32": "icons/scale-32.png",
       "64": "icons/scale-64.png"

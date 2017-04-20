@@ -4,7 +4,7 @@ import {spy, wasCalledWith} from 'spyjest';
 
 import {isGeneratorThat, assertResolved} from './testutils';
 
-import {WhiteListModel} from '../src/settings/whitelistmodel';
+import {WhiteListModel} from '../src/popup/whitelistmodel';
 
 
 const cookieRepoOf = cookies => ({
