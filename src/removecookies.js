@@ -1,5 +1,5 @@
 import {Domain} from './domain';
-import {CookieFilter} from './filter';
+import {CookieFilter} from './domainfilter';
 
 const removeAll = filteredCookies =>
     Promise.all(filteredCookies.map(cookie => cookie.remove()));
