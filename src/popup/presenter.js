@@ -3,7 +3,6 @@ import {domainCompare} from "./domaincompare";
 function createListElement(item) {
     let element = document.createElement('div');
     element.appendChild(document.createTextNode(item.value));
-    element.classList.add('item');
     if (item.isApplied) {
         element.classList.add('selected');
     }
@@ -11,16 +10,16 @@ function createListElement(item) {
 }
 
 export class Presenter {
-    constructor(view, modelstore) {
+    constructor(view, modelStore) {
         this.view = view;
-        this.modelstore = modelstore;
+        this.modelStore = modelStore;
         this.model = null;
 
-        this.view.onItemClick(this.itemClicked)
+        this.view.onItemClick(element => this.itemClicked(element));
     }
 
     refresh() {
-        this.modelstore.getModel()
+        this.modelStore.getModel()
             .then(model => {
                 this.model = model;
                 this.rebuildView();
@@ -31,7 +30,7 @@ export class Presenter {
         this.view.clear();
 
         let listElements = this.model.getItems()
-            .sort((a, b) => domainCompare(a.domain, b.domain))
+            .sort((a, b) => domainCompare(a.value, b.value))
             .map(createListElement);
         this.view.setListItems(listElements);
     }
@@ -42,6 +41,8 @@ export class Presenter {
     }
 
     persistModel() {
-        return this.modelstore.persist(this.model);
+        if (this.model !== null) {
+            return this.modelStore.persist(this.model);
+        }
     }
 }

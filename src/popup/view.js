@@ -2,13 +2,6 @@
 export class View {
     constructor(rootElem) {
         this.rootElem = rootElem;
-        this.bindListener();
-    }
-
-    bindListener() {
-        this.rootElem.addEventListener('click', event => {
-            event.target.classList.toggle('selected');
-        })
     }
 
     clear() {
