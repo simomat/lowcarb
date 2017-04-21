@@ -1,5 +1,5 @@
-import {Domain} from '../src/domain';
 import {assertThat, is} from 'hamjest';
+import {Domain} from '../src/domain';
 
 describe("Domain", function () {
     it("matches with pattern equal to domain", function () {

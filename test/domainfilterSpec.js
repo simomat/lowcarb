@@ -1,7 +1,6 @@
-
 import 'babel-polyfill'
-import {CookieFilter} from '../src/filter';
-import {assertThat, is, contains, FeatureMatcher, not} from 'hamjest';
+import {assertThat, contains, FeatureMatcher, not} from 'hamjest';
+import {CookieFilter} from '../src/domainfilter';
 
 function domainFor(domain) {
     return {
@@ -22,7 +21,6 @@ describe("CookieFilter", function () {
         let cookieFilter = new CookieFilter([domainFor('foo'), domainFor('baz')]);
 
         let cookies = cookieFilter.filterDomainMatches([{domain: 'foo'}, {domain: 'blue'}]);
-        cookies = Array.from(cookies);
 
         assertThat(cookies, contains(cookieWithDomain('foo')));
     });
@@ -31,7 +29,6 @@ describe("CookieFilter", function () {
         let cookieFilter = new CookieFilter([domainFor('foo'), domainFor('baz')]);
 
         let cookies = cookieFilter.filterDomainMatches([{domain:'blue'}]);
-        cookies = Array.from(cookies);
 
         assertThat(cookies, not(contains(cookieWithDomain('grey'))));
     });
@@ -40,7 +37,6 @@ describe("CookieFilter", function () {
         let cookieFilter = new CookieFilter([domainFor('foo'), domainFor('baz')]);
 
         let cookies = cookieFilter.filterDomainNotMatches([{domain:'foo'}, {domain:'blue'}]);
-        cookies = Array.from(cookies);
 
         assertThat(cookies, contains(cookieWithDomain('blue')));
     });
@@ -49,9 +45,7 @@ describe("CookieFilter", function () {
         let cookieFilter = new CookieFilter([domainFor('foo'), domainFor('baz')]);
 
         let cookies = cookieFilter.filterDomainNotMatches([{domain:'blue'}]);
-        cookies = Array.from(cookies);
 
         assertThat(cookies, contains(cookieWithDomain('blue')));
     });
 });
-

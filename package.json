@@ -27,7 +27,7 @@
     "hamjest": "^2.13.0",
     "mocha": "^3.2.0",
     "rollup-stream": "^1.19.0",
-    "spyjest": "^1.0.2",
+    "spyjest": "^1.0.3",
     "vinyl-source-stream": "^1.1.0",
     "web-ext": "^1.8.1"
   }
