@@ -1,49 +1,18 @@
-import {Cookie} from './cookie';
-import {Domain} from './domain';
-import {CookieFilter} from './filter';
-import {webext} from './webExtApi';
+import {CommandListener} from "./commandlistener";
+import {CookieWhitelistStorage} from "./cookiewhiteliststorage";
+import {removeCookies} from './removecookies';
 
-function removeCookies(cookies) {
-    return Promise.all(Array.from(cookies).map(cookie=>{return cookie.remove();}));
-}
+const cookieWhitelistStorage = new CookieWhitelistStorage();
+const commandListener = new CommandListener();
 
-function* toCookieObjects(cookies) {
-    for (let cookie of cookies) {
-        yield new Cookie(cookie);
-    }
-}
+commandListener.onPersistCookieWhitelist(items => cookieWhitelistStorage.setItems(items));
+commandListener.onRequestCookieWhitelist(() => cookieWhitelistStorage.getItems());
 
-function filterAndRemove(cookies, storage) {
-    let whitelistedDomains = storage.whitelistDomains.map(domain => {
-        return new Domain(domain);
-    });
-    let whitelistFilter = new CookieFilter(whitelistedDomains);
-    let filteredCookies = whitelistFilter.filterDomainNotMatches(toCookieObjects(cookies));
-    return removeCookies(filteredCookies);
-}
-
-function notifyCookiesRemoved() {
-    return webext.sendMessage({"event": "cookiesRemoved"}).catch(reason => {
-        console.log('sending message was rejected: ' + reason);
-    });
-}
-
-webext.addMessageListener(message => {
-    if (message.command === 'removeCookies') { // TODO: right?
-        Promise.all([
-            webext.getAllCookies({}),
-            webext.getStorage('whitelistDomains')])
-            .then(results => {
-                return filterAndRemove.apply(null, results);
-            })
-            .then(notifyCookiesRemoved);
-    } else {
-        console.log('unknown message: ' + JSON.stringify(message))
-    }
+commandListener.onRemoveCookies(() => {
+    cookieWhitelistStorage.getItems()
+        .then(items =>
+            removeCookies(
+                items.filter(item => item.isApplied),
+                items.filter(item => !item.isApplied))
+        );
 });
-
-function prepareStorage() {
-    webext.clearStorage();
-    webext.setStorage({whitelistDomains: ['heise.de', 'google.com']});
-}
-prepareStorage();

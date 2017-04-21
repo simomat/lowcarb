@@ -4,11 +4,11 @@ import {spy, wasCalledWith} from 'spyjest';
 
 import {isGeneratorThat, assertResolved} from './testutils';
 
-import {WhiteListModel} from '../src/settings/whitelistmodel';
+import {WhiteListModel} from '../src/popup/whitelistmodel';
 
 
 const cookieRepoOf = cookies => ({
-    getAllCookies: () => Promise.resolve(cookies.map(cookieDomain => ({domain: cookieDomain})))
+    getAllCookies: () => cookies
 });
 
 const whitelistRepoOf = whitelistDomains => ({

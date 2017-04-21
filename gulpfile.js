@@ -16,7 +16,7 @@ gulp.task("copyStaticFiles", function () {
         .pipe(gulp.dest("./dist"));
 });
 
-gulp.task('build', ['copyStaticFiles', 'buildBackground', 'buildsettings']);
+gulp.task('build', ['copyStaticFiles', 'buildBackground', 'buildpopup']);
 
 gulp.task('buildBackground', function () {
     return rollup({
@@ -28,12 +28,12 @@ gulp.task('buildBackground', function () {
         .pipe(gulp.dest(dist));
 });
 
-gulp.task('buildsettings', function () {
+gulp.task('buildpopup', function () {
     return rollup({
-        entry: './src/settings/settings.js',
+        entry: './src/popup/popup.js',
         format: 'es',
         exports: 'none'
     })
-        .pipe(source('settings.js'))
-        .pipe(gulp.dest(dist + '/settings'));
+        .pipe(source('popup.js'))
+        .pipe(gulp.dest(dist + '/popup'));
 });
