@@ -1,5 +1,3 @@
-import {webext} from "./webExtApi";
-
 function normalizeDomain(domain) {
     domain = domain.toLowerCase();
     if (domain.startsWith('.')) {
@@ -29,38 +27,25 @@ function createListItems(cookies, whitelistDomains) {
 }
 
 export class CookieWhitelistStorage {
-    constructor() {
-        this.items = null;
+    constructor(cookieStorage, whitelistDomainStorage) {
+        this.cookieStorage = cookieStorage;
+        this.whitelistDomainStorage = whitelistDomainStorage;
     }
 
     getItems() {
-        if (this.items !== null) {
-            return Promise.resolve(this.items);
-        }
-        return this.buildItems();
+        return Promise.all([
+            this.cookieStorage.getCookies(),
+            this.whitelistDomainStorage.getDomains()
+        ])
+            .then(([cookies, domains]) => {
+                return createListItems(cookies, domains);
+            });
     }
 
     setItems(items) {
-        this.items = items;
-    }
-
-    buildItems() {
-        return Promise.all([
-            webext.getAllCookies({}),
-            webext.getStorage('whitelistDomains')
-        ])
-        .then(([cookies, storage]) => {
-            let domains = storage.whitelistDomains;
-            if (domains === undefined || domains.length === 0) {
-                // domains = ['heise.de', 'google.com'];
-                domains = [];
-            }
-            this.items = createListItems(cookies, domains);
-            return this.items;
-        });
-    }
-
-    flush() {
-        this.items = null;
+        let domains = items
+            .filter(item => item.isApplied)
+            .map(item => item.value);
+        this.whitelistDomainStorage.setDomains(domains);
     }
 }
