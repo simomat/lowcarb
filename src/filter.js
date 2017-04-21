@@ -3,25 +3,15 @@ export class CookieFilter {
         this.domains = domains;
     }
 
-    *filterDomainMatches(cookies) {
-        for (let cookie of cookies) {
-            if (this.matches(cookie)) {
-                yield cookie;
-            }
-        }
+    filterDomainMatches(cookies) {
+        return cookies.filter(cookie => this.matches(cookie));
     }
 
-    *filterDomainNotMatches(cookies) {
-        for (let cookie of cookies) {
-            if (! this.matches(cookie)) {
-                yield cookie;
-            }
-        }
+    filterDomainNotMatches(cookies) {
+        return cookies.filter(cookie => !this.matches(cookie));
     }
 
     matches(cookie) {
-        return this.domains.some((domain) => {
-            return domain.matches(cookie.domain);
-        });
+        return this.domains.some(domain => domain.matches(cookie.domain));
     }
 }
