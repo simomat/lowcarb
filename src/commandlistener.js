@@ -7,7 +7,7 @@ export class CommandListener {
         this.requestCookieWhitelist = nothing;
         this.persistCookieWhitelist = nothing;
 
-        webext.addMessageListener(this.handleMessage);
+        webext.addMessageListener(message => this.handleMessage(message));
     }
 
     handleMessage(message) {

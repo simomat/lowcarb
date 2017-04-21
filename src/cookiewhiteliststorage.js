@@ -11,14 +11,22 @@ function normalizeDomain(domain) {
 const toListItem = isApplied =>
     domain => ({value: domain, isApplied: isApplied});
 
-const createDomainListItems = whitelistDomains => whitelistDomains
-        .map(normalizeDomain)
-        .map(toListItem(true));
+const addToMap = (map, item) => map.set(item.value, item);
 
-const createCookieListItems = cookies => cookies
+function createListItems(cookies, whitelistDomains) {
+    let itemMap = cookies
         .map(cookie => cookie.domain)
         .map(normalizeDomain)
-        .map(toListItem(false));
+        .map(toListItem(false))
+        .reduce(addToMap, new Map());
+
+    itemMap = whitelistDomains
+        .map(normalizeDomain)
+        .map(toListItem(true))
+        .reduce(addToMap, itemMap);
+
+    return Array.from(itemMap.values());
+}
 
 export class CookieWhitelistStorage {
 
@@ -30,7 +38,7 @@ export class CookieWhitelistStorage {
     }
 
     setItems(items) {
-
+        this.items = items;
     }
 
     buildItems() {
@@ -38,10 +46,14 @@ export class CookieWhitelistStorage {
             webext.getAllCookies({}),
             webext.getStorage('whitelistDomains')
         ])
-            .then(([domains, cookies]) => {
-                this.items = createCookieListItems(cookies)
-                    .concat(createDomainListItems(domains));
-                return this.items;
-            });
+        .then(([cookies, storage]) => {
+            let domains = storage.whitelistDomains;
+            if (domains === undefined || domains.length === 0) {
+                // domains = ['heise.de', 'google.com'];
+                domains = [];
+            }
+            this.items = createListItems(cookies, domains);
+            return this.items;
+        });
     }
 }
