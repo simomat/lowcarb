@@ -29,9 +29,12 @@ function createListItems(cookies, whitelistDomains) {
 }
 
 export class CookieWhitelistStorage {
+    constructor() {
+        this.items = null;
+    }
 
     getItems() {
-        if (this.items !== undefined) {
+        if (this.items !== null) {
             return Promise.resolve(this.items);
         }
         return this.buildItems();
@@ -55,5 +58,9 @@ export class CookieWhitelistStorage {
             this.items = createListItems(cookies, domains);
             return this.items;
         });
+    }
+
+    flush() {
+        this.items = null;
     }
 }

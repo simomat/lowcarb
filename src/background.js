@@ -13,6 +13,6 @@ commandListener.onRemoveCookies(() => {
         .then(items =>
             removeCookies(
                 items.filter(item => item.isApplied),
-                items.filter(item => !item.isApplied))
-        );
+                items.filter(item => !item.isApplied)))
+        .then(() => cookieWhitelistStorage.flush());
 });
