@@ -7,6 +7,15 @@ let view = new View(document.getElementById('whitelist'));
 let presenter = new Presenter(view, new ModelStore());
 
 window.addEventListener('unload', () => presenter.persistModel());
-document.getElementById('removeCookies').addEventListener('click', () => webext.sendMessage({command: 'removeCookies'}));
+document.getElementById('removeCookies').addEventListener('click', () => {
+    presenter.persistModel()
+        .then(() => webext.sendMessage({command: 'removeCookies'}))
+        .then(() => presenter.refresh());
+});
+document.getElementById('reload').addEventListener('click', () => {
+    presenter.persistModel()
+        .then(() => webext.sendMessage({command: 'refresh'}))
+        .then((() => presenter.refresh()));
+});
 
 presenter.refresh();

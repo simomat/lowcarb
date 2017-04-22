@@ -12,6 +12,10 @@ const commandListener = new CommandListener();
 
 commandListener.onPersistCookieWhitelist(items => cookieWhitelistStorage.setItems(items));
 commandListener.onRequestCookieWhitelist(() => cookieWhitelistStorage.getItems());
+commandListener.onRefresh(() => {
+    cookieStorage.flush();
+    whitelistDomainStorage.flush();
+});
 
 commandListener.onRemoveCookies(() => {
     whitelistDomainStorage.getDomains()

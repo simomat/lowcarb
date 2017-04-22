@@ -3,6 +3,7 @@ import {domainCompare} from "./domaincompare";
 function createListElement(item) {
     let element = document.createElement('div');
     element.appendChild(document.createTextNode(item.value));
+    element.classList.add('listItem');
     if (item.isApplied) {
         element.classList.add('selected');
     }
@@ -36,6 +37,9 @@ export class Presenter {
     }
 
     itemClicked(element) {
+        if (!element.classList.contains('listItem')) {
+            return;
+        }
         element.classList.toggle('selected');
         this.model.toggleItem(element.innerText.trim());
     }

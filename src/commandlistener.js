@@ -6,6 +6,7 @@ export class CommandListener {
         this.removeCookies = nothing;
         this.requestCookieWhitelist = nothing;
         this.persistCookieWhitelist = nothing;
+        this.refresh = nothing;
 
         webext.addMessageListener(message => this.handleMessage(message));
     }
@@ -17,6 +18,8 @@ export class CommandListener {
             return this.requestCookieWhitelist();
         } if (message.command === 'persistCookieWhitelist') {
             return this.persistCookieWhitelist(message.data);
+        } if (message.command === 'refresh') {
+            return this.onRefresh();
         } else {
             console.log('handleMessage: unknown message: ' + JSON.stringify(message))
         }
@@ -32,5 +35,9 @@ export class CommandListener {
 
     onPersistCookieWhitelist(handler) {
         this.persistCookieWhitelist = handler;
+    }
+
+    onRefresh(handler) {
+        this.refresh = handler;
     }
 }

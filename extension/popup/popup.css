@@ -1,4 +1,16 @@
-
 .selected {
-    background-color: red;
+    background-color: darkseagreen;
+}
+
+.listItem {
+    padding: 4px;
+    margin: 2px;
+    border: 1px slategrey ridge;
+    border-radius: 7px;
+}
+
+#whitelist {
+    height: 200px;
+    overflow: hidden;
+    overflow-y: scroll;
 }
