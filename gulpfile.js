@@ -26,14 +26,14 @@ gulp.task('buildBackground', function () {
         .pipe(gulp.dest(dist));
 });
 
-gulp.task('buildPopup', function () {
+gulp.task('buildOptions', function () {
     return rollup({
-        entry: './src/popup/popup.js',
+        entry: './src/options/options.js',
         format: 'es',
         exports: 'none'
     })
-        .pipe(source('popup.js'))
-        .pipe(gulp.dest(dist + '/popup'));
+        .pipe(source('options.js'))
+        .pipe(gulp.dest(dist + '/options'));
 });
 
-gulp.task('build', ['copyStaticFiles', 'buildBackground', 'buildPopup']);
+gulp.task('build', ['copyStaticFiles', 'buildBackground', 'buildOptions']);

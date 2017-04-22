@@ -15,7 +15,7 @@
   "scripts": {
     "build": "gulp",
     "clean": "gulp clean",
-    "start": "web-ext run -s dist/ --start-url about:debugging",
+    "start": "web-ext run -s dist/ --start-url about:debugging --start-url about:addons",
     "test": "mocha --require ./test/test-helper.js --compilers js:babel-core/register",
     "pack": "web-ext build -s dist/"
   },

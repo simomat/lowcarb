@@ -1,5 +1,5 @@
 import {assertThat, is, FeatureMatcher} from 'hamjest';
-import {ListModel} from '../src/popup/listmodel';
+import {ListModel} from '../src/options/listmodel';
 
 function itemWithApplied(isApplied) {
     return new FeatureMatcher(isApplied, 'item with isApplied', 'isApplied');

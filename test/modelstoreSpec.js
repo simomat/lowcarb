@@ -1,6 +1,6 @@
 import {assertThat, is} from 'hamjest';
 import {spy, wasCalledWith} from 'spyjest';
-import {ModelStore} from '../src/popup/modelstore';
+import {ModelStore} from '../src/options/modelstore';
 
 import {whenResolved, uninstallGlobalMocks, installGlobalMock} from './testutils';
 

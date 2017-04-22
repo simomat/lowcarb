@@ -23,14 +23,7 @@
     "64": "icons/scale-64.png"
   },
 
-  "browser_action": {
-    "browser_style": true,
-    "default_title": "Remove cookies",
-    "default_popup": "popup/popup.html",
-    "default_icon": {
-      "16": "icons/scale-16.png",
-      "32": "icons/scale-32.png",
-      "64": "icons/scale-64.png"
-    }
+  "options_ui": {
+    "page": "options/options.html"
   }
 }

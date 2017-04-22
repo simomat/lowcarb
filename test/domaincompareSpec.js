@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 import {assertThat, is} from 'hamjest';
-import {domainCompare} from '../src/popup/domaincompare';
+import {domainCompare} from '../src/options/domaincompare';
 
 describe("domainCompare", function () {
 
