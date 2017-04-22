@@ -18,7 +18,8 @@
     "test": "mocha --require ./test/test-helper.js --compilers js:babel-core/register",
     "start": "web-ext run -s dist/ --start-url about:debugging --start-url about:addons --verbose",
     "lint": "web-ext lint -s dist/",
-    "pack": "web-ext build -s dist/"
+    "pack": "web-ext build -s dist/",
+    "sign": "web-ext sign -s dist/"
   },
   "dependencies": {},
   "devDependencies": {
