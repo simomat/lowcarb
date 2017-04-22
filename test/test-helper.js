@@ -6,6 +6,7 @@ let apiObjects = [
     'browser.runtime.sendMessage',
     'browser.runtime.onMessage.addListener',
     'browser.runtime.onMessage.removeListener',
+    'browser.runtime.onStartup.addListener',
     'browser.storage.local.clear',
     'browser.storage.local.set',
     'browser.storage.local.get'
