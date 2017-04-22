@@ -9,10 +9,6 @@ export class Cookie {
         return webext.removeCookie(this.toRemoveParameter());
     }
 
-    toString() {
-        return this.url;
-    }
-
     get url() {
         if ('url' in this.cookieDef) {
             return this.cookieDef.url;

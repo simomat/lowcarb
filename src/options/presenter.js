@@ -3,9 +3,9 @@ import {domainCompare} from "./domaincompare";
 function createListElement(item) {
     let element = document.createElement('div');
     element.appendChild(document.createTextNode(item.value));
-    element.classList.add('listItem');
+    element.classList.add('list-group-item');
     if (item.isApplied) {
-        element.classList.add('selected');
+        element.classList.add('active');
     }
     return element;
 }
@@ -37,10 +37,10 @@ export class Presenter {
     }
 
     itemClicked(element) {
-        if (!element.classList.contains('listItem')) {
+        if (!element.classList.contains('list-group-item')) {
             return;
         }
-        element.classList.toggle('selected');
+        element.classList.toggle('active');
         this.model.toggleItem(element.innerText.trim());
     }
 
