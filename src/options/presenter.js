@@ -3,8 +3,9 @@ import {domainCompare} from "./domaincompare";
 function createListElement(item) {
     let element = document.createElement('div');
     element.appendChild(document.createTextNode(item.value));
+    element.classList.add('list-group-item');
     if (item.isApplied) {
-        element.classList.add('selected');
+        element.classList.add('active');
     }
     return element;
 }
@@ -36,7 +37,10 @@ export class Presenter {
     }
 
     itemClicked(element) {
-        element.classList.toggle('selected');
+        if (!element.classList.contains('list-group-item')) {
+            return;
+        }
+        element.classList.toggle('active');
         this.model.toggleItem(element.innerText.trim());
     }
 

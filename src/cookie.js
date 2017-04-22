@@ -6,13 +6,7 @@ export class Cookie {
     }
 
     remove() {
-        let removeParam = this.toRemoveParameter();
-        console.log('removing cookie: ' + JSON.stringify(removeParam));
-        return webext.removeCookie(removeParam);
-    }
-
-    toString() {
-        return this.url;
+        return webext.removeCookie(this.toRemoveParameter());
     }
 
     get url() {

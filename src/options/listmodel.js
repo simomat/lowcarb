@@ -1,6 +1,5 @@
-
-export class Model {
-    constructor(items=[]) {
+export class ListModel {
+    constructor(items) {
         this.items = items;
     }
 
@@ -12,8 +11,6 @@ export class Model {
         let item = this.items.find(item => item.value === value);
         if (item !== undefined) {
             item.isApplied = !item.isApplied;
-        } else {
-            console.log('toggleItem: could not find item with value ' + value);
         }
     }
 }

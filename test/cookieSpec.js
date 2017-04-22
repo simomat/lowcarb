@@ -2,6 +2,8 @@ import {assertThat, is} from 'hamjest';
 import {spy, wasCalledWith} from 'spyjest';
 import {Cookie} from '../src/cookie';
 
+import {uninstallGlobalMocks, installGlobalMock} from './testutils';
+
 describe("Cookie", function () {
 
     afterEach(uninstallGlobalMocks);
@@ -58,5 +60,3 @@ let objectWithUrlOf = cookie => ({
     matches: obj => obj.url === cookie.url,
     describeTo: desc => desc.append(`object with url ${cookie.url}`)
 });
-
-

@@ -1,10 +1,10 @@
 import {webext} from '../webExtApi';
-import {Model} from "./model";
+import {ListModel} from "./listmodel";
 
 export class ModelStore {
     getModel() {
         return webext.sendMessage({command: 'requestCookieWhitelist'})
-            .then(items => new Model(items));
+            .then(items => new ListModel(items));
     }
 
     persist(model) {

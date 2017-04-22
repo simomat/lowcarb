@@ -1,72 +1,16 @@
+import {createMock} from './testutils';
 
-let globalMocks = [];
+let apiObjects = [
+    'browser.cookies.remove',
+    'browser.cookies.getAll',
+    'browser.runtime.sendMessage',
+    'browser.runtime.onMessage.addListener',
+    'browser.runtime.onMessage.removeListener',
+    'browser.storage.local.clear',
+    'browser.storage.local.set',
+    'browser.storage.local.get'
+];
 
-function mockWebextApi() {
-
-    let apiObjects = [
-        'browser.cookies.remove',
-        'browser.cookies.getAll',
-        'browser.runtime.sendMessage',
-        'browser.runtime.onMessage.addListener',
-        'browser.runtime.onMessage.removeListener',
-        'browser.storage.local.clear',
-        'browser.storage.local.set',
-        'browser.storage.local.get'
-    ];
-
-    for (let apiObject of apiObjects) {
-        createMock(apiObject, () => {});
-    }
+for (let apiObject of apiObjects) {
+    createMock(apiObject, () => {});
 }
-mockWebextApi();
-
-function createMock(name, mock) {
-
-    function composeObject(inner, name) {
-        let result = {};
-        result[name] = inner;
-        return result;
-    }
-
-    function createProxyChainToMock(nameParts) {
-        return nameParts.reduceRight(composeObject, mock);
-    }
-
-    function installOnLastDefined(currentParent, nameChain) {
-        let [name, ...restNames] = nameChain;
-        let object = currentParent[name];
-
-        if (object !== undefined && restNames.length > 0) {
-            return installOnLastDefined(object, restNames);
-        }
-
-        if (object === undefined) {
-            currentParent[name] = createProxyChainToMock(restNames);
-        } else {
-            currentParent[name] = mock;
-        }
-
-        return {
-            parent: currentParent,
-            childName: name,
-            originalChild: object
-        };
-    }
-
-    return installOnLastDefined(global, name.split('.'));
-}
-
-
-global.installGlobalMock = function (name, mock) {
-    let mockInfo = createMock(name, mock);
-    globalMocks.push(()=>{
-        mockInfo.parent[mockInfo.childName] = mockInfo.originalChild;
-    });
-};
-
-
-global.uninstallGlobalMocks = function () {
-    for (let mockUndoAction of globalMocks) {
-        mockUndoAction();
-    }
-};

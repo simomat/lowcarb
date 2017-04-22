@@ -1,18 +1,24 @@
 import {CommandListener} from "./commandlistener";
 import {CookieWhitelistStorage} from "./cookiewhiteliststorage";
-import {removeCookies} from './removecookies';
+import {CookieRemover} from './removecookies';
+import {CookieStorage} from './cookiestorage';
+import {WhitelistDomainStorage} from './whitelistdomainstorage';
 
-const cookieWhitelistStorage = new CookieWhitelistStorage();
+const cookieStorage = new CookieStorage();
+const whitelistDomainStorage = new WhitelistDomainStorage();
+
+const cookieWhitelistStorage = new CookieWhitelistStorage(cookieStorage, whitelistDomainStorage);
 const commandListener = new CommandListener();
 
 commandListener.onPersistCookieWhitelist(items => cookieWhitelistStorage.setItems(items));
 commandListener.onRequestCookieWhitelist(() => cookieWhitelistStorage.getItems());
+commandListener.onRefresh(() => {
+    cookieStorage.flush();
+    whitelistDomainStorage.flush();
+});
 
 commandListener.onRemoveCookies(() => {
-    cookieWhitelistStorage.getItems()
-        .then(items =>
-            removeCookies(
-                items.filter(item => item.isApplied),
-                items.filter(item => !item.isApplied))
-        );
+    whitelistDomainStorage.getDomains()
+        .then(domains => new CookieRemover(cookieStorage).removeCookiesOf(domains))
+        .then(() => cookieStorage.flush());
 });

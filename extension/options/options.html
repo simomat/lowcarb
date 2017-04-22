@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        #whitelist {
+            overflow: hidden;
+            overflow-y: scroll;
+            height: 15em;
+        }
+        .list-group-item {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <div style="max-width: 30em">
+
+        <h3>Select which cookies to keep</h3>
+
+        <ul id="whitelist" class="list-group">
+        </ul>
+
+        <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+                <button id="removeCookies" class="btn btn-default">Save and Remove Cookies</button>
+            </div>
+            <div class="btn-group" role="group">
+                <button id="reload" class="btn btn-default">Refresh</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="options.js"></script>
+
+</body>
+</html>

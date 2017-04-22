@@ -1,14 +1,20 @@
 import {Domain} from './domain';
-import {Cookie} from './cookie';
-import {CookieFilter} from './filter';
+import {CookieFilter} from './domainfilter';
 
-export function removeCookies(domains, cookies) {
-    let domainObjects = domains.map(domain => new Domain(domain));
-    let cookieObjects = cookies.map(domain => new Cookie(domain));
+const removeAll = filteredCookies =>
+    Promise.all(filteredCookies.map(cookie => cookie.remove()));
 
-    let cookieFilter = new CookieFilter(domainObjects);
-    let filteredCookies = cookieFilter.filterDomainNotMatches(cookieObjects);
-    return Promise.all(
-        Array.from(filteredCookies)
-            .map(cookie => cookie.remove()));
+const filterForDomains = (domains, cookies) =>
+    new CookieFilter(domains).filterDomainNotMatches(cookies);
+
+export class CookieRemover {
+    constructor(cookieStorage) {
+        this.cookieStorage = cookieStorage;
+    }
+
+    removeCookiesOf(domains) {
+        let domainObjects = domains.map(domain => new Domain(domain));
+        return this.cookieStorage.getCookies()
+            .then(cookies => removeAll(filterForDomains(domainObjects, cookies)));
+    }
 }

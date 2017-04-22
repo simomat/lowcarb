@@ -1,11 +1,15 @@
 {
-  "browser_action": {
-    "browser_style": true,
-    "default_title": "Remove cookies",
-    "default_popup": "popup/popup.html",
-    "default_icon": {
-      "32": "icons/scale-32.png",
-      "64": "icons/scale-64.png"
+  "name": "lowcarb",
+  "description": "Remove unwanted cookies",
+  "homepage_url": "https://github.com/simomat/lowcarb",
+  "author": "Matthias Simon",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "permissions": ["cookies", "<all_urls>", "storage"],
+  "applications": {
+    "gecko": {
+      "id": "lowcab@infonautika.de",
+      "strict_min_version": "48.0"
     }
   },
 
@@ -13,15 +17,13 @@
     "scripts": ["background.js"]
   },
 
-  "description": "Remove unwanted cookies",
   "icons": {
     "16": "icons/scale-16.png",
     "32": "icons/scale-32.png",
     "64": "icons/scale-64.png"
   },
-  "homepage_url": "https://github.com/simomat/lowcarb",
-  "manifest_version": 2,
-  "name": "lowcarb",
-  "version": "0.1",
-  "permissions": ["cookies", "<all_urls>", "storage"]
+
+  "options_ui": {
+    "page": "options/options.html"
+  }
 }
