@@ -1,7 +1,7 @@
 {
   "name": "lowcarb",
   "description": " A Firefox Plugin to remove unwanted cookies",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MPL",
   "author": "Matthias Simon",
   "homepage": "https://github.com/simomat/lowcarb#readme",
