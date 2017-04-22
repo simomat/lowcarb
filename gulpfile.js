@@ -12,11 +12,9 @@ gulp.task('clean', function () {
 });
 
 gulp.task("copyStaticFiles", function () {
-    return gulp.src("./extension/**")
+    return gulp.src(['./extension/**', '!./extension/icons/scale-169.png'])
         .pipe(gulp.dest("./dist"));
 });
-
-gulp.task('build', ['copyStaticFiles', 'buildBackground', 'buildpopup']);
 
 gulp.task('buildBackground', function () {
     return rollup({
@@ -28,7 +26,7 @@ gulp.task('buildBackground', function () {
         .pipe(gulp.dest(dist));
 });
 
-gulp.task('buildpopup', function () {
+gulp.task('buildPopup', function () {
     return rollup({
         entry: './src/popup/popup.js',
         format: 'es',
@@ -37,3 +35,5 @@ gulp.task('buildpopup', function () {
         .pipe(source('popup.js'))
         .pipe(gulp.dest(dist + '/popup'));
 });
+
+gulp.task('build', ['copyStaticFiles', 'buildBackground', 'buildPopup']);
