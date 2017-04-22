@@ -13,7 +13,7 @@ export class WhitelistDomainStorage {
             .then(storage => {
                 let domains = storage.whitelistDomains;
                 if (domains === undefined) {
-                    domains = ['heise.de', 'google.com'];
+                    domains = [];
                 }
                 this.cache = domains;
                 return this.cache;
@@ -22,6 +22,7 @@ export class WhitelistDomainStorage {
 
     setDomains(domains) {
         this.cache = domains;
+        webext.setStorage({whitelistDomains: domains});
     }
 
     flush() {
