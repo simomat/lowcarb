@@ -8,7 +8,7 @@ const dist = './dist';
 gulp.task('default', ['build']);
 
 gulp.task('clean', function () {
-    return del(dist + '/**/*');
+    return del([dist + '/**/*', './web-ext-artifacts/']);
 });
 
 gulp.task("copyStaticFiles", function () {
