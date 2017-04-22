@@ -2,7 +2,6 @@
 
 A Firefox Plugin to remove unwanted cookies but keeps your whitelisted cookies. 
 
-`lowcarb` aims to mock the features of the [selectivecookiedelete](https://addons.mozilla.org/de/firefox/addon/selectivecookiedelete) addon, but is based on WebExtensions API and aims to work on mobile platforms as well.
+Based on WebExtensions API and requiring minimal configuration, `lowcarb` aims to run on all platforms. 
 
-It's in very early developement stage right now.
-
+Go to the option panel and choose which cookies to keep. Remove cookies on demand or on firefox startup.

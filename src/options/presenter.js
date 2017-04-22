@@ -1,7 +1,7 @@
 import {domainCompare} from "./domaincompare";
 
 function createListElement(item) {
-    let element = document.createElement('div');
+    let element = document.createElement('li');
     element.appendChild(document.createTextNode(item.value));
     element.classList.add('list-group-item');
     if (item.isApplied) {

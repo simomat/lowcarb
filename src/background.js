@@ -3,7 +3,7 @@ import {CookieWhitelistStorage} from "./cookiewhiteliststorage";
 import {CookieRemover} from './removecookies';
 import {CookieStorage} from './cookiestorage';
 import {WhitelistDomainStorage} from './whitelistdomainstorage';
-import {webext} from "./webExtApi";
+import {loadSettings} from "./settings";
 
 const cookieStorage = new CookieStorage();
 const whitelistDomainStorage = new WhitelistDomainStorage();
@@ -25,4 +25,10 @@ commandListener.onPersistCookieWhitelist(items => cookieWhitelistStorage.setItem
 commandListener.onRequestCookieWhitelist(() => cookieWhitelistStorage.getItems());
 commandListener.onRefresh(flushCache);
 commandListener.onRemoveCookies(removeCookies);
-webext.onStartup(removeCookies);
+
+loadSettings()
+    .then(settings => {
+        if (settings.removeOnStartup) {
+            removeCookies();
+        }
+    });
