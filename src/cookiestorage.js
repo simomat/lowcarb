@@ -10,7 +10,7 @@ export class CookieStorage {
         if (this.cache !== null) {
             return Promise.resolve(this.cache);
         }
-        return webext.getAllCookies({})
+        return webext.getAllCookies()
             .then(cookies => {
                 this.cache = cookies.map(cookieDef => new Cookie(cookieDef));
                 return this.cache;
