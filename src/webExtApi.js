@@ -10,5 +10,5 @@ export const webext = {
     setStorage: object => browser.storage.local.set(object),
     getStorage: key => browser.storage.local.get(key),
 
-    onStartup: browser.runtime.onStartup.addListener
+    onStartup: listener => browser.runtime.onStartup.addListener(listener)
 };
