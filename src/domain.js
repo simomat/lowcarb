@@ -8,3 +8,5 @@ export class Domain {
         return this.pattern.test(domainExpression);
     }
 }
+
+export const createDomainFromString = domainString => new Domain(domainString);
