@@ -5,6 +5,8 @@ const del = require('del');
 
 const dist = './dist';
 
+let rollupCache;
+
 gulp.task('default', ['build']);
 
 gulp.task('clean', function () {
@@ -20,6 +22,7 @@ gulp.task('buildBackground', function () {
     return rollup({
         entry: './src/background.js',
         format: 'es',
+        cache: rollupCache,
         exports: 'none'
     })
         .pipe(source('background.js'))
@@ -30,6 +33,7 @@ gulp.task('buildOptions', function () {
     return rollup({
         entry: './src/options/options.js',
         format: 'es',
+        cache: rollupCache,
         exports: 'none'
     })
         .pipe(source('options.js'))
