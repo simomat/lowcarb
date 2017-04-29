@@ -6,6 +6,8 @@ const resolve = require('rollup-plugin-node-resolve');
 
 const dist = './dist';
 
+let rollupCache;
+
 gulp.task('default', ['build']);
 
 gulp.task('clean', function () {
@@ -22,6 +24,7 @@ gulp.task('buildBackground', function () {
         entry: './src/background.js',
         format: 'es',
         plugins: [resolve()],
+        cache: rollupCache,
         exports: 'none'
     })
         .pipe(source('background.js'))
@@ -33,6 +36,7 @@ gulp.task('buildOptions', function () {
         entry: './src/options/options.js',
         format: 'es',
         plugins: [resolve()],
+        cache: rollupCache,
         exports: 'none'
     })
         .pipe(source('options.js'))
