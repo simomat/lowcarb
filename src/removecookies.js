@@ -1,20 +1,18 @@
-import {Domain} from './domain';
+import {getCookies} from './cookiestorage';
 import {CookieFilter} from './domainfilter';
+import {createDomainFromString} from './domain';
+import {getWhitelistDomains} from './whitelistdomainstorage';
 
-const removeAll = filteredCookies =>
-    Promise.all(filteredCookies.map(cookie => cookie.remove()));
+const toDomainObjects = pureDomains => pureDomains.map(createDomainFromString);
+const getDomains = () =>
+    getWhitelistDomains()
+        .then(toDomainObjects);
 
-const filterForDomains = (domains, cookies) =>
-    new CookieFilter(domains).filterDomainNotMatches(cookies);
+const filterCookiesThatMatch = cookies => domains => new CookieFilter(domains).filterDomainNotMatches(cookies);
+const filterMatchingDomains = cookies => getDomains().then(filterCookiesThatMatch(cookies));
+const removeTheCookies = cookies => Promise.all(cookies.map(cookie => cookie.remove()));
 
-export class CookieRemover {
-    constructor(cookieStorage) {
-        this.cookieStorage = cookieStorage;
-    }
-
-    removeCookiesOf(domains) {
-        let domainObjects = domains.map(domain => new Domain(domain));
-        return this.cookieStorage.getCookies()
-            .then(cookies => removeAll(filterForDomains(domainObjects, cookies)));
-    }
-}
+export const removeCookies = () =>
+    getCookies()
+        .then(filterMatchingDomains)
+        .then(removeTheCookies);

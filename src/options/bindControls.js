@@ -1,5 +1,5 @@
 import {webext} from '../webExtApi';
-import {loadSettings, saveSetting} from '../settings';
+import {loadSettings} from '../settings';
 
 export function bindControls(removeCookies, reload, removeOnStartup, presenter) {
     removeCookies.addEventListener('click', () => {
