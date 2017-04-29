@@ -1,3 +1,7 @@
+import {maybeOf} from 'wellmaybe';
+import {getCookies} from './cookiestorage';
+import {getWhitelistDomains, setWhitelistDomains} from "./whitelistdomainstorage";
+
 function normalizeDomain(domain) {
     domain = domain.toLowerCase();
     if (domain.startsWith('.')) {
@@ -26,26 +30,13 @@ function createListItems(cookies, whitelistDomains) {
     return Array.from(itemMap.values());
 }
 
-export class CookieWhitelistStorage {
-    constructor(cookieStorage, whitelistDomainStorage) {
-        this.cookieStorage = cookieStorage;
-        this.whitelistDomainStorage = whitelistDomainStorage;
-    }
+export const getDisplayItems = () =>
+    getCookies()
+        .then(cookies => getWhitelistDomains()
+            .then(domains => createListItems(cookies, domains)));
 
-    getItems() {
-        return Promise.all([
-            this.cookieStorage.getCookies(),
-            this.whitelistDomainStorage.getDomains()
-        ])
-            .then(([cookies, domains]) => {
-                return createListItems(cookies, domains);
-            });
-    }
-
-    setItems(items) {
-        let domains = items
-            .filter(item => item.isApplied)
-            .map(item => item.value);
-        this.whitelistDomainStorage.setDomains(domains);
-    }
-}
+export const setDisplayItems = items =>
+    setWhitelistDomains(
+        items
+        .filter(item => item.isApplied)
+        .map(item => item.value));

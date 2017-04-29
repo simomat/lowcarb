@@ -1,31 +1,10 @@
+import {maybeOf} from 'wellmaybe';
 import {webext} from "./webExtApi";
 
-export class WhitelistDomainStorage {
-    constructor() {
-        this.flush();
-    }
+export const getWhitelistDomains = () =>
+    maybeOf(webext.getStorage('whitelistDomains'))
+        .then(storage => storage.whitelistDomains)
+        .orElse(() => []);
 
-    getDomains() {
-        if (this.cache !== null) {
-            return Promise.resolve(this.cache);
-        }
-        return webext.getStorage('whitelistDomains')
-            .then(storage => {
-                let domains = storage.whitelistDomains;
-                if (domains === undefined) {
-                    domains = [];
-                }
-                this.cache = domains;
-                return this.cache;
-            });
-    }
-
-    setDomains(domains) {
-        this.cache = domains;
-        webext.setStorage({whitelistDomains: domains});
-    }
-
-    flush() {
-        this.cache = null;
-    }
-}
+export const setWhitelistDomains = domains =>
+    maybeOf(webext.setStorage({whitelistDomains: domains}));

@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const source = require("vinyl-source-stream");
 const rollup = require('rollup-stream');
 const del = require('del');
+const resolve = require('rollup-plugin-node-resolve');
 
 const dist = './dist';
 
@@ -20,6 +21,7 @@ gulp.task('buildBackground', function () {
     return rollup({
         entry: './src/background.js',
         format: 'es',
+        plugins: [resolve()],
         exports: 'none'
     })
         .pipe(source('background.js'))
@@ -30,6 +32,7 @@ gulp.task('buildOptions', function () {
     return rollup({
         entry: './src/options/options.js',
         format: 'es',
+        plugins: [resolve()],
         exports: 'none'
     })
         .pipe(source('options.js'))

@@ -1,23 +1,7 @@
 import {webext} from './webExtApi';
 import {Cookie} from './cookie';
+import {maybeOf} from 'wellmaybe';
 
-export class CookieStorage {
-    constructor() {
-        this.flush();
-    }
-
-    getCookies() {
-        if (this.cache !== null) {
-            return Promise.resolve(this.cache);
-        }
-        return webext.getAllCookies()
-            .then(cookies => {
-                this.cache = cookies.map(cookieDef => new Cookie(cookieDef));
-                return this.cache;
-            });
-    }
-
-    flush() {
-        this.cache = null;
-    }
-}
+export const getCookies =
+    maybeOf(webext.getAllCookies())
+        .then(pureCookies => pureCookies.map(cookieDef => new Cookie(cookieDef)));
