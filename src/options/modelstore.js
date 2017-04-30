@@ -1,13 +1,7 @@
-import {webext} from '../webExtApi';
-import {ListModel} from "./listmodel";
+import {sendMessage} from '../webext';
 
-export class ModelStore {
-    getModel() {
-        return webext.sendMessage({command: 'requestCookieWhitelist'})
-            .then(items => new ListModel(items));
-    }
+export const getModelItems = () =>
+    sendMessage({command: 'requestDomainCookieItems'});
 
-    persist(model) {
-        return webext.sendMessage({command: 'persistCookieWhitelist', data: model.getItems()});
-    }
-}
+export const setModelItems = modelItems =>
+    sendMessage({command: 'persistDomainCookieItems', data: modelItems});

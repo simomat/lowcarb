@@ -1,18 +1,24 @@
-import {View} from './view';
-import {Presenter} from './presenter';
-import {ModelStore} from './modelstore';
-import {bindControls} from './bindControls';
+import {sendMessage} from '../webext';
+import {ifRemoveCookiesOnStartup, setRemoveCookiesOnStartup} from '../settings';
+import {refreshListView, saveListModel} from './presenter';
 
-let view = new View(document.getElementById('whitelist'));
-let presenter = new Presenter(view, new ModelStore());
+window.addEventListener('unload', saveListModel);
 
-window.addEventListener('unload', () => presenter.persistModel());
+const getElement = id => document.getElementById(id);
 
-bindControls(
-    document.getElementById('removeCookies'),
-    document.getElementById('reload'),
-    document.getElementById('removeOnStartup'),
-    presenter
-);
+getElement('removeCookies').addEventListener('click', () =>
+    saveListModel()
+        .map(() => sendMessage({command: 'removeCookies'}))
+        .map(refreshListView));
 
-presenter.refresh();
+getElement('reload').addEventListener('click', () =>
+    saveListModel()
+        .map(refreshListView));
+
+ifRemoveCookiesOnStartup().map(() =>
+    document.getElementById('removeOnStartup').checked = true);
+
+getElement('removeOnStartup').addEventListener('change', () =>
+    setRemoveCookiesOnStartup(getElement('removeOnStartup').checked));
+
+refreshListView();

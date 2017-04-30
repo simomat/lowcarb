@@ -1,43 +1,28 @@
-import {webext} from './webExtApi';
+import {getStorage, setStorage} from './webext';
 import {maybeOf} from 'wellmaybe';
 
 const defaultSettings = {
     removeOnStartup: false
 };
 
-function ensureDefaults(settings) {
-    for (let key in defaultSettings) {
-        if (settings[key] === undefined) {
-            settings[key] = defaultSettings[key];
-        }
-    }
-    return settings;
-}
+const setValue = (key, value) => object => Object.assign(object, {[key]: value});
+const defaultDefaults = () => Object.assign({}, defaultSettings);
+const extractSettings = storage =>
+    maybeOf(storage.settings)
+        .orElse(defaultDefaults);
 
-function extractSettings(storage) {
-    if (storage === undefined) {
-        return {};
-    }
-    if (storage.settings === undefined) {
-        return {};
-    }
-    return storage.settings;
-}
-
-export const loadSettings = () =>
-    maybeOf(webext.getStorage('settings'))
-        .then(storage => ensureDefaults(extractSettings(storage)));
+const loadSettings = () =>
+    getStorage('settings')
+        .map(extractSettings);
 
 const saveSetting = (key, value) =>
     loadSettings()
-        .then(settings => {
-            settings[key] = value;
-            return webext.setStorage({settings});
-        });
+        .map(setValue(key, value))
+        .map(settings => setStorage({settings}));
 
 export const ifRemoveCookiesOnStartup = () =>
     loadSettings()
-        .then(settings => settings.removeOnStartup);
+        .map(settings => settings.removeOnStartup);
 
 export const setRemoveCookiesOnStartup = value =>
     saveSetting('removeOnStartup', value);

@@ -1,18 +1,25 @@
-import {getCookies} from './cookiestorage';
-import {CookieFilter} from './domainfilter';
-import {createDomainFromString} from './domain';
 import {getWhitelistDomains} from './whitelistdomainstorage';
+import {toRemoveParameter} from './cookie';
+import {getAllCookies, removeCookie} from './webext';
+import {toDomainMatcher} from './domain';
 
-const toDomainObjects = pureDomains => pureDomains.map(createDomainFromString);
-const getDomains = () =>
+const toDomainMatchers = domains => domains.map(toDomainMatcher);
+
+const domainNotMatchedBy = (domainExpression, domainMatchers) => !domainMatchers.some(matcher => matcher.test(domainExpression));
+const notMatchedBy = domainMatchers => cookie => domainNotMatchedBy(cookie.domain, domainMatchers);
+const filterNotMatchingCookies = cookies => domainMatchers => cookies.filter(notMatchedBy(domainMatchers));
+
+const filterCookiesNotInWhitelist = cookies =>
     getWhitelistDomains()
-        .then(toDomainObjects);
+        .map(toDomainMatchers)
+        .map(filterNotMatchingCookies(cookies));
 
-const filterCookiesThatMatch = cookies => domains => new CookieFilter(domains).filterDomainNotMatches(cookies);
-const filterMatchingDomains = cookies => getDomains().then(filterCookiesThatMatch(cookies));
-const removeTheCookies = cookies => Promise.all(cookies.map(cookie => cookie.remove()));
+const removeTheCookies = cookies => Promise.all(cookies.map(toRemoveParameter).map(removeCookie));
+
+const emtpyListToFalsy = list => list.length > 0 ? list : false;
 
 export const removeCookies = () =>
-    getCookies()
-        .then(filterMatchingDomains)
-        .then(removeTheCookies);
+    getAllCookies()
+        .map(emtpyListToFalsy)
+        .map(filterCookiesNotInWhitelist)
+        .map(removeTheCookies);

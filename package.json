@@ -22,7 +22,8 @@
     "sign": "web-ext sign -s dist/"
   },
   "dependencies": {
-    "wellmaybe": "../wellmaybe-dist"
+    "escape-string-regexp": "^1.0.5",
+    "wellmaybe": "^0.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -30,9 +31,10 @@
     "gulp": "^3.9.1",
     "hamjest": "^2.13.0",
     "mocha": "^3.2.0",
+    "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-stream": "^1.19.0",
-    "spyjest": "^1.0.3",
+    "spyjest": "^1.0.4",
     "vinyl-source-stream": "^1.1.0",
     "web-ext": "^1.9.0"
   }

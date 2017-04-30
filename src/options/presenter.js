@@ -1,52 +1,38 @@
-import {domainCompare} from "./domaincompare";
+import {domainCompare} from './domaincompare';
+import {getModelItems, setModelItems} from './modelstore';
+import {getListElements, onListItemClick, setListElements} from './view';
+import {maybeOf} from 'wellmaybe';
 
-function createListElement(item) {
+function toListElement(modelItems) {
     let element = document.createElement('li');
-    element.appendChild(document.createTextNode(item.value));
+    element.appendChild(document.createTextNode(modelItems.value));
     element.classList.add('list-group-item');
-    if (item.isApplied) {
+    if (modelItems.isApplied) {
         element.classList.add('active');
     }
     return element;
 }
 
-export class Presenter {
-    constructor(view, modelStore) {
-        this.view = view;
-        this.modelStore = modelStore;
-        this.model = null;
+const toModelItem = listElement => ({
+        value: listElement.innerText.trim(),
+        isApplied: listElement.classList.contains('active')
+});
 
-        this.view.onItemClick(element => this.itemClicked(element));
-    }
+const sortModelItem = listElements => listElements.sort((a, b) => domainCompare(a.value, b.value));
 
-    refresh() {
-        this.modelStore.getModel()
-            .then(model => {
-                this.model = model;
-                this.rebuildView();
-            });
-    }
+export const refreshListView = () =>
+    getModelItems()
+        .map(sortModelItem)
+        .map(modelItems => modelItems.map(toListElement))
+        .map(setListElements);
 
-    rebuildView() {
-        this.view.clear();
+export const saveListModel = () =>
+    getListElements()
+        .map(listElements => Array.from(listElements).map(toModelItem))
+        .map(setModelItems);
 
-        let listElements = this.model.getItems()
-            .sort((a, b) => domainCompare(a.value, b.value))
-            .map(createListElement);
-        this.view.setListItems(listElements);
-    }
+const ifElementIsListItem = element => maybeOf(element.classList.contains('list-group-item'));
 
-    itemClicked(element) {
-        if (!element.classList.contains('list-group-item')) {
-            return;
-        }
-        element.classList.toggle('active');
-        this.model.toggleItem(element.innerText.trim());
-    }
-
-    persistModel() {
-        if (this.model !== null) {
-            return this.modelStore.persist(this.model);
-        }
-    }
-}
+onListItemClick(element =>
+    ifElementIsListItem(element)
+        .map(() => element.classList.toggle('active')));

@@ -1,17 +1,11 @@
-// import {CommandListener} from "./commandlistener";
-// import {getDisplayItems, setDisplayItems} from "./cookiewhiteliststorage";
-
 import {ifRemoveCookiesOnStartup} from './settings';
 import {removeCookies} from './removecookies';
+import {onPersistDomainCookieItems, onRemoveCookies, onRequestDomainCookieItems} from './commandlistener';
+import {getDisplayItems, setDisplayItems} from './displayitems';
 
-//
-// const commandListener = new CommandListener();
-//
-// commandListener.onPersistCookieWhitelist(items => setDisplayItems(items));
-// commandListener.onRequestCookieWhitelist(() => getDisplayItems());
-// commandListener.onRemoveCookies(removeCookies);
+onPersistDomainCookieItems(setDisplayItems);
+onRequestDomainCookieItems(getDisplayItems);
+onRemoveCookies(removeCookies);
 
 ifRemoveCookiesOnStartup()
-    .then(removeCookies);
-
-
+    .map(removeCookies);

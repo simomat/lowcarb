@@ -1,62 +1,47 @@
-import {assertThat, is} from 'hamjest';
-import {spy, wasCalledWith} from 'spyjest';
-import {Cookie} from '../src/cookie';
+import {assertThat, is, equalTo} from 'hamjest';
 
-import {uninstallGlobalMocks, installGlobalMock} from './testutils';
+import {toRemoveParameter, urlOfCookie} from '../src/cookie';
 
-describe("Cookie", function () {
+describe("cookie", function () {
 
-    afterEach(uninstallGlobalMocks);
+    it("given a cookie with defined url, urlOfCookie() returns the url", function () {
+        let cookie = {url: 'foo', domain: 'bar'};
 
-    it("builds the right cookie from cookie def with given url", function () {
+        let url = urlOfCookie(cookie);
 
-        let cookie = new Cookie({url: 'foo', domain: 'bar'});
-
-        assertThat(cookie.url, is('foo'));
+        assertThat(url, is('foo'));
     });
 
-    it("builds the right cookie from cookie def when url is not given", function () {
-        let cookie = new Cookie({
+    it("given a not secure cookie without url but properties, urlOfCookie() returns the http url built from properties", function () {
+        let cookie = {
             domain: 'example.com',
             secure: false,
             path: '/baz'
-        });
+        };
 
-        assertThat(cookie.url, is('http://example.com/baz'));
+        let url = urlOfCookie(cookie);
+
+        assertThat(url, is('http://example.com/baz'));
     });
 
-    it("builds the right cookie from cookie def when url is not given and host starts with dot", function () {
-        let cookie = new Cookie({
+    it("given a secure cookie without url but properties, urlOfCookie() returns the https url built from properties", function () {
+        let cookie = {
             domain: '.example.com',
             secure: true,
             path: '/'
-        });
+        };
 
-        assertThat(cookie.url, is('https://example.com/'));
+        let url = urlOfCookie(cookie);
+
+        assertThat(url, is('https://example.com/'));
     });
 
-    it("has domain equal to cooki def's domain", function () {
-        let domain = 'example.com';
-        let cookie = new Cookie({domain: domain});
+    it("given a not secure cookie without url but properties, toRemoveParameter() returns the right remove parameter", function () {
+        let cookie = {url: 'http://example.com/fizz', name: 'sck', storeId: '5'};
 
-        assertThat(cookie.domain, is(domain));
+        let removeParameter = toRemoveParameter(cookie);
+
+        assertThat(removeParameter, equalTo(cookie));
     });
 
-    it("remove calls cookiesRepo with right parameter", function () {
-        let remove = spy(_ => _);
-        installGlobalMock('browser.cookies.remove', remove);
-        let domain = 'example.com';
-        let cookie = new Cookie({domain: domain, path: '/', name: 'sck', storeId: '5'});
-
-        cookie.remove();
-
-        assertThat(remove, wasCalledWith(objectWithUrlOf(cookie)));
-    });
-
-
-});
-
-let objectWithUrlOf = cookie => ({
-    matches: obj => obj.url === cookie.url,
-    describeTo: desc => desc.append(`object with url ${cookie.url}`)
 });

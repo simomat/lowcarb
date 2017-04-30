@@ -1,52 +1,6 @@
-class IsGenerator {
-    constructor(innerMatcher) {
-        this.inner = innerMatcher;
-        this.isGenerator = this.innerMatches = this.generatorValues = null;
-    }
-
-    matches(object) {
-        this.isGenerator = typeof object.next === 'function';
-        this.generatorValues = Array.from(object);
-        this.innerMatches = this.inner.matches(this.generatorValues );
-        return this.isGenerator && this.innerMatches;
-    }
-
-    describeTo(description) {
-        description.append('a generator with ');
-        this.inner.describeTo(description);
-    }
-
-    describeMismatch(actual, description) {
-        if (!this.isGenerator) {
-            description.append('input was not a generator');
-        }
-        if (!this.innerMatches) {
-            this.inner.describeMismatch(this.generatorValues, description);
-        }
-    }
-}
-
-const isGeneratorThat = inner =>
-    new IsGenerator(inner);
-
-const whenResolved = promise => ({
-    then: resolveHandler => ({
-        and: done => promise
-            .then(resolveHandler)
-            .then(() => done())
-            .catch(e => done(e))
-    })
-});
-
 const createMock = (name, mock) => {
-    let composeObject = (inner, name) => {
-        let result = {};
-        result[name] = inner;
-        return result;
-    };
-
-    let createProxyChainToMock = nameParts =>
-        nameParts.reduceRight(composeObject, mock);
+    const composeObject = (inner, name) => ({[name]: inner});
+    const createProxyChainToMock = nameParts => nameParts.reduceRight(composeObject, mock);
 
     let installOnLastDefined = (currentParent, nameChain) => {
         let [name, ...restNames] = nameChain;
@@ -87,7 +41,5 @@ const uninstallGlobalMocks = () => {
 export {
     installGlobalMock,
     uninstallGlobalMocks,
-    createMock,
-    whenResolved,
-    isGeneratorThat
+    createMock
 }

@@ -1,10 +1,8 @@
-import {maybeOf} from 'wellmaybe';
-import {webext} from "./webExtApi";
+import {getStorage, setStorage} from './webext';
 
 export const getWhitelistDomains = () =>
-    maybeOf(webext.getStorage('whitelistDomains'))
-        .then(storage => storage.whitelistDomains)
+    getStorage('whitelistDomains')
+        .map(storage => storage.whitelistDomains)
         .orElse(() => []);
 
-export const setWhitelistDomains = domains =>
-    maybeOf(webext.setStorage({whitelistDomains: domains}));
+export const setWhitelistDomains = domains => setStorage({whitelistDomains: domains});

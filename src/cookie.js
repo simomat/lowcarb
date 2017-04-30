@@ -1,41 +1,21 @@
-import {webext} from './webExtApi';
+import {normalizeDomain} from './domain';
 
-export class Cookie {
-    constructor(cookieDef) {
-        this.cookieDef = cookieDef;
+const getProtocol = cookie => {
+    if (cookie.secure) {
+        return 'https://';
     }
+    return 'http://';
+};
 
-    remove() {
-        return webext.removeCookie(this.toRemoveParameter());
+export const toRemoveParameter = cookie => ({
+    url: urlOfCookie(cookie),
+    storeId: cookie.storeId,
+    name: cookie.name
+});
+
+export const urlOfCookie = cookie => {
+    if (cookie.url) {
+        return cookie.url;
     }
-
-    get url() {
-        if ('url' in this.cookieDef) {
-            return this.cookieDef.url;
-        }
-
-        let url = 'http://';
-        if (this.cookieDef.secure) {
-            url = 'https://'
-        }
-        if (this.cookieDef.domain.startsWith('.')) {
-            url += this.cookieDef.domain.substr(1);
-        } else {
-            url += this.cookieDef.domain;
-        }
-        url += this.cookieDef.path;
-        return url;
-    }
-
-    get domain() {
-        return this.cookieDef.domain;
-    }
-
-    toRemoveParameter() {
-        return {
-            "url": this.url,
-            "storeId": this.cookieDef.storeId,
-            "name": this.cookieDef.name
-        };
-    }
-}
+    return getProtocol(cookie) + normalizeDomain(cookie.domain) + cookie.path;
+};

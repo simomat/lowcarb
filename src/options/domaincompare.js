@@ -1,4 +1,3 @@
-
 function* reverseIterateParts(domain) {
     let currentEnd = domain.length;
     for (let index = currentEnd-1; index >= -1; index--) {

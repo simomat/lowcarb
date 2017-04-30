@@ -1,12 +1,11 @@
-export class Domain {
-    constructor(domain) {
-        this.domain = domain;
-        this.pattern = new RegExp('^\.?' + this.domain + '$', 'i');
-    }
+import regexEscape from 'escape-string-regexp';
 
-    matches(domainExpression) {
-        return this.pattern.test(domainExpression);
+export const normalizeDomain = domain => {
+    domain = domain.toLowerCase();
+    if (domain.startsWith('.')) {
+        return domain.substr(1);
     }
-}
+    return domain;
+};
 
-export const createDomainFromString = domainString => new Domain(domainString);
+export const toDomainMatcher = domain => new RegExp('^\.?' + regexEscape(domain) + '$', 'i');

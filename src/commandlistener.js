@@ -1,46 +1,22 @@
-import {webext} from './webExtApi';
+import {maybeOf} from 'wellmaybe';
+import {addMessageListener} from './webext';
 
-export class CommandListener {
-    constructor() {
-        let nothing = () => undefined;
-        this.removeCookies = nothing;
-        this.requestCookieWhitelist = nothing;
-        this.persistCookieWhitelist = nothing;
-        this.refresh = nothing;
+const handlers = {};
+const getHandler = command => maybeOf(handlers[command]);
+const setHandler = command => handler => handlers[command] = handler;
 
-        webext.addMessageListener(message => this.handleMessage(message));
-    }
+const applyHandler = message => handler => handler(maybeOf(message.data));
 
-    handleMessage(message) {
-        if (message.command === 'removeCookies') {
-            return this.removeCookies();
-        }
-        if (message.command === 'requestCookieWhitelist') {
-            return this.requestCookieWhitelist();
-        }
-        if (message.command === 'persistCookieWhitelist') {
-            return this.persistCookieWhitelist(message.data);
-        }
-        if (message.command === 'refresh') {
-            return this.refresh();
-        } else {
-            console.log('handleMessage: unknown message: ' + JSON.stringify(message))
-        }
-    }
+const handleMessage = message =>
+    getHandler(message.command)
+        .orElse(() => console.log('handleMessage: unknown message: ' + JSON.stringify(message)))
+        .map(applyHandler(message))
+        .asPromise();
 
-    onRemoveCookies(handler) {
-        this.removeCookies = handler;
-    }
+addMessageListener(handleMessage);
 
-    onRequestCookieWhitelist(handler) {
-        this.requestCookieWhitelist = handler;
-    }
+export const onRemoveCookies = setHandler('removeCookies');
+export const onRequestDomainCookieItems = setHandler('requestDomainCookieItems');
+export const onPersistDomainCookieItems = setHandler('persistDomainCookieItems');
 
-    onPersistCookieWhitelist(handler) {
-        this.persistCookieWhitelist = handler;
-    }
-
-    onRefresh(handler) {
-        this.refresh = handler;
-    }
-}
+export const test_handleMessage = handleMessage;

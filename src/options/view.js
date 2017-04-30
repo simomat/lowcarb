@@ -1,23 +1,29 @@
+import {maybeOf} from 'wellmaybe';
 
-export class View {
-    constructor(rootElem) {
-        this.rootElem = rootElem;
+const getRootElem = () => maybeOf(document.getElementById('whitelist'));
+const clearListItems = rootElem => {
+    while (rootElem.firstChild) {
+        rootElem.removeChild(rootElem.firstChild);
     }
+    return rootElem;
+};
 
-    clear() {
-        while (this.rootElem.firstChild) {
-            this.rootElem.removeChild(this.rootElem.firstChild);
-        }
+const appendListItems = listItems => rootElem => {
+    for (let item of listItems) {
+        rootElem.appendChild(item);
     }
+    return true;
+};
 
-    onItemClick(handler) {
-        this.rootElem.addEventListener('click', event => handler(event.target));
-    }
+export const getListElements = () =>
+    getRootElem()
+        .map(elem => elem.children);
 
-    setListItems(items) {
-        for (let item of items) {
-            this.rootElem.appendChild(item);
-        }
-    }
+export const setListElements = listItems =>
+    getRootElem()
+        .map(clearListItems)
+        .map(appendListItems(listItems));
 
-}
+export const onListItemClick = handler =>
+    getRootElem()
+        .map(rootElem => rootElem.addEventListener('click', event => handler(event.target)));
