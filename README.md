@@ -2,6 +2,8 @@
 
 A Firefox Plugin to remove unwanted cookies but keeps your whitelisted cookies. 
 
+[![Build Status](https://travis-ci.org/simomat/lowcarb.svg?branch=master)](https://travis-ci.org/simomat/lowcarb) [![devDependency Status](https://david-dm.org/simomat/firefox-addon-skeleton/dev-status.svg)](https://david-dm.org/simomat/firefox-addon-skeleton?type=dev)
+
 [Get it from mozilla](https://addons.mozilla.org/en-US/firefox/addon/lowcarb/)
 
 Use lowcarb if you care about privacy but also want to be logged in specific sites or keep your site settings.
