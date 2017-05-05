@@ -7,7 +7,12 @@ const commonjs = require('rollup-plugin-commonjs');
 
 const dist = './dist';
 
-let rollupCache; // TODO: does this work?
+const scripts = [
+    {taskName: 'buildBackground', entry: './src/background.js',      source: 'background.js', dest: dist},
+    {taskName: 'buildOptions',    entry: './src/options/options.js', source: 'options.js',    dest: dist + '/options'}
+];
+
+let rollupCache;
 
 gulp.task('default', ['build']);
 
@@ -17,27 +22,13 @@ gulp.task('clean', function () {
 
 gulp.task("copyStaticFiles", function () {
     return gulp.src(['./extension/**', '!./extension/icons/scale-169.png'])
-        .pipe(gulp.dest("./dist"));
-});
-
-gulp.task('buildBackground', function () {
-    return rollup({
-        entry: './src/background.js',
-        format: 'es',
-        plugins: [
-            resolve()
-            ,commonjs()
-        ],
-        cache: rollupCache,
-        exports: 'none'
-    })
-        .pipe(source('background.js'))
         .pipe(gulp.dest(dist));
 });
 
-gulp.task('buildOptions', function () {
-    return rollup({
-        entry: './src/options/options.js',
+const scriptTasks = scripts.map(script => ({
+    taskName: script.taskName,
+    opCreator: () => rollup({
+        entry: script.entry,
         format: 'es',
         plugins: [
             resolve()
@@ -46,8 +37,14 @@ gulp.task('buildOptions', function () {
         cache: rollupCache,
         exports: 'none'
     })
-        .pipe(source('options.js'))
-        .pipe(gulp.dest(dist + '/options'));
-});
+        .pipe(source(script.source))
+        .pipe(gulp.dest(script.dest))
+}));
 
-gulp.task('build', ['copyStaticFiles', 'buildBackground', 'buildOptions']);
+for (let scriptTask of scriptTasks) {
+    gulp.task(scriptTask.taskName, scriptTask.opCreator);
+}
+
+const scriptTaskNames = () => scripts.map(s => s.taskName);
+
+gulp.task('build', ['copyStaticFiles'].concat(scriptTaskNames()));
