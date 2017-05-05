@@ -14,12 +14,15 @@ const filterCookiesNotInWhitelist = cookies =>
         .map(toDomainMatchers)
         .map(filterNotMatchingCookies(cookies));
 
-const removeTheCookies = cookies => Promise.all(cookies.map(toRemoveParameter).map(removeCookie));
+const removeTheCookies = cookies => Promise.all(
+    cookies
+        .map(toRemoveParameter)
+        .map(removeCookie));
 
-const emtpyListToFalsy = list => list.length > 0 ? list : false;
+const ifCookiesPresent = list => list.length > 0 ? list : false;
 
 export const removeCookies = () =>
     getAllCookies()
-        .map(emtpyListToFalsy)
+        .map(ifCookiesPresent)
         .map(filterCookiesNotInWhitelist)
         .map(removeTheCookies);

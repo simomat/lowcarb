@@ -8,7 +8,9 @@ let apiObjects = [
     'browser.runtime.onMessage.removeListener',
     'browser.storage.local.clear',
     'browser.storage.local.set',
-    'browser.storage.local.get'
+    'browser.storage.local.get',
+    'browser.browserAction.onClicked.addListener',
+    'browser.runtime.openOptionsPage'
 ];
 
 for (let apiObject of apiObjects) {
