@@ -3,7 +3,7 @@
   "description": "Remove unwanted cookies",
   "homepage_url": "https://github.com/simomat/lowcarb",
   "author": "Matthias Simon",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "manifest_version": 2,
   "permissions": ["cookies", "<all_urls>", "storage"],
   "applications": {
