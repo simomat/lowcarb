@@ -1,4 +1,4 @@
-import {createMock} from './testutils';
+import {createMock} from './globalMock';
 
 let apiObjects = [
     'browser.cookies.remove',

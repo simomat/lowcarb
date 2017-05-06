@@ -1,7 +1,7 @@
 import {assertThat, is, FeatureMatcher, containsInAnyOrder} from 'hamjest';
 import {spy, wasCalled, wasCalledWith} from 'spyjest';
 import {maybeOf} from 'wellmaybe';
-import {installGlobalMock, uninstallGlobalMocks} from './testutils';
+import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 import {getDisplayItems, setDisplayItems} from '../src/displayitems';
 
 describe("displayitems", function () {

@@ -1,6 +1,6 @@
 import {assertThat, is} from 'hamjest';
 import {spy, wasCalled, wasCalledWith} from 'spyjest';
-import {installGlobalMock, uninstallGlobalMocks} from './testutils';
+import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 
 import {ifRemoveCookiesOnStartup, setRemoveCookiesOnStartup} from '../src/settings';
 
