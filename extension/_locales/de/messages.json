@@ -1,0 +1,20 @@
+{
+  "extensionDescription": {
+    "message": "Beseitigt unerwünschte Cookies"
+  },
+  "actionTitle": {
+    "message": "Cookies Löschen"
+  },
+  "saveAndRemoveCookies": {
+    "message": "Übernehmen"
+  },
+  "selectCookies": {
+    "message": "Wähle zu behaltende Cookies"
+  },
+  "refresh": {
+    "message": "Neu Laden"
+  },
+  "removeOnStartup": {
+    "message": "Cookies beim Start Löschen"
+  }
+}

@@ -10,7 +10,8 @@ let apiObjects = [
     'browser.storage.local.set',
     'browser.storage.local.get',
     'browser.browserAction.onClicked.addListener',
-    'browser.runtime.openOptionsPage'
+    'browser.runtime.openOptionsPage',
+    'browser.i18n.getMessage'
 ];
 
 for (let apiObject of apiObjects) {

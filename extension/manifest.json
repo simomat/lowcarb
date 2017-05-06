@@ -1,11 +1,12 @@
 {
   "name": "lowcarb",
-  "description": "Remove unwanted cookies",
+  "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/simomat/lowcarb",
   "author": "Matthias Simon",
   "version": "1.0.6",
   "manifest_version": 2,
   "permissions": ["cookies", "<all_urls>", "storage"],
+  "default_locale": "en",
   "applications": {
     "gecko": {
       "id": "lowcab@infonautika.de",
@@ -24,7 +25,7 @@
       "32": "icons/scale-32.png",
       "64": "icons/scale-64.png"
     },
-    "default_title": "Remove Cookies"
+    "default_title": "__MSG_actionTitle__"
   },
 
   "icons": {

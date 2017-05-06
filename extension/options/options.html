@@ -11,10 +11,13 @@
         #whitelist {
             overflow: hidden;
             overflow-y: scroll;
-            height: 15em;
+            height: 17em;
         }
         .list-group-item {
             cursor: pointer;
+        }
+        .restrictWidth {
+            max-width: 32em
         }
     </style>
 
@@ -22,19 +25,19 @@
 <body>
 
 <div class="container">
-    <div style="max-width: 30em">
+    <div class="restrictWidth">
 
-        <h3>Select which cookies to keep</h3>
+        <h3 data-m="selectCookies">Select which cookies to keep</h3>
 
         <ul id="whitelist" class="list-group">
         </ul>
 
         <div class="btn-group btn-group-justified" role="group">
             <div class="btn-group" role="group">
-                <button id="removeCookies" class="btn btn-default">Save and Remove Cookies</button>
+                <button id="removeCookies" class="btn btn-primary" data-m="saveAndRemoveCookies">Save and Remove Cookies</button>
             </div>
             <div class="btn-group" role="group">
-                <button id="reload" class="btn btn-default">Refresh</button>
+                <button id="reload" class="btn btn-default" data-m="refresh">Refresh</button>
             </div>
         </div>
 
@@ -42,7 +45,7 @@
             <div class="checkbox">
                 <label>
                     <input id="removeOnStartup" type="checkbox">
-                    Remove cookies on startup
+                    <span data-m="removeOnStartup">Remove cookies on startup</span>
                 </label>
             </div>
         </div>

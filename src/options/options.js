@@ -1,6 +1,9 @@
 import {sendMessage} from '../webext';
 import {ifRemoveCookiesOnStartup, setRemoveCookiesOnStartup} from '../settings';
 import {refreshListView, saveListModel} from './presenter';
+import {translateContent} from '../i18n';
+
+translateContent();
 
 window.addEventListener('unload', saveListModel);
 
