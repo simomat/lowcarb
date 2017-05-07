@@ -1,27 +1,21 @@
-import {sendMessage} from '../webext';
-import {ifRemoveCookiesOnStartup, setRemoveCookiesOnStartup} from '../settings';
+import {ifRemoveCookiesOnStartup} from '../settings';
 import {refreshListView, saveListModel} from './presenter';
 import {translateContent} from '../i18n';
+import {getElement} from '../utils';
+import {onChangeRemoveOnStartup, onReload, onRemoveCookies} from './actions';
+
+const addElementEventListener = (elementId, eventName, listener) =>
+    getElement(elementId).addEventListener(eventName, listener);
 
 translateContent();
 
-window.addEventListener('unload', saveListModel);
+ifRemoveCookiesOnStartup()
+    .map(() => getElement('removeOnStartup').checked = true);
 
-const getElement = id => document.getElementById(id);
-
-getElement('removeCookies').addEventListener('click', () =>
-    saveListModel()
-        .map(() => sendMessage({command: 'removeCookies'}))
-        .map(refreshListView));
-
-getElement('reload').addEventListener('click', () =>
-    saveListModel()
-        .map(refreshListView));
-
-ifRemoveCookiesOnStartup().map(() =>
-    document.getElementById('removeOnStartup').checked = true);
-
-getElement('removeOnStartup').addEventListener('change', () =>
-    setRemoveCookiesOnStartup(getElement('removeOnStartup').checked));
+addElementEventListener('removeCookies', 'click', onRemoveCookies);
+addElementEventListener('reload', 'click', onReload);
+addElementEventListener('removeOnStartup', 'change', onChangeRemoveOnStartup);
 
 refreshListView();
+
+window.addEventListener('unload', saveListModel);

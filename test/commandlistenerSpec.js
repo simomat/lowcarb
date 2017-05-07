@@ -2,13 +2,13 @@ import {assertThat, is, FeatureMatcher} from 'hamjest';
 import {spy, wasCalled, wasCalledWith} from 'spyjest';
 import {maybeOf} from 'wellmaybe';
 
-import {onPersistDomainCookieItems, onRemoveCookies, onRequestDomainCookieItems, test_getHandlers, test_handleMessage} from '../src/commandlistener';
+import {onCommandPersistDomainCookieItems, onCommandRemoveCookies, onCommandRequestDomainCookieItems, test_getHandlers, test_handleMessage} from '../src/commandlistener';
 
 describe("commandlistener", function () {
 
-    it("handler for onRemoveCookies is called", function () {
+    it("handler for onCommandRemoveCookies is called", function () {
         let handler = spy(() => 1);
-        onRemoveCookies(handler);
+        onCommandRemoveCookies(handler);
         let message = {command: 'removeCookies'};
 
         test_handleMessage(message);
@@ -16,9 +16,9 @@ describe("commandlistener", function () {
         assertThat(handler, wasCalled().times(1));
     });
 
-    it("handler for onRequestDomainCookieItems is called", function () {
+    it("handler for onCommandRequestDomainCookieItems is called", function () {
         let handler = spy();
-        onRequestDomainCookieItems(handler);
+        onCommandRequestDomainCookieItems(handler);
         let message = {command: 'requestDomainCookieItems', data: 1};
 
         test_handleMessage(message);
@@ -26,9 +26,9 @@ describe("commandlistener", function () {
         assertThat(handler, wasCalled().times(1));
     });
 
-    it("handler for onPersistDomainCookieItems is called", function () {
+    it("handler for onCommandPersistDomainCookieItems is called", function () {
         let handler = spy();
-        onPersistDomainCookieItems(handler);
+        onCommandPersistDomainCookieItems(handler);
         let message = {command: 'persistDomainCookieItems', data: 1};
 
         test_handleMessage(message);
@@ -38,7 +38,7 @@ describe("commandlistener", function () {
 
     it("result of handler is returned by handleMessage as Promise", function (done) {
         let handler = () => 5;
-        onRequestDomainCookieItems(handler);
+        onCommandRequestDomainCookieItems(handler);
         let message = {command: 'requestDomainCookieItems'};
 
         let result = test_handleMessage(message);

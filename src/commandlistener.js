@@ -15,8 +15,8 @@ const handleMessage = message =>
 
 addMessageListener(handleMessage);
 
-export const onRemoveCookies = setHandler('removeCookies');
-export const onRequestDomainCookieItems = setHandler('requestDomainCookieItems');
-export const onPersistDomainCookieItems = setHandler('persistDomainCookieItems');
+export const onCommandRemoveCookies = setHandler('removeCookies');
+export const onCommandRequestDomainCookieItems = setHandler('requestDomainCookieItems');
+export const onCommandPersistDomainCookieItems = setHandler('persistDomainCookieItems');
 
 export const test_handleMessage = handleMessage;

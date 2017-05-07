@@ -1,6 +1,7 @@
 import {maybeOf} from 'wellmaybe';
+import {getElement, returnTrue} from '../utils';
 
-const getRootElem = () => maybeOf(document.getElementById('whitelist'));
+const getRootElem = () => maybeOf(getElement('whitelist'));
 const clearListItems = rootElem => {
     while (rootElem.firstChild) {
         rootElem.removeChild(rootElem.firstChild);
@@ -8,12 +9,8 @@ const clearListItems = rootElem => {
     return rootElem;
 };
 
-const appendListItems = listItems => rootElem => {
-    for (let item of listItems) {
-        rootElem.appendChild(item);
-    }
-    return true;
-};
+const appendListItems = listItems => rootElem =>
+    returnTrue(listItems.forEach(item => rootElem.appendChild(item)));
 
 export const getListElements = () =>
     getRootElem()
