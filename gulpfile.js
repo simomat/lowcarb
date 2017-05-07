@@ -4,6 +4,8 @@ const rollup = require('rollup-stream');
 const del = require('del');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
+const rename = require('gulp-rename');
+const uncss = require('gulp-uncss');
 
 const dist = './dist';
 
@@ -21,8 +23,21 @@ gulp.task('clean', function () {
 });
 
 gulp.task("copyStaticFiles", function () {
-    return gulp.src(['./extension/**', '!./extension/icons/scale-169.png'])
+    return gulp.src([
+            './extension/**',
+            '!./extension/icons/scale-169.png',
+            '!./extension/options/bootstrap.min.css'])
         .pipe(gulp.dest(dist));
+});
+
+gulp.task("reduceCss", function () {
+    return gulp.src('./extension/options/bootstrap.min.css')
+        .pipe(uncss({
+            html: ['./extension/options/options.html'],
+            ignore: ['.list-group-item', '.list-group-item.active']
+        }))
+        .pipe(rename('bootstrap.min.reduced.css'))
+        .pipe(gulp.dest(dist + '/options'));
 });
 
 const scriptTasks = scripts.map(script => ({
@@ -47,4 +62,4 @@ for (let scriptTask of scriptTasks) {
 
 const scriptTaskNames = () => scripts.map(s => s.taskName);
 
-gulp.task('build', ['copyStaticFiles'].concat(scriptTaskNames()));
+gulp.task('build', ['copyStaticFiles', 'reduceCss'].concat(scriptTaskNames()));
