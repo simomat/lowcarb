@@ -20,7 +20,6 @@
             max-width: 32em
         }
         .list-group {
-            /*margin-bottom: 1rem;*/
             border: 1px solid #e6e6e6;
             border-radius: 0;
             background: #fefefe;
@@ -38,13 +37,13 @@
         .list-group-item.active {
             color: #fefefe;
             background-color: #1779ba;
-            border-color: #1779ba;
+            border-color: #1e7dbc;
         }
         .list-group-item:hover, .list-group-item:focus {
             background-color: #e6e6e6;
         }
         .list-group-item:hover.active, .list-group-item:focus.active {
-            background-color: #1779ba;
+            background-color: #196fa8;
         }
     </style>
 
@@ -60,7 +59,7 @@
         </ul>
 
         <div class="expanded button-group" role="group">
-            <button id="removeCookies" class="button primary" data-m="saveAndRemoveCookies">Save and Remove Cookies</button>
+            <button id="removeCookies" class="button primary" data-m="saveAndRemoveCookies">Apply</button>
             <button id="reload" class="button secondary" data-m="refresh">Refresh</button>
         </div>
 
@@ -70,7 +69,7 @@
             <div class="small-3 columns">
                 <span class="switch">
                     <input class="switch-input" id="removeOnStartup" type="checkbox">
-                    <label class="switch-paddle" for="removeOnStartup" />
+                    <label class="switch-paddle" for="removeOnStartup"></label>
                 </span>
             </div>
             <div class="small-8 columns">
