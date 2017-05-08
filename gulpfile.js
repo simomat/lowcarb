@@ -18,40 +18,39 @@ let rollupCache;
 
 gulp.task('default', ['build']);
 
-gulp.task('clean', function () {
-    return del([dist + '/**/*',  dist + '/.*', './web-ext-artifacts/']);
-});
+gulp.task('clean', () =>
+    del([dist + '/**/*',  dist + '/.*', './web-ext-artifacts/']));
 
-gulp.task("copyStaticFiles", function () {
-    return gulp.src([
-            './extension/**',
-            '!./extension/icons/scale-169.png',
-            '!./extension/options/bootstrap.min.css'])
-        .pipe(gulp.dest(dist));
-});
+gulp.task('copyStaticFiles', () =>
+    gulp.src([
+        './extension/**',
+        '!./extension/icons/scale-169.png',
+        '!./extension/options/foundation.min.css'])
+    .pipe(gulp.dest(dist)));
 
-gulp.task("reduceCss", function () {
-    return gulp.src('./extension/options/bootstrap.min.css')
+
+gulp.task('reduceCss', () =>
+    gulp.src('./extension/options/foundation.min.css')
         .pipe(uncss({
-            html: ['./extension/options/options.html'],
-            ignore: ['.list-group-item', '.list-group-item.active']
+            html: ['./extension/options/options.html']
         }))
-        .pipe(rename('bootstrap.min.reduced.css'))
-        .pipe(gulp.dest(dist + '/options'));
-});
+        .pipe(rename('foundation.min.reduced.css'))
+        .pipe(gulp.dest(dist + '/options')));
+
 
 const scriptTasks = scripts.map(script => ({
     taskName: script.taskName,
     opCreator: () => rollup({
-        entry: script.entry,
-        format: 'es',
-        plugins: [
-            resolve()
-            ,commonjs()
-        ],
-        cache: rollupCache,
-        exports: 'none'
-    })
+            entry: script.entry,
+            format: 'es',
+            plugins: [
+                resolve()
+                ,commonjs()
+            ],
+            cache: rollupCache,
+            exports: 'none'
+        })
+        .on('unifiedcache', unifiedCache => rollupCache = unifiedCache)
         .pipe(source(script.source))
         .pipe(gulp.dest(script.dest))
 }));
@@ -60,6 +59,4 @@ for (let scriptTask of scriptTasks) {
     gulp.task(scriptTask.taskName, scriptTask.opCreator);
 }
 
-const scriptTaskNames = () => scripts.map(s => s.taskName);
-
-gulp.task('build', ['copyStaticFiles', 'reduceCss'].concat(scriptTaskNames()));
+gulp.task('build', ['copyStaticFiles', 'reduceCss'].concat(scripts.map(s => s.taskName)));

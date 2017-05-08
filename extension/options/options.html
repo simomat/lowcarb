@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="bootstrap.min.reduced.css" rel="stylesheet">
+    <link href="foundation.min.reduced.css" rel="stylesheet">
 
     <style>
         #whitelist {
@@ -13,40 +13,65 @@
             overflow-y: scroll;
             height: 17em;
         }
-        .list-group-item {
-            cursor: pointer;
-        }
         .restrictWidth {
             max-width: 32em
+        }
+        .list-group {
+            /*margin-bottom: 1rem;*/
+            border: 1px solid #e6e6e6;
+            border-radius: 0;
+            background: #fefefe;
+            box-shadow: none;
+            overflow: hidden;
+            color: #0a0a0a;
+            margin-left: 0px;
+        }
+        .list-group-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #e6e6e6;
+            font-family: sans-serif;
+            cursor: pointer;
+        }
+        .list-group-item.active {
+            color: #fefefe;
+            background-color: #1779ba;
+            border-color: #1779ba;
+        }
+        .list-group-item:hover, .list-group-item:focus {
+            background-color: #e6e6e6;
+        }
+        .list-group-item:hover.active, .list-group-item:focus.active {
+            background-color: #1779ba;
         }
     </style>
 
 </head>
 <body>
 
-<div class="container">
-    <div class="restrictWidth">
+<div>
+    <div class="restrictWidth callout">
 
-        <h3 data-m="selectCookies">Select which cookies to keep</h3>
+        <h5 data-m="selectCookies">Select which cookies to keep</h5>
 
         <ul id="whitelist" class="list-group">
         </ul>
 
-        <div class="btn-group btn-group-justified" role="group">
-            <div class="btn-group" role="group">
-                <button id="removeCookies" class="btn btn-primary" data-m="saveAndRemoveCookies">Save and Remove Cookies</button>
-            </div>
-            <div class="btn-group" role="group">
-                <button id="reload" class="btn btn-default" data-m="refresh">Refresh</button>
-            </div>
+        <div class="expanded button-group" role="group">
+            <button id="removeCookies" class="button primary" data-m="saveAndRemoveCookies">Save and Remove Cookies</button>
+            <button id="reload" class="button secondary" data-m="refresh">Refresh</button>
         </div>
 
-        <div>
-            <div class="checkbox">
-                <label>
-                    <input id="removeOnStartup" type="checkbox">
-                    <span data-m="removeOnStartup">Remove cookies on startup</span>
-                </label>
+        <hr>
+
+        <div class="row">
+            <div class="small-2 columns">
+                <span class="switch">
+                    <input class="switch-input" id="removeOnStartup" type="checkbox">
+                    <label class="switch-paddle" for="removeOnStartup" />
+                </span>
+            </div>
+            <div class="small-10 columns">
+                <span data-m="removeOnStartup">Remove cookies on startup</span>
             </div>
         </div>
 
