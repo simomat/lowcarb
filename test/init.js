@@ -11,7 +11,9 @@ let apiObjects = [
     'browser.storage.local.get',
     'browser.browserAction.onClicked.addListener',
     'browser.runtime.openOptionsPage',
-    'browser.i18n.getMessage'
+    'browser.i18n.getMessage',
+    'document.getElementById',
+    'document.createElement'
 ];
 
 for (let apiObject of apiObjects) {

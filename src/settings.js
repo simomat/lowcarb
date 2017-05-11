@@ -6,10 +6,10 @@ const defaultSettings = {
 };
 
 const setValue = (key, value) => object => Object.assign(object, {[key]: value});
-const defaultDefaults = () => Object.assign({}, defaultSettings);
+const getDefaultSettings = () => Object.assign({}, defaultSettings);
 const extractSettings = storage =>
     maybeOf(storage.settings)
-        .orElse(defaultDefaults);
+        .orElse(getDefaultSettings);
 
 const loadSettings = () =>
     getStorage('settings')

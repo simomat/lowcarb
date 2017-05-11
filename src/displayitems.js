@@ -2,8 +2,7 @@ import {getWhitelistDomains, setWhitelistDomains} from './whitelistdomainstorage
 import {normalizeDomain} from './domain';
 import {getAllCookies} from './webext';
 
-const toListItem = isApplied =>
-    domain => ({value: domain, isApplied: isApplied});
+const toListItem = isApplied => value => ({value, isApplied});
 
 const addToMap = (map, item) => map.set(item.value, item);
 

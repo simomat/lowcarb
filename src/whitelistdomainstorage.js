@@ -5,4 +5,4 @@ export const getWhitelistDomains = () =>
         .map(storage => storage.whitelistDomains)
         .orElse(() => []);
 
-export const setWhitelistDomains = domains => setStorage({whitelistDomains: domains});
+export const setWhitelistDomains = whitelistDomains => setStorage({whitelistDomains});
