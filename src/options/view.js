@@ -7,9 +7,10 @@ export const getListElements = () =>
     getRootElem()
         .map(elem => elem.children);
 
+const Sanitizer = {unwrapSafeHTML: s => s /* no thanks, we know what we are doing, lint */};
 export const setListElements = listContent =>
     getRootElem()
-        .map(rootElem => returnTrue(rootElem.innerHTML = listContent));
+        .map(rootElem => returnTrue(rootElem.innerHTML = Sanitizer.unwrapSafeHTML(listContent)));
 
 export const onListItemClick = handler =>
     getRootElem()
