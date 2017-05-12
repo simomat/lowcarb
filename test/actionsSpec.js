@@ -24,10 +24,8 @@ describe("actions", function () {
     afterEach(uninstallGlobalMocks);
 
     it("when onReload is called, current info is saved and reloaded and frontend elements are set", function (done) {
-        let appendChild = spy();
-        installGlobalMock('document.getElementById', () => ({children:[{innerText:{trim:fn}, classList:{contains:fn}}], appendChild:appendChild}));
-        installGlobalMock('document.createTextNode', fn);
-        installGlobalMock('document.createElement', () => ({appendChild: fn, classList: {add: fn}}));
+        let getElementById = spy(() => ({children:[{innerText:{trim:fn}, classList:{contains:fn}}]}));
+        installGlobalMock('document.getElementById', getElementById);
 
         let sendMessage = spy();
         sendMessage.whenCalledWith(messageOf('persistDomainCookieItems')).doReturn(Promise.resolve(true));
@@ -40,7 +38,7 @@ describe("actions", function () {
                 assertThat(sendMessage, wasCalled().times(2));
                 assertThat(sendMessage, wasCalledWith(messageOf('persistDomainCookieItems')).times(1));
                 assertThat(sendMessage, wasCalledWith(messageOf('requestDomainCookieItems')).times(1));
-                assertThat(appendChild, wasCalled().times(1));
+                assertThat(getElementById, wasCalled().times(2));
                 done();
             });
 

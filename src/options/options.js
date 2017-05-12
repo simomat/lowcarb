@@ -1,6 +1,6 @@
 import {ifRemoveCookiesOnStartup} from '../settings';
 import {refreshListView, saveListModel} from './presenter';
-import {translateContent} from '../i18n';
+import {translateContent} from './i18n';
 import {getElement} from '../utils';
 import {onChangeRemoveOnStartup, onReload, onRemoveCookies} from './actions';
 

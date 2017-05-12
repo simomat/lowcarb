@@ -1,0 +1,23 @@
+{
+  "extensionDescription": {
+    "message": "Retirer les cookies indésirables"
+  },
+  "actionTitle": {
+    "message": "Retirer les cookies"
+  },
+  "saveAndRemoveCookies": {
+    "message": "Appliquer"
+  },
+  "selectCookies": {
+    "message": "Sélectionner les cookies à garder"
+  },
+  "refresh": {
+    "message": "Rafraîchir"
+  },
+  "removeOnStartup": {
+    "message": "Retirer les cookies au démarrage"
+  },
+  "empty": {
+    "message": "vide"
+  }
+}

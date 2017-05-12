@@ -2,28 +2,26 @@ import {domainCompare} from './domaincompare';
 import {getModelItems, setModelItems} from './modelstore';
 import {getListElements, onListItemClick, setListElements} from './view';
 import {maybeOf} from 'wellmaybe';
+import {getIntMessage} from '../webext';
 
-function toListElement(modelItems) {
-    let element = document.createElement('li');
-    element.appendChild(document.createTextNode(modelItems.value));
-    element.classList.add('list-group-item');
-    if (modelItems.isApplied) {
-        element.classList.add('active');
-    }
-    return element;
-}
+const toListContent = items => items
+    .map(item => `<li class="list-group-item${item.isApplied ? ' active' : ''}">${item.value}</li>`)
+    .join('');
+
+const createEmptyPlaceholder = () => `<li class="empty">${getIntMessage('empty')}</li>`;
 
 const toModelItem = listElement => ({
         value: listElement.innerText.trim(),
         isApplied: listElement.classList.contains('active')
 });
 
-const sortModelItem = listElements => listElements.sort((a, b) => domainCompare(a.value, b.value));
+const sortModelItems = listElements => listElements.sort((a, b) => domainCompare(a.value, b.value));
 
 export const refreshListView = () =>
     getModelItems()
-        .map(sortModelItem)
-        .map(modelItems => modelItems.map(toListElement))
+        .map(sortModelItems)
+        .map(toListContent)
+        .orElse(createEmptyPlaceholder)
         .map(setListElements);
 
 export const saveListModel = () =>

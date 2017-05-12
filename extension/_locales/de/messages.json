@@ -16,5 +16,8 @@
   },
   "removeOnStartup": {
     "message": "Cookies beim Start Löschen"
+  },
+  "empty": {
+    "message": "leer"
   }
 }

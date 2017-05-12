@@ -16,5 +16,8 @@
   },
   "removeOnStartup": {
     "message": "Eliminar cookies al inicio"
+  },
+  "empty": {
+    "message": "vacío"
   }
 }

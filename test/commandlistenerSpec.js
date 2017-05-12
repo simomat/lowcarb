@@ -17,7 +17,7 @@ describe("commandlistener", function () {
     });
 
     it("handler for onCommandRequestDomainCookieItems is called", function () {
-        let handler = spy();
+        let handler = spy(() => 1);
         onCommandRequestDomainCookieItems(handler);
         let message = {command: 'requestDomainCookieItems', data: 1};
 
@@ -27,7 +27,7 @@ describe("commandlistener", function () {
     });
 
     it("handler for onCommandPersistDomainCookieItems is called", function () {
-        let handler = spy();
+        let handler = spy(() => 1);
         onCommandPersistDomainCookieItems(handler);
         let message = {command: 'persistDomainCookieItems', data: 1};
 

@@ -1,6 +1,6 @@
-import {getIntMessage} from './webext';
+import {getIntMessage} from '../webext';
 import {maybeOf} from 'wellmaybe';
-import {returnTrue} from './utils';
+import {returnTrue} from '../utils';
 
 const getTranslatableElements = () => maybeOf(document.querySelectorAll('[data-m]'));
 

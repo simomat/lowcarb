@@ -2,24 +2,14 @@ import {maybeOf} from 'wellmaybe';
 import {getElement, returnTrue} from '../utils';
 
 const getRootElem = () => maybeOf(getElement('whitelist'));
-const clearListItems = rootElem => {
-    while (rootElem.firstChild) {
-        rootElem.removeChild(rootElem.firstChild);
-    }
-    return rootElem;
-};
-
-const appendListItems = listItems => rootElem =>
-    returnTrue(listItems.forEach(item => rootElem.appendChild(item)));
 
 export const getListElements = () =>
     getRootElem()
         .map(elem => elem.children);
 
-export const setListElements = listItems =>
+export const setListElements = listContent =>
     getRootElem()
-        .map(clearListItems)
-        .map(appendListItems(listItems));
+        .map(rootElem => returnTrue(rootElem.innerHTML = listContent));
 
 export const onListItemClick = handler =>
     getRootElem()

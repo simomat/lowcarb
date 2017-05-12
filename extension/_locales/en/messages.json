@@ -16,5 +16,8 @@
   },
   "removeOnStartup": {
     "message": "Remove cookies on startup"
+  },
+  "empty": {
+    "message": "empty"
   }
 }
