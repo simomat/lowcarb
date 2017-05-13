@@ -13,7 +13,8 @@ let apiObjects = [
     'browser.runtime.openOptionsPage',
     'browser.i18n.getMessage',
     'document.getElementById',
-    'document.createElement'
+    'document.createElement',
+    'browser.notifications.create'
 ];
 
 for (let apiObject of apiObjects) {

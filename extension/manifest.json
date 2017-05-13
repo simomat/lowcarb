@@ -5,7 +5,7 @@
   "author": "Matthias Simon",
   "version": "1.1.0",
   "manifest_version": 2,
-  "permissions": ["cookies", "<all_urls>", "storage"],
+  "permissions": ["cookies", "<all_urls>", "storage", "notifications"],
   "default_locale": "en",
   "applications": {
     "gecko": {

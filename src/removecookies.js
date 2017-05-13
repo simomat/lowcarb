@@ -2,6 +2,7 @@ import {getWhitelistDomains} from './whitelistdomainstorage';
 import {toRemoveParameter} from './cookie';
 import {getAllCookies, removeCookie} from './webext';
 import {toDomainMatcher} from './domain';
+import {notifyCookiesRemoved} from './notify';
 
 const toDomainMatchers = domains => domains.map(toDomainMatcher);
 
@@ -25,4 +26,5 @@ export const removeCookies = () =>
     getAllCookies()
         .map(ifCookiesPresent)
         .map(filterCookiesNotInWhitelist)
-        .map(removeTheCookies);
+        .map(removeTheCookies)
+        .map(notifyCookiesRemoved);

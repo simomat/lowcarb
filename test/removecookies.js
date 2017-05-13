@@ -14,8 +14,10 @@ describe("removecookies", function () {
 
         installGlobalMock('browser.cookies.getAll', () => [cookie1, cookie2]);
         installGlobalMock('browser.storage.local.get', () => ({whitelistDomains: []}));
-        let remove = spy();
+        let remove = spy(_=>_);
         installGlobalMock('browser.cookies.remove', remove);
+        let notify = spy(_=>_);
+        installGlobalMock('browser.notifications.create', notify);
 
         removeCookies()
 
@@ -23,6 +25,9 @@ describe("removecookies", function () {
                 assertThat(remove, wasCalled().times(2));
                 assertThat(remove, wasCalledWith({url: 'foo', storeId: 1, name: 'bar'}));
                 assertThat(remove, wasCalledWith({url: 'fizz', storeId: 2, name: 'buzz'}));
+
+                assertThat(notify, wasCalled().times(1));
+                assertThat(notify, wasCalledWith('lowcarb-cookies-removed'));
                 done();
             });
     });
@@ -32,10 +37,13 @@ describe("removecookies", function () {
         installGlobalMock('browser.storage.local.get', () => ({whitelistDomains: ['yerp', 'narf']}));
         let remove = spy();
         installGlobalMock('browser.cookies.remove', remove);
+        let notify = spy(_=>_);
+        installGlobalMock('browser.notifications.create', notify);
 
         removeCookies()
             .orElse(() => {
                 assertThat(remove, wasNotCalled());
+                assertThat(notify, wasNotCalled());
                 done();
             });
     });
@@ -46,14 +54,19 @@ describe("removecookies", function () {
 
         installGlobalMock('browser.cookies.getAll', () => [cookie1, cookie2]);
         installGlobalMock('browser.storage.local.get', () => ({whitelistDomains: ['yerp', 'narf']}));
-        let remove = spy();
+        let remove = spy(_=>_);
         installGlobalMock('browser.cookies.remove', remove);
+        let notify = spy(_=>_);
+        installGlobalMock('browser.notifications.create', notify);
 
         removeCookies()
 
             .map(() => {
                 assertThat(remove, wasCalled().times(1));
                 assertThat(remove, wasCalledWith({url: 'fizz', storeId: 2, name: 'buzz'}));
+
+                assertThat(notify, wasCalled().times(1));
+                assertThat(notify, wasCalledWith('lowcarb-cookies-removed'));
                 done();
             });
     });
