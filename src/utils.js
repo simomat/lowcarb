@@ -16,3 +16,5 @@ export const safeMaybeOf = fn => {
         return maybeOf();
     }
 };
+
+export const removeDuplicates = domains => Array.from(new Set(domains));

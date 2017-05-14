@@ -1,8 +1,8 @@
-import {assertThat, is} from 'hamjest';
+import {assertThat, is, containsInAnyOrder} from 'hamjest';
 import {spy, wasCalled, wasCalledWith, wasNotCalled} from 'spyjest';
 import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 
-import {applyTo, getElement, returnTrue, safeMaybeOf} from '../src/utils';
+import {applyTo, getElement, removeDuplicates, returnTrue, safeMaybeOf} from '../src/utils';
 
 describe("utils", function () {
 
@@ -63,5 +63,12 @@ describe("utils", function () {
         assertThat(onSuccess, wasNotCalled());
     });
 
+    it("removeDuplicates returns array with same elements if no duplicates are present", function () {
+        assertThat(removeDuplicates(['a', 'b']), containsInAnyOrder('a', 'b'));
+    });
+
+    it("removeDuplicates removes duplicated items", function () {
+        assertThat(removeDuplicates(['a', 'b', 'a', 'c', 'a', 'b']), containsInAnyOrder('a', 'b', 'c'));
+    });
 
 });

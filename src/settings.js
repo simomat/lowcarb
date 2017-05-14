@@ -1,5 +1,5 @@
-import {getStorage, setStorage} from './webext';
 import {maybeOf} from 'wellmaybe';
+import {getStorage, setStorage} from './storage';
 
 const defaultSettings = {
     removeOnStartup: false
@@ -15,8 +15,11 @@ const loadSettings = () =>
     getStorage('settings')
         .map(extractSettings);
 
+const ifNotAlreadySet = (key, value) => settings => settings[key] === value ? false : settings;
+
 const saveSetting = (key, value) =>
     loadSettings()
+        .map(ifNotAlreadySet(key, value))
         .map(setValue(key, value))
         .map(settings => setStorage({settings}));
 

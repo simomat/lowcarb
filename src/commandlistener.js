@@ -1,5 +1,5 @@
 import {maybeOf} from 'wellmaybe';
-import {addMessageListener} from './webext';
+import {onMessage} from './webext';
 
 const handlers = {};
 const getHandler = command => maybeOf(handlers[command]);
@@ -13,7 +13,7 @@ const handleMessage = message =>
         .map(applyHandler(message))
         .asPromise();
 
-addMessageListener(handleMessage);
+onMessage(handleMessage);
 
 export const onCommandRemoveCookies = setHandler('removeCookies');
 export const onCommandRequestDomainCookieItems = setHandler('requestDomainCookieItems');

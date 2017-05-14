@@ -1,4 +1,4 @@
-import {getWhitelistDomains} from './whitelistdomainstorage';
+import {getWhitelistDomains} from './whitelist';
 import {toRemoveParameter} from './cookie';
 import {getAllCookies, removeCookie} from './webext';
 import {toDomainMatcher} from './domain';

@@ -1,6 +1,7 @@
-import {getWhitelistDomains, setWhitelistDomains} from './whitelistdomainstorage';
+import {getWhitelistDomains, setWhitelistDomains} from './whitelist';
 import {normalizeDomain} from './domain';
 import {getAllCookies} from './webext';
+import {removeDuplicates} from './utils';
 
 const toListItem = isApplied => value => ({value, isApplied});
 
@@ -32,4 +33,5 @@ const extractWhitelistDomains = items => items
 
 export const setDisplayItems = items => items
     .map(extractWhitelistDomains)
+    .map(removeDuplicates)
     .map(setWhitelistDomains);

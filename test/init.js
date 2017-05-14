@@ -4,17 +4,17 @@ let apiObjects = [
     'browser.cookies.remove',
     'browser.cookies.getAll',
     'browser.runtime.sendMessage',
+    'browser.runtime.openOptionsPage',
     'browser.runtime.onMessage.addListener',
     'browser.runtime.onMessage.removeListener',
     'browser.storage.local.clear',
-    'browser.storage.local.set',
-    'browser.storage.local.get',
+    'browser.storage.sync.get',
+    'browser.storage.sync.set',
     'browser.browserAction.onClicked.addListener',
-    'browser.runtime.openOptionsPage',
+    'browser.notifications.create',
     'browser.i18n.getMessage',
     'document.getElementById',
-    'document.createElement',
-    'browser.notifications.create'
+    'document.createElement'
 ];
 
 for (let apiObject of apiObjects) {

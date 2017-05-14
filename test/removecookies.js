@@ -13,7 +13,7 @@ describe("removecookies", function () {
         let cookie2 = {url: 'fizz', storeId: 2, name: 'buzz', domain: 'sneep'};
 
         installGlobalMock('browser.cookies.getAll', () => [cookie1, cookie2]);
-        installGlobalMock('browser.storage.local.get', () => ({whitelistDomains: []}));
+        installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains: []}));
         let remove = spy(_=>_);
         installGlobalMock('browser.cookies.remove', remove);
         let notify = spy(_=>_);
@@ -34,7 +34,7 @@ describe("removecookies", function () {
 
     it("given no cookies and some whitelist domains, removeCookies() no cookie is removed", function (done) {
         installGlobalMock('browser.cookies.getAll', () => []);
-        installGlobalMock('browser.storage.local.get', () => ({whitelistDomains: ['yerp', 'narf']}));
+        installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains: ['yerp', 'narf']}));
         let remove = spy();
         installGlobalMock('browser.cookies.remove', remove);
         let notify = spy(_=>_);
@@ -53,7 +53,7 @@ describe("removecookies", function () {
         let cookie2 = {url: 'fizz', storeId: 2, name: 'buzz', domain: 'sneep'};
 
         installGlobalMock('browser.cookies.getAll', () => [cookie1, cookie2]);
-        installGlobalMock('browser.storage.local.get', () => ({whitelistDomains: ['yerp', 'narf']}));
+        installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains: ['yerp', 'narf']}));
         let remove = spy(_=>_);
         installGlobalMock('browser.cookies.remove', remove);
         let notify = spy(_=>_);

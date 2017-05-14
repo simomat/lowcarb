@@ -10,6 +10,8 @@ const toListContent = items => items
 
 const createEmptyPlaceholder = () => `<li class="empty">${getIntMessage('empty')}</li>`;
 
+const removeEmptyPlaceholder = elements => elements.filter(e => !e.classList.contains('empty'));
+
 const toModelItem = listElement => ({
         value: listElement.innerText.trim(),
         isApplied: listElement.classList.contains('active')
@@ -26,7 +28,8 @@ export const refreshListView = () =>
 
 export const saveListModel = () =>
     getListElements()
-        .map(listElements => Array.from(listElements).map(toModelItem))
+        .map(removeEmptyPlaceholder)
+        .map(listElements => listElements.map(toModelItem))
         .map(setModelItems);
 
 const ifElementIsListItem = element => maybeOf(element.classList.contains('list-group-item'));
