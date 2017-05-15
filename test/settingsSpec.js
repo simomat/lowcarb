@@ -42,7 +42,7 @@ describe("settings", function () {
     });
 
     it("saveSettings() saves any value when it was not set before", function (done) {
-        let setSyncStorage = spy(_=>_);
+        let setSyncStorage = spy(_=> Promise.resolve());
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
         installGlobalMock('browser.storage.sync.get', () => ({settings:{}}));
 
@@ -65,7 +65,7 @@ describe("settings", function () {
     });
 
     it("setRemoveCookiesOnStartup(true) stores removeOnStartup=true, even when it was false before", function (done) {
-        let setSyncStorage = spy(_=>_);
+        let setSyncStorage = spy(_=> Promise.resolve());
         installGlobalMock('browser.storage.sync.get', () => ({settings: {removeOnStartup: false}}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 
@@ -88,7 +88,7 @@ describe("settings", function () {
     });
 
     it("setNotifyOnRemovedCookies(true) stores notifyOnRemovedCookies=true, even when it was false before", function (done) {
-        let setSyncStorage = spy(_=>_);
+        let setSyncStorage = spy(_=> Promise.resolve());
         installGlobalMock('browser.storage.sync.get', () => ({settings: {notifyCookiesRemoved: false}}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 
