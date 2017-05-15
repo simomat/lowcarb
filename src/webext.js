@@ -1,5 +1,5 @@
 import {maybeOf} from 'wellmaybe';
-import {applyTo, safeMaybeOf} from './utils';
+import {returnTrue, safeMaybeOf} from './utils';
 
 export const getAllCookies = () => safeMaybeOf(() => browser.cookies.getAll({}));
 export const removeCookie = param => browser.cookies.remove(param);
@@ -10,7 +10,7 @@ export const getIntMessage = browser.i18n.getMessage;
 
 export const createNotification = (id, param) => browser.notifications.create(id, param);
 
-export const setSyncStorage = applyTo(object => browser.storage.sync.set(object));
+export const setSyncStorage = object => safeMaybeOf(() => browser.storage.sync.set(object).then(returnTrue));
 export const getSyncStorage = key => safeMaybeOf(() => browser.storage.sync.get(key));
 
 export const onMessage = browser.runtime.onMessage.addListener;

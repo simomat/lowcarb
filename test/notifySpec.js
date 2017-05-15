@@ -11,10 +11,31 @@ describe("notify", function () {
     it("notifyCookiesRemoved calls API", function () {
         let notify = spy(_=>_);
         installGlobalMock('browser.notifications.create', notify);
+        installGlobalMock('browser.storage.sync.get', () => ({settings:{notifyCookiesRemoved:true}}));
+
+        notifyCookiesRemoved(['x']);
+
+        assertThat(notify, wasCalledWith('lowcarb-cookies-removed'));
+    });
+
+    it("notifyCookiesRemoved does not call API if notification is disabled", function () {
+        let notify = spy(_=>_);
+        installGlobalMock('browser.notifications.create', notify);
+        installGlobalMock('browser.storage.sync.get', () => ({settings:{notifyCookiesRemoved:false}}));
+
+        notifyCookiesRemoved(['x']);
+
+        assertThat(notify, wasNotCalled());
+    });
+
+    it("notifyCookiesRemoved does not call API if no cookies are given", function () {
+        let notify = spy(_=>_);
+        installGlobalMock('browser.notifications.create', notify);
+        installGlobalMock('browser.storage.sync.get', () => ({settings:{notifyCookiesRemoved:true}}));
 
         notifyCookiesRemoved([]);
 
-        assertThat(notify, wasCalledWith('lowcarb-cookies-removed'));
+        assertThat(notify, wasNotCalled());
     });
 
 });

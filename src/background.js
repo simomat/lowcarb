@@ -3,12 +3,17 @@ import {onCommandPersistDomainCookieItems, onCommandRemoveCookies, onCommandRequ
 import {getDisplayItems, setDisplayItems} from './displayitems';
 import {ifRemoveCookiesOnStartup} from './settings';
 import {setupActionButtons} from './actionbuttons';
+import {doMigrationCheck} from './migrate';
 
-onCommandPersistDomainCookieItems(setDisplayItems);
-onCommandRequestDomainCookieItems(getDisplayItems);
-onCommandRemoveCookies(removeCookies);
+doMigrationCheck()
+    .map(() => {
+        onCommandPersistDomainCookieItems(setDisplayItems);
+        onCommandRequestDomainCookieItems(getDisplayItems);
+        onCommandRemoveCookies(removeCookies);
 
-setupActionButtons();
+        setupActionButtons();
 
-ifRemoveCookiesOnStartup()
-    .map(removeCookies);
+        ifRemoveCookiesOnStartup()
+            .map(removeCookies);
+    });
+
