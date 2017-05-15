@@ -3,6 +3,7 @@ import {createMock} from './globalMock';
 let apiObjects = [
     'browser.cookies.remove',
     'browser.cookies.getAll',
+    'browser.runtime.onStartup.addListener',
     'browser.runtime.sendMessage',
     'browser.runtime.openOptionsPage',
     'browser.runtime.onMessage.addListener',

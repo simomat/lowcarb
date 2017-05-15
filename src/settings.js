@@ -2,7 +2,8 @@ import {maybeOf} from 'wellmaybe';
 import {getStorage, setStorage} from './storage';
 
 const defaultSettings = {
-    removeOnStartup: false
+    removeOnStartup: false,
+    notifyCookiesRemoved: false
 };
 
 const setValue = (key, value) => object => Object.assign(object, {[key]: value});
@@ -29,3 +30,13 @@ export const ifRemoveCookiesOnStartup = () =>
 
 export const setRemoveCookiesOnStartup = value =>
     saveSetting('removeOnStartup', value);
+
+export const ifNotifyOnRemovedCookies = () =>
+    loadSettings()
+        .map(settings => settings.notifyCookiesRemoved);
+
+export const setNotifyCookiesRemoved = value =>
+    saveSetting('notifyCookiesRemoved', value);
+
+export const test_saveSetting = saveSetting;
+export const test_loadSettings = loadSettings;

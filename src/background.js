@@ -1,14 +1,14 @@
-import {ifRemoveCookiesOnStartup} from './settings';
 import {removeCookies} from './removecookies';
 import {onCommandPersistDomainCookieItems, onCommandRemoveCookies, onCommandRequestDomainCookieItems} from './commandlistener';
 import {getDisplayItems, setDisplayItems} from './displayitems';
-import {onBrowserActionClicked, openOptionsPage} from './webext';
+import {ifRemoveCookiesOnStartup} from './settings';
+import {setupActionButtons} from './actionbuttons';
 
 onCommandPersistDomainCookieItems(setDisplayItems);
 onCommandRequestDomainCookieItems(getDisplayItems);
 onCommandRemoveCookies(removeCookies);
 
+setupActionButtons();
+
 ifRemoveCookiesOnStartup()
     .map(removeCookies);
-
-onBrowserActionClicked(openOptionsPage);

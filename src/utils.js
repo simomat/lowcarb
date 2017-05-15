@@ -1,4 +1,5 @@
 import {maybeOf} from 'wellmaybe';
+import {getBrowserInfo, getPlatformInfo} from './webext';
 
 export const returnTrue = () => true;
 export const getElement = id => document.getElementById(id);
@@ -18,3 +19,12 @@ export const safeMaybeOf = fn => {
 };
 
 export const removeDuplicates = domains => Array.from(new Set(domains));
+
+const toBranchInt = versionString => parseInt(versionString.substr(0,2));
+
+export const getEnv = () =>
+    getPlatformInfo()
+        .map(platform => getBrowserInfo()
+                .map(browser => ({
+                        os: platform.os,
+                        branch: toBranchInt(browser.version)})));
