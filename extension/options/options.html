@@ -14,10 +14,18 @@
         #whitelist {
             overflow: hidden;
             overflow-y: scroll;
-            height: 17em;
+            height: 20em;
         }
-        .restrictWidth {
-            max-width: 32em
+        #options-panel {
+            padding: 2rem;
+        }
+        .options-field {
+            margin-top: .5rem;
+            margin-bottom: .5rem;
+        }
+        #lowcarb {
+            max-width: 50rem;
+            margin: auto;
         }
         .empty {
             list-style: none;
@@ -61,29 +69,46 @@
 <body>
 
 <div>
-    <div class="restrictWidth callout">
+    <div class="row callout" id="lowcarb">
 
-        <h5 data-m="selectCookies">Select which cookies to keep</h5>
+        <div class="medium-6 columns">
 
-        <ul id="whitelist" class="list-group">
-        </ul>
+            <h5 data-m="selectCookies">Select which cookies to keep</h5>
 
-        <div class="expanded button-group" role="group">
-            <button id="removeCookies" class="button primary" data-m="saveAndRemoveCookies">Apply</button>
-            <button id="reload" class="button secondary" data-m="refresh">Refresh</button>
+            <ul id="whitelist" class="list-group">
+            </ul>
+
+            <div class="expanded button-group" role="group">
+                <button id="removeCookies" class="button primary" data-m="saveAndRemoveCookies">Apply</button>
+                <button id="reload" class="button secondary" data-m="refresh">Refresh</button>
+            </div>
+
         </div>
 
-        <hr>
+        <div class="medium-6 columns" id="options-panel">
 
-        <div class="row">
-            <div class="small-3 columns">
-                <span class="switch">
-                    <input class="switch-input" id="removeOnStartup" type="checkbox">
-                    <label class="switch-paddle" for="removeOnStartup"></label>
-                </span>
+            <div class="row options-field">
+                <div class="small-3 columns">
+                    <span class="switch">
+                        <input class="switch-input" id="removeOnStartup" type="checkbox">
+                        <label class="switch-paddle" for="removeOnStartup"></label>
+                    </span>
+                </div>
+                <div class="small-9 columns">
+                    <label data-m="removeOnStartup">Remove cookies on startup</label>
+                </div>
             </div>
-            <div class="small-8 columns">
-                <label data-m="removeOnStartup">Remove cookies on startup</label>
+
+            <div class="row options-field">
+                <div class="small-3 columns">
+                    <span class="switch">
+                        <input class="switch-input" id="notifyCookiesRemoved" type="checkbox">
+                        <label class="switch-paddle" for="notifyCookiesRemoved"></label>
+                    </span>
+                </div>
+                <div class="small-9 columns">
+                    <label>Notify when removed cookies</label>
+                </div>
             </div>
         </div>
 

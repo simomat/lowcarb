@@ -13,7 +13,9 @@ export const notifyCookiesRemoved = cookies => {
             {
                 type: 'basic',
                 title: 'Firefox Cookies removed',
-                message: `lowcarb removed ${names.length} cookies`
+                message: `lowcarb removed ${cookies.length} cookies`
             }));
+
+    // TODO: remove notification after some time
 };
 

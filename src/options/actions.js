@@ -1,6 +1,6 @@
 import {refreshListView, saveListModel} from './presenter';
 import {sendMessage} from '../webext';
-import {setRemoveCookiesOnStartup} from '../settings';
+import {setNotifyCookiesRemoved, setRemoveCookiesOnStartup} from '../settings';
 import {getElement} from '../utils';
 
 export const onRemoveCookies = () =>
@@ -14,3 +14,6 @@ export const onReload = () =>
 
 export const onChangeRemoveOnStartup = () =>
     setRemoveCookiesOnStartup(getElement('removeOnStartup').checked);
+
+export const onChangeNotifyCookiesRemoved = () =>
+    setNotifyCookiesRemoved(getElement('notifyCookiesRemoved').checked);
