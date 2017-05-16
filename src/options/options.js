@@ -1,7 +1,7 @@
 import {ifNotifyOnRemovedCookies, ifRemoveCookiesOnStartup} from '../settings';
 import {refreshListView, saveListModel} from './presenter';
 import {translateContent} from './i18n';
-import {getElement} from '../utils';
+import {getElement, ifIsAndroid} from '../utils';
 import {onChangeNotifyCookiesRemoved, onChangeRemoveOnStartup, onReload, onRemoveCookies} from './actions';
 
 const addElementEventListener = (elementId, eventName, listener) =>
@@ -23,3 +23,5 @@ addElementEventListener('notifyCookiesRemoved', 'change', onChangeNotifyCookiesR
 refreshListView();
 
 window.addEventListener('unload', saveListModel);
+
+ifIsAndroid().orElse(() => getElement('html').classList.add('non-touch'));

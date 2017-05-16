@@ -76,7 +76,7 @@ describe("displayitems", function () {
 
 
     it("setDisplayItems sets whitelist of applied items", function () {
-        let setSyncStorage = spy(_=>_);
+        let setSyncStorage = spy(_=> Promise.resolve());
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains:[]}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 
@@ -87,7 +87,7 @@ describe("displayitems", function () {
     });
 
     it("setDisplayItems sets empty whitelist array if no items are applied", function () {
-        let setSyncStorage = spy(_=>_);
+        let setSyncStorage = spy(_=> Promise.resolve());
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains:['x']}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 
@@ -98,7 +98,7 @@ describe("displayitems", function () {
     });
 
     it("setDisplayItems sets empty whitelist array if no items are given", function () {
-        let setSyncStorage = spy(_=>_);
+        let setSyncStorage = spy(_=> Promise.resolve());
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains:['x']}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 

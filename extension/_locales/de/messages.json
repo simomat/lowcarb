@@ -19,5 +19,14 @@
   },
   "empty": {
     "message": "leer"
+  },
+  "removed": {
+    "message": "gelöscht"
+  },
+  "removedXCookies": {
+    "message": "lowcarb hat $1 cookies gelöscht"
+  },
+  "notifyCookiesRemoved": {
+    "message": "Nach dem Löschen benachrichtigen"
   }
 }

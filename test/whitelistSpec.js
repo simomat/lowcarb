@@ -31,7 +31,7 @@ describe("whitelist", function () {
     });
 
     it("setWhitelistDomains sets the domains if no whitelist was present before", function (done) {
-        let setSyncStorage = spy(_=>_);
+        let setSyncStorage = spy(_=> Promise.resolve());
         installGlobalMock('browser.storage.sync.get', () => ({}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 
@@ -44,7 +44,7 @@ describe("whitelist", function () {
     });
 
     it("setWhitelistDomains sets the domains if different whitelist was present before", function (done) {
-        let setSyncStorage = spy(_=>_);
+        let setSyncStorage = spy(_=> Promise.resolve());
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains: ['c', 'd']}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 

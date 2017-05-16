@@ -13,6 +13,7 @@ let apiObjects = [
     'browser.storage.sync.set',
     'browser.browserAction.onClicked.addListener',
     'browser.notifications.create',
+    'browser.notifications.clear',
     'browser.i18n.getMessage',
     'document.getElementById',
     'document.createElement'

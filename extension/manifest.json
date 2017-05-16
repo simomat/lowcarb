@@ -10,7 +10,8 @@
     "<all_urls>",
     "storage",
     "notifications",
-    "tabs"
+    "tabs",
+    "alarms"
   ],
   "default_locale": "en",
   "applications": {

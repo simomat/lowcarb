@@ -2,7 +2,7 @@ import {getEnv} from './utils';
 import {onBrowserActionClicked, openOptionsPage} from './webext';
 
 
-const createOptionsTab = tabUrl => browser.tabs.create(tabUrl);
+const createOptionsTab = tabInfo => browser.tabs.create(tabInfo);
 
 const openOptionsPageAsTab = () => {
     let url = chrome.runtime.getURL('options/options.html');
@@ -14,9 +14,7 @@ const openOptionsPageAsTab = () => {
             }
             return createOptionsTab({url});
         })
-        .catch(() => {
-            return createOptionsTab({url})
-        });
+        .catch(() => createOptionsTab({url}));
 };
 
 export const setupActionButton = () => {

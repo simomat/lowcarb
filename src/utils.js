@@ -28,3 +28,5 @@ export const getEnv = () =>
                 .map(browser => ({
                         os: platform.os,
                         branch: toBranchInt(browser.version)})));
+
+export const ifIsAndroid = () => getPlatformInfo().map(platform => platform.os === 'android');

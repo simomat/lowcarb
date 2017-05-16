@@ -9,7 +9,7 @@ describe("notify", function () {
     afterEach(uninstallGlobalMocks);
 
     it("notifyCookiesRemoved calls API", function () {
-        let notify = spy(_=>_);
+        let notify = spy(_=> Promise.resolve());
         installGlobalMock('browser.notifications.create', notify);
         installGlobalMock('browser.storage.sync.get', () => ({settings:{notifyCookiesRemoved:true}}));
 

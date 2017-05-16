@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -17,7 +17,8 @@
             height: 20em;
         }
         #options-panel {
-            padding: 2rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
         }
         .options-field {
             margin-top: .5rem;
@@ -26,6 +27,7 @@
         #lowcarb {
             max-width: 50rem;
             margin: auto;
+            border: 1px solid hsla(0,0%,4%,.25);
         }
         .empty {
             list-style: none;
@@ -33,8 +35,6 @@
             font-size: 4rem;
             color: #ddd;
             margin: 2rem;
-            user-select: none;
-            -moz-user-select: none;
         }
         .list-group {
             border: 1px solid #e6e6e6;
@@ -43,7 +43,11 @@
             box-shadow: none;
             overflow: hidden;
             color: #0a0a0a;
-            margin-left: 0px;
+            margin-left: 0;
+        }
+        .list-group > li {
+            user-select: none;
+            -moz-user-select: none;
         }
         .list-group-item {
             list-style: none;
@@ -57,10 +61,10 @@
             background-color: #1779ba;
             border-color: #1e7dbc;
         }
-        .list-group-item:hover, .list-group-item:focus {
+        html.non-touch li.list-group-item:hover {
             background-color: #e6e6e6;
         }
-        .list-group-item:hover.active, .list-group-item:focus.active {
+        html.non-touch li.list-group-item:hover.active {
             background-color: #196fa8;
         }
     </style>
@@ -69,7 +73,7 @@
 <body>
 
 <div>
-    <div class="row callout" id="lowcarb">
+    <div class="row" id="lowcarb">
 
         <div class="medium-6 columns">
 
@@ -107,7 +111,7 @@
                     </span>
                 </div>
                 <div class="small-9 columns">
-                    <label>Notify when removed cookies</label>
+                    <label data-m="notifyCookiesRemoved">Notify when removed cookies</label>
                 </div>
             </div>
         </div>

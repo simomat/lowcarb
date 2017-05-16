@@ -16,7 +16,7 @@ describe("removecookies", function () {
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains: [], settings:{notifyCookiesRemoved:true}}));
         let remove = spy(_=>_);
         installGlobalMock('browser.cookies.remove', remove);
-        let notify = spy(_=>_);
+        let notify = spy(_=> Promise.resolve());
         installGlobalMock('browser.notifications.create', notify);
 
         removeCookies()
@@ -56,7 +56,7 @@ describe("removecookies", function () {
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains: ['yerp', 'narf'], settings:{notifyCookiesRemoved:true}}));
         let remove = spy(_=>_);
         installGlobalMock('browser.cookies.remove', remove);
-        let notify = spy(_=>_);
+        let notify = spy(_=> Promise.resolve());
         installGlobalMock('browser.notifications.create', notify);
 
         removeCookies()
