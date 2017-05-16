@@ -15,6 +15,8 @@ let apiObjects = [
     'browser.notifications.create',
     'browser.notifications.clear',
     'browser.i18n.getMessage',
+    'browser.alarms.create',
+    'browser.alarms.onAlarm.addListener',
     'document.getElementById',
     'document.createElement'
 ];
