@@ -12,7 +12,3 @@ Go to the add-on options page, select which cookies you want to keep. Remove oth
 
 It's designed to be easy to use and to be touch friendly on mobile platforms.
 Based on new [WebExtensions](https://developer.mozilla.org/en-US/Add-ons/WebExtensions) API, lowcarb will keep working after mozilla removes support for old add-on mechanisms in near future.
-
-#### Limitations
-The WebExtension API is quite new and not fully supported on all Firefox platforms. This causes the options page **not to be displayed on Firefox Mobile** currently :(
-
