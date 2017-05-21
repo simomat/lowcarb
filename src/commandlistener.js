@@ -1,11 +1,11 @@
-import {maybeOf} from 'wellmaybe';
+import {Maybe} from 'wellmaybe';
 import {onMessage} from './webext';
 
 const handlers = {};
-const getHandler = command => maybeOf(handlers[command]);
+const getHandler = command => Maybe.of(handlers[command]);
 const setHandler = command => handler => handlers[command] = handler;
 
-const applyHandler = message => handler => handler(maybeOf(message.data));
+const applyHandler = message => handler => handler(Maybe.of(message.data));
 
 const handleMessage = message =>
     getHandler(message.command)

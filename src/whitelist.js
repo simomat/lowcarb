@@ -1,4 +1,3 @@
-import {maybeOf} from 'wellmaybe';
 import {getStorage, setStorage} from './storage';
 import {removeDuplicates} from './utils';
 

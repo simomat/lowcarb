@@ -1,7 +1,7 @@
 import {domainCompare} from './domaincompare';
 import {getModelItems, setModelItems} from './modelstore';
 import {getListElements, onListItemClick, setListElements} from './view';
-import {maybeOf} from 'wellmaybe';
+import {Maybe} from 'wellmaybe';
 import {getIntMessage} from '../webext';
 
 const toListContent = items => items
@@ -32,7 +32,7 @@ export const saveListModel = () =>
         .map(listElements => listElements.map(toModelItem))
         .map(setModelItems);
 
-const ifElementIsListItem = element => maybeOf(element.classList.contains('list-group-item'));
+const ifElementIsListItem = element => Maybe.of(element.classList.contains('list-group-item'));
 
 onListItemClick(element =>
     ifElementIsListItem(element)

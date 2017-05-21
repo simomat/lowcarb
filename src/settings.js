@@ -1,4 +1,4 @@
-import {maybeOf} from 'wellmaybe';
+import {Maybe} from 'wellmaybe';
 import {getStorage, setStorage} from './storage';
 
 const defaultSettings = {
@@ -9,7 +9,7 @@ const defaultSettings = {
 const setValue = (key, value) => object => Object.assign(object, {[key]: value});
 const getDefaultSettings = () => Object.assign({}, defaultSettings);
 const extractSettings = storage =>
-    maybeOf(storage.settings)
+    Maybe.of(storage.settings)
         .orElse(getDefaultSettings);
 
 const loadSettings = () =>

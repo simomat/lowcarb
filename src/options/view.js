@@ -1,7 +1,7 @@
-import {maybeOf} from 'wellmaybe';
+import {Maybe} from 'wellmaybe';
 import {getElement, returnTrue} from '../utils';
 
-const getRootElem = () => maybeOf(getElement('whitelist'));
+const getRootElem = () => Maybe.of(getElement('whitelist'));
 
 export const getListElements = () =>
     getRootElem()

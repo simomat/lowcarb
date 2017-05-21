@@ -16,4 +16,3 @@ doMigrationCheck()
         ifRemoveCookiesOnStartup()
             .map(removeCookies);
     });
-

@@ -1,8 +1,8 @@
 import {getIntMessage} from '../webext';
-import {maybeOf} from 'wellmaybe';
+import {Maybe} from 'wellmaybe';
 import {returnTrue} from '../utils';
 
-const getTranslatableElements = () => maybeOf(document.querySelectorAll('[data-m]'));
+const getTranslatableElements = () => Maybe.of(document.querySelectorAll('[data-m]'));
 
 const translateElements = nodeList =>
     returnTrue(nodeList.forEach(node => node.innerText = getIntMessage(node.dataset.m)));

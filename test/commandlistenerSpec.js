@@ -1,6 +1,6 @@
 import {assertThat, is, FeatureMatcher} from 'hamjest';
 import {spy, wasCalled, wasCalledWith} from 'spyjest';
-import {maybeOf} from 'wellmaybe';
+import {Maybe} from 'wellmaybe';
 
 import {onCommandPersistDomainCookieItems, onCommandRemoveCookies, onCommandRequestDomainCookieItems, test_getHandlers, test_handleMessage} from '../src/commandlistener';
 
@@ -33,7 +33,7 @@ describe("commandlistener", function () {
 
         test_handleMessage(message);
 
-        assertThat(handler, wasCalledWith(maybeOf(1)).times(1));
+        assertThat(handler, wasCalledWith(Maybe.of(1)).times(1));
     });
 
     it("result of handler is returned by handleMessage as Promise", function (done) {

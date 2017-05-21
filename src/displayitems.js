@@ -1,3 +1,4 @@
+import {Maybe} from 'wellmaybe';
 import {getWhitelistDomains, setWhitelistDomains} from './whitelist';
 import {normalizeDomain} from './domain';
 import {getAllCookies} from './webext';
@@ -23,9 +24,8 @@ function createListItems(cookies, whitelistDomains) {
 }
 
 export const getDisplayItems = () =>
-    getAllCookies()
-        .map(cookies => getWhitelistDomains()
-            .map(whitelistDomain => createListItems(cookies, whitelistDomain)));
+    Maybe.all(getAllCookies(), getWhitelistDomains())
+        .map(cookiesAndWhitelistDomains => createListItems(...cookiesAndWhitelistDomains));
 
 const extractWhitelistDomains = items => items
     .filter(item => item.isApplied)

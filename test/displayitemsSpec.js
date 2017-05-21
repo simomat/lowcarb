@@ -1,6 +1,6 @@
 import {assertThat, is, FeatureMatcher, containsInAnyOrder} from 'hamjest';
 import {spy, wasCalled, wasCalledWith} from 'spyjest';
-import {maybeOf} from 'wellmaybe';
+import {Maybe} from 'wellmaybe';
 import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 import {getDisplayItems, setDisplayItems} from '../src/displayitems';
 
@@ -80,7 +80,7 @@ describe("displayitems", function () {
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains:[]}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 
-        let items = maybeOf([{value: 'hi', isApplied: true}, {value: 'ho', isApplied: false}]);
+        let items = Maybe.of([{value: 'hi', isApplied: true}, {value: 'ho', isApplied: false}]);
         setDisplayItems(items);
 
         assertThat(setSyncStorage, wasCalledWith({whitelistDomains: ['hi']}));
@@ -91,7 +91,7 @@ describe("displayitems", function () {
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains:['x']}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 
-        let items = maybeOf([{value: 'hi', isApplied: false}, {value: 'ho', isApplied: false}]);
+        let items = Maybe.of([{value: 'hi', isApplied: false}, {value: 'ho', isApplied: false}]);
         setDisplayItems(items);
 
         assertThat(setSyncStorage, wasCalledWith({whitelistDomains: []}));
@@ -102,7 +102,7 @@ describe("displayitems", function () {
         installGlobalMock('browser.storage.sync.get', () => ({whitelistDomains:['x']}));
         installGlobalMock('browser.storage.sync.set', setSyncStorage);
 
-        setDisplayItems(maybeOf([]));
+        setDisplayItems(Maybe.of([]));
 
         assertThat(setSyncStorage, wasCalledWith({whitelistDomains: []}));
     });

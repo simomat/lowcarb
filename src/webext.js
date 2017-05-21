@@ -1,4 +1,4 @@
-import {maybeOf} from 'wellmaybe';
+import {Maybe} from 'wellmaybe';
 import {returnTrue, safeMaybeOf} from './utils';
 
 export const getAllCookies = () => safeMaybeOf(() => browser.cookies.getAll({}));
@@ -17,8 +17,8 @@ export const getSyncStorage = key => safeMaybeOf(() => browser.storage.sync.get(
 export const onMessage = browser.runtime.onMessage.addListener;
 export const onBrowserActionClicked = listener => browser.browserAction.onClicked.addListener(listener);
 
-export const getPlatformInfo = () => maybeOf(browser.runtime.getPlatformInfo());
-export const getBrowserInfo = () => maybeOf(browser.runtime.getBrowserInfo());
+export const getPlatformInfo = () => Maybe.of(browser.runtime.getPlatformInfo());
+export const getBrowserInfo = () => Maybe.of(browser.runtime.getBrowserInfo());
 
 export const createAlarm = browser.alarms.create;
 export const onAlarm = browser.alarms.onAlarm.addListener;
