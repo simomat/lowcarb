@@ -1,4 +1,4 @@
-import {assertThat} from 'hamjest';
+import {assertThat, anything} from 'hamjest';
 import {spy, wasCalled, wasCalledWith, wasNotCalled} from 'spyjest';
 import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 
@@ -27,7 +27,7 @@ describe("removecookies", function () {
                 assertThat(remove, wasCalledWith({url: 'fizz', storeId: 2, name: 'buzz'}));
 
                 assertThat(notify, wasCalled().times(1));
-                assertThat(notify, wasCalledWith('lowcarb-cookies-removed'));
+                assertThat(notify, wasCalledWith('lowcarb-cookies-removed', anything()));
                 done();
             });
     });
@@ -66,7 +66,7 @@ describe("removecookies", function () {
                 assertThat(remove, wasCalledWith({url: 'fizz', storeId: 2, name: 'buzz'}));
 
                 assertThat(notify, wasCalled().times(1));
-                assertThat(notify, wasCalledWith('lowcarb-cookies-removed'));
+                assertThat(notify, wasCalledWith('lowcarb-cookies-removed', anything()));
                 done();
             });
     });

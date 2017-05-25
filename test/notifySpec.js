@@ -1,4 +1,4 @@
-import {assertThat} from 'hamjest';
+import {assertThat, anything} from 'hamjest';
 import {spy, wasCalled, wasCalledWith, wasNotCalled} from 'spyjest';
 import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 
@@ -15,7 +15,7 @@ describe("notify", function () {
 
         notifyCookiesRemoved(['x']);
 
-        assertThat(notify, wasCalledWith('lowcarb-cookies-removed'));
+        assertThat(notify, wasCalledWith('lowcarb-cookies-removed', anything()));
     });
 
     it("notifyCookiesRemoved does not call API if notification is disabled", function () {

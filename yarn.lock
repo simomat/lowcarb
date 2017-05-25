@@ -3587,9 +3587,9 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
-spyjest@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/spyjest/-/spyjest-1.1.8.tgz#65f36e432de958ae62d7e6e83d84dcdeea646861"
+spyjest@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/spyjest/-/spyjest-1.2.1.tgz#1a371a23e776b42a43681191ed338b69d8c64a01"
   dependencies:
     deep-equal "^1.0.1"
 
@@ -4076,9 +4076,9 @@ web-ext@^1.9.0:
     yargs "6.6.0"
     zip-dir "1.0.2"
 
-wellmaybe@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/wellmaybe/-/wellmaybe-0.0.1.tgz#6598471ea0eddc44452629058b4c7bceb1ace6cb"
+wellmaybe@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/wellmaybe/-/wellmaybe-0.1.0.tgz#3dad89ee6f0326eb8184ff6e9ec07b042904dc77"
 
 when@3.7.7:
   version "3.7.7"
