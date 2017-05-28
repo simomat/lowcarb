@@ -25,17 +25,6 @@ describe("utils", function () {
         assertThat(result, is(2));
     });
 
-    it("applyTo lets function called with argument and returns same argument", function () {
-        let fun = spy(() => 5);
-
-        let applyer = applyTo(fun);
-        let result = applyer(10);
-
-        assertThat(fun, wasCalled().times(1));
-        assertThat(fun, wasCalledWith(10));
-        assertThat(result, is(10));
-    });
-
     it("safeMaybeOf returns the result of a function as a maybe", function () {
         let onSuccess = spy();
         let onFail = spy();

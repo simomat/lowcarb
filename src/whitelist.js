@@ -1,5 +1,5 @@
 import {getStorage, setStorage} from './storage';
-import {removeDuplicates} from './utils';
+import {removeDuplicates, returnTrue} from './utils';
 
 export const getWhitelistDomains = () =>
     getStorage('whitelistDomains')
@@ -7,16 +7,13 @@ export const getWhitelistDomains = () =>
         .map(removeDuplicates)
         .orElse(() => []);
 
-const notEqual = (arrayA, arrayB) => {
+const ifNotEqual = arrayA => arrayB => {
     let setB = new Set(arrayB);
     return !arrayA.every(d => setB.delete(d)) || setB.size > 0;
 };
 
 export const setWhitelistDomains = whitelistDomains =>
     getWhitelistDomains()
-        .map(oldWhitelist => {
-            if (notEqual(oldWhitelist, whitelistDomains)) {
-                setStorage({whitelistDomains})
-            }
-            return true;
-        });
+        .map(ifNotEqual(whitelistDomains))
+        .map(() => setStorage({whitelistDomains}))
+        .orElse(returnTrue);

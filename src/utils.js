@@ -3,10 +3,6 @@ import {getBrowserInfo, getPlatformInfo} from './webext';
 
 export const returnTrue = () => true;
 export const getElement = id => document.getElementById(id);
-export const applyTo = fun => arg => {
-    fun(arg);
-    return arg;
-};
 export const safeMaybeOf = fn => {
     try {
         return Maybe.of(fn());

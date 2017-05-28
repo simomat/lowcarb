@@ -1,12 +1,8 @@
-import {clearNotification, createNotification, onAlarm, createAlarm, getIntMessage} from './webext';
+import {clearNotification, createNotification, getIntMessage} from './webext';
 import {ifNotifyOnRemovedCookies} from './settings';
+import {createAlarmRemoveNotification} from './alarm';
 
-onAlarm(alarm => {
-    if (alarm.name === 'cookies-removed-notification-expired') {
-        clearNotification('lowcarb-cookies-removed');
-    }
-});
-
+export const clearRemoveNotification = () => clearNotification('lowcarb-cookies-removed');
 export const notifyCookiesRemoved = cookies => {
     cookies = cookies.filter(c => c !== null);
     if (cookies.length === 0) {
@@ -21,8 +17,7 @@ export const notifyCookiesRemoved = cookies => {
                 title: 'Firefox Cookies ' + getIntMessage('removed'),
                 message: getIntMessage('removedXCookies', cookies.length)
             }))
-        .map(() => createAlarm('cookies-removed-notification-expired', {delayInMinutes: 0.5}));
+        .map(() => createAlarmRemoveNotification(0.5));
 
     return true;
 };
-

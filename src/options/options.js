@@ -9,11 +9,8 @@ const addElementEventListener = (elementId, eventName, listener) =>
 
 translateContent();
 
-ifRemoveCookiesOnStartup()
-    .map(() => getElement('removeOnStartup').checked = true);
-
-ifNotifyOnRemovedCookies()
-    .map(() => getElement('notifyCookiesRemoved').checked = true);
+ifRemoveCookiesOnStartup().map(() => getElement('removeOnStartup').checked = true);
+ifNotifyOnRemovedCookies().map(() => getElement('notifyCookiesRemoved').checked = true);
 
 addElementEventListener('removeCookies', 'click', onRemoveCookies);
 addElementEventListener('reload', 'click', onReload);

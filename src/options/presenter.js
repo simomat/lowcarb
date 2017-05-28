@@ -35,5 +35,4 @@ export const saveListModel = () =>
 const ifElementIsListItem = element => Maybe.of(element.classList.contains('list-group-item'));
 
 onListItemClick(element =>
-    ifElementIsListItem(element)
-        .map(() => element.classList.toggle('active')));
+    ifElementIsListItem(element).map(() => element.classList.toggle('active')));
