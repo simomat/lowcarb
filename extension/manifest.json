@@ -3,7 +3,7 @@
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/simomat/lowcarb",
   "author": "Matthias Simon",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "manifest_version": 2,
   "permissions": [
     "cookies",
