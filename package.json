@@ -13,10 +13,9 @@
     "url": "https://github.com/simomat/lowcarb/issues"
   },
   "scripts": {
-    "build": "gulp",
-    "clean": "gulp clean",
+    "build": "webpack --config build/webpack.config.js",
     "test": "mocha --require ./test/init.js --compilers js:babel-core/register",
-    "start": "web-ext run -s dist/ --start-url about:debugging --start-url about:addons --verbose",
+    "start": "web-ext run -s build/dist/ --start-url about:debugging --start-url about:addons --verbose",
     "lint": "web-ext lint -s dist/",
     "pack": "web-ext build -s dist/",
     "sign": "web-ext sign -s dist/"
@@ -28,9 +27,7 @@
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
-    "gulp": "^3.9.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uncss": "^1.0.6",
+
     "hamjest": "^3.0.0",
     "mocha": "^3.2.0",
     "rollup-plugin-commonjs": "^8.0.2",
@@ -38,7 +35,10 @@
     "rollup-stream": "^1.19.0",
     "spyjest": "^1.2.1",
     "vinyl-source-stream": "^1.1.0",
-    "web-ext": "^1.9.0"
+    "web-ext": "^6.6.0",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "copy-webpack-plugin": "^10.0.0"
   },
   "babel": {
     "plugins": [
