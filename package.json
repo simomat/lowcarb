@@ -14,36 +14,27 @@
   },
   "scripts": {
     "build": "webpack --config build/webpack.config.js",
-    "test": "mocha --require ./test/init.js --compilers js:babel-core/register",
-    "start": "web-ext run -s build/dist/ --start-url about:debugging --start-url about:addons --verbose",
-    "lint": "web-ext lint -s dist/",
-    "pack": "web-ext build -s dist/",
-    "sign": "web-ext sign -s dist/"
+    "test": "jest",
+    "clean": "rimraf build/dist/* & rimraf build/package/*",
+    "start": "web-ext run --source-dir build/dist/ --start-url about:debugging --start-url about:addons --verbose",
+    "lint": "web-ext lint --source-dir build/dist/",
+    "pack": "web-ext build --source-dir build/dist/ --artifacts-dir build/package --overwrite-dest",
+    "sign": "web-ext sign --source-dir build/dist/"
   },
   "dependencies": {
     "escape-string-regexp": "^1.0.5",
     "wellmaybe": "^0.1.0"
   },
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
-
+    "@babel/preset-env": "^7.16.4",
+    "babel-jest": "^27.3.1",
+    "copy-webpack-plugin": "^10.0.0",
     "hamjest": "^3.0.0",
-    "mocha": "^3.2.0",
-    "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-stream": "^1.19.0",
+    "jest": "^27.3.1",
     "spyjest": "^1.2.1",
-    "vinyl-source-stream": "^1.1.0",
     "web-ext": "^6.6.0",
     "webpack": "^5.64.4",
-    "webpack-cli": "^4.9.1",
-    "copy-webpack-plugin": "^10.0.0"
-  },
-  "babel": {
-    "plugins": [
-      "transform-es2015-modules-commonjs"
-    ]
+    "webpack-cli": "^4.9.1"
   },
   "private": true
 }

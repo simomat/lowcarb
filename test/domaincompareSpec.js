@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import {assertThat, is} from 'hamjest';
 import {domainCompare} from '../src/options/domaincompare';
 
