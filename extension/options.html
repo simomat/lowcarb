@@ -4,122 +4,16 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+   
 
-    <link href="foundation.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            font-size: 85%;
-        }
-        #whitelist {
-            overflow: hidden;
-            overflow-y: scroll;
-            height: 20em;
-        }
-        #options-panel {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
-        .options-field {
-            margin-top: .5rem;
-            margin-bottom: .5rem;
-        }
-        #lowcarb {
-            max-width: 50rem;
-            margin: auto;
-            border: 1px solid hsla(0,0%,4%,.25);
-        }
-        .empty {
-            list-style: none;
-            text-align: center;
-            font-size: 4rem;
-            color: #ddd;
-            margin: 2rem;
-        }
-        .list-group {
-            border: 1px solid #e6e6e6;
-            border-radius: 0;
-            background: #fefefe;
-            box-shadow: none;
-            overflow: hidden;
-            color: #0a0a0a;
-            margin-left: 0;
-        }
-        .list-group > li {
-            user-select: none;
-            -moz-user-select: none;
-        }
-        .list-group-item {
-            list-style: none;
-            padding: 0.5rem;
-            border-bottom: 1px solid #e6e6e6;
-            font-family: sans-serif;
-            cursor: pointer;
-        }
-        .list-group-item.active {
-            color: #fefefe;
-            background-color: #1779ba;
-            border-color: #1e7dbc;
-        }
-        html.non-touch li.list-group-item:hover {
-            background-color: #e6e6e6;
-        }
-        html.non-touch li.list-group-item:hover.active {
-            background-color: #196fa8;
-        }
-    </style>
+    <script defer src="options.js"></script>
 
 </head>
 <body>
 
-<div>
-    <div class="row" id="lowcarb">
-
-        <div class="medium-6 columns">
-
-            <h5 data-m="selectCookies">Select which cookies to keep</h5>
-
-            <ul id="whitelist" class="list-group">
-            </ul>
-
-            <div class="expanded button-group" role="group">
-                <button id="removeCookies" class="button primary" data-m="saveAndRemoveCookies">Apply</button>
-                <button id="reload" class="button secondary" data-m="refresh">Refresh</button>
-            </div>
-
-        </div>
-
-        <div class="medium-6 columns" id="options-panel">
-
-            <div class="row options-field">
-                <div class="small-3 columns">
-                    <span class="switch">
-                        <input class="switch-input" id="removeOnStartup" type="checkbox">
-                        <label class="switch-paddle" for="removeOnStartup"></label>
-                    </span>
-                </div>
-                <div class="small-9 columns">
-                    <label data-m="removeOnStartup">Remove cookies on startup</label>
-                </div>
-            </div>
-
-            <div class="row options-field">
-                <div class="small-3 columns">
-                    <span class="switch">
-                        <input class="switch-input" id="notifyCookiesRemoved" type="checkbox">
-                        <label class="switch-paddle" for="notifyCookiesRemoved"></label>
-                    </span>
-                </div>
-                <div class="small-9 columns">
-                    <label data-m="notifyCookiesRemoved">Notify when removed cookies</label>
-                </div>
-            </div>
-        </div>
-
-    </div>
+<div id="app">
+blabla banane
 </div>
-
-<script src="options.js"></script>
 
 </body>
 </html>
