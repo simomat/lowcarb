@@ -2,7 +2,6 @@ import {Maybe} from 'wellmaybe';
 import {getBrowserInfo, getPlatformInfo} from './webext';
 
 export const returnTrue = () => true;
-export const getElement = id => document.getElementById(id);
 export const safeMaybeOf = fn => {
     try {
         return Maybe.of(fn());
@@ -19,5 +18,3 @@ export const getEnv = () =>
         .map(([platform, browser]) => ({
             os: platform.os,
             branch: toBranchInt(browser.version)}));
-
-export const ifIsAndroid = () => getPlatformInfo().map(platform => platform.os === 'android');
