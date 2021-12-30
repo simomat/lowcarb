@@ -23,8 +23,6 @@ function createListItems(cookies, whitelistDomains) {
     return Array.from(itemMap.values());
 }
 
-const removeDuplicates = domains => Array.from(new Set(domains));
-
 const DEFAULT_SETTINGS = {
     removeOnStartup: false,
     notifyCookiesRemoved: false
@@ -35,7 +33,7 @@ const mutateStoredWhitelistDomains = mutator =>
         .then(storage => {
             let whitelistDomains = new Set(storage.whitelistDomains);
             mutator(whitelistDomains);
-            browser.storage.sync.set({ whitelistDomains: Array.from(whitelistDomains) }).then(() => console.log('safed ' + JSON.stringify(whitelistDomains)));
+            browser.storage.sync.set({ whitelistDomains: Array.from(whitelistDomains) });
         });
 
 const mutateSettings = mutator =>
@@ -57,7 +55,6 @@ export const store = createStore({
         setDomains(state, domains) {
             
             state.domains = domains;
-            console.log('+++ ' + JSON.stringify(state.domains))
         },
         changeSetting(state, settings) {
             state.settings = { ...state.settings, ... settings}
@@ -82,7 +79,6 @@ export const store = createStore({
 
             
             const newLocal = createListItems(cookies, whitelistDomains);
-            console.log('+++ ' + JSON.stringify(newLocal))
             commit('setDomains', newLocal)
 
         },

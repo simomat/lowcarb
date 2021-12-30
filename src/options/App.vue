@@ -81,7 +81,6 @@ export default {
         return this.$store.getters.settings.removeOnStartup;
       },
       set(newValue) {
-        console.log("setRemoveOnStartup");
         this.$store.dispatch("setRemoveOnStartup", newValue);
       },
     },

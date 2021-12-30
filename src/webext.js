@@ -16,8 +16,5 @@ export const getSyncStorage = key => safeMaybeOf(() => browser.storage.sync.get(
 export const onMessage = browser.runtime.onMessage.addListener;
 export const onBrowserActionClicked = listener => browser.browserAction.onClicked.addListener(listener);
 
-export const getPlatformInfo = () => Maybe.of(browser.runtime.getPlatformInfo());
-export const getBrowserInfo = () => Maybe.of(browser.runtime.getBrowserInfo());
-
 export const createAlarm = browser.alarms.create;
 export const onAlarm = browser.alarms.onAlarm.addListener;
