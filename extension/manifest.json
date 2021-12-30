@@ -48,6 +48,6 @@
   },
   "options_ui": {
     "page": "options.html",
-    "browser_style": false
+    "browser_style": true
   }
 }

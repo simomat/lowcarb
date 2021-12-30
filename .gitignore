@@ -1,6 +1,7 @@
 .idea/
 *.iml
 build/dist/*
+build/package/*
 *.log
 web-ext-artifacts/
 node_modules/
