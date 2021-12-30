@@ -1,9 +1,22 @@
 import {removeCookies} from './removecookies';
-import {ifRemoveCookiesOnStartup} from './settings';
-import {setupActionButton} from './actionbuttons';
-import {onAlarmClearRemoveNotification} from './alarm';
-import {clearRemoveNotification} from './notify';
+import {onAlarm, clearNotification, onBrowserActionClicked, openOptionsPage} from './webext';
+import { getEnv } from './utils';
+import { loadSettings } from './settings'
 
-onAlarmClearRemoveNotification(clearRemoveNotification);
-setupActionButton();
-ifRemoveCookiesOnStartup().map(removeCookies);
+onAlarm(alarm => {
+    if (alarm.name === 'cookies-removed-notification-expired') {
+        return clearNotification('lowcarb-cookies-removed');
+    }
+})
+
+getEnv().map(env => {
+    if (env.os !== 'android') {
+        onBrowserActionClicked(openOptionsPage);
+    }
+});
+
+loadSettings().map(settings => {
+    if (settings.removeOnStartup) {
+        removeCookies();
+    }
+});

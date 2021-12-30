@@ -10,7 +10,6 @@ export const safeMaybeOf = fn => {
         return Maybe.of();
     }
 };
-export const removeDuplicates = domains => Array.from(new Set(domains));
 
 const toBranchInt = versionString => parseInt(versionString.substr(0,2));
 export const getEnv = () =>

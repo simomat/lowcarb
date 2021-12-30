@@ -118,6 +118,7 @@ export default {
   overflow-y: scroll;
   height: 15em;
   width: 100vw;
+  border-left: 1px solid #e2e3e2;
 }
 
 .lc-footer {

@@ -11,7 +11,6 @@ export const getIntMessage = browser.i18n.getMessage;
 export const createNotification = (id, param) => browser.notifications.create(id, param).then(returnTrue);
 export const clearNotification = id => browser.notifications.clear(id);
 
-export const setSyncStorage = object => safeMaybeOf(() => browser.storage.sync.set(object).then(returnTrue));
 export const getSyncStorage = key => safeMaybeOf(() => browser.storage.sync.get(key));
 
 export const onMessage = browser.runtime.onMessage.addListener;

@@ -1,8 +1,7 @@
-import {clearNotification, createNotification, getIntMessage} from './webext';
+import {createNotification, getIntMessage} from './webext';
 import {ifNotifyOnRemovedCookies} from './settings';
 import {createAlarmRemoveNotification} from './alarm';
 
-export const clearRemoveNotification = () => clearNotification('lowcarb-cookies-removed');
 export const notifyCookiesRemoved = cookies => {
     cookies = cookies.filter(c => c !== null);
     if (cookies.length === 0) {

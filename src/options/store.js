@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 
-import { normalizeDomain, toDomainMatcher } from '../domain';
+import { normalizeDomain } from '../domain';
 
 
 const toListItem = isApplied => name => ({ name, isApplied });

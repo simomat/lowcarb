@@ -1,6 +1,6 @@
-import {assertThat, is, containsInAnyOrder} from 'hamjest';
+import {assertThat, is} from 'hamjest';
 import {spy, wasCalled, wasCalledWith, wasNotCalled} from 'spyjest';
-import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
+import {uninstallGlobalMocks} from './globalMock';
 
 import {returnTrue, safeMaybeOf} from '../src/utils';
 

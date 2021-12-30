@@ -1,8 +1,8 @@
 import {assertThat, is, equalTo} from 'hamjest';
-import {spy, wasCalled, wasCalledWith, wasNotCalled} from 'spyjest';
+import {spy, wasCalled } from 'spyjest';
 import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 
-import {ifNotifyOnRemovedCookies, ifRemoveCookiesOnStartup, setNotifyCookiesRemoved, setRemoveCookiesOnStartup, test_loadSettings, test_saveSetting} from '../src/settings';
+import {ifNotifyOnRemovedCookies, test_loadSettings, test_saveSetting} from '../src/settings';
 
 describe("settings", function () {
 
@@ -29,53 +29,6 @@ describe("settings", function () {
             });
     });
 
-    it("saveSettings() does not save when the value set before was equal", function (done) {
-        let setSyncStorage = spy(_=>_);
-        installGlobalMock('browser.storage.sync.set', setSyncStorage);
-        installGlobalMock('browser.storage.sync.get', () => ({settings:{someKey: true}}));
-
-        test_saveSetting('someKey', true)
-            .orElse(() => {
-                assertThat(setSyncStorage, wasNotCalled());
-                done();
-            });
-    });
-
-    it("saveSettings() saves any value when it was not set before", function (done) {
-        let setSyncStorage = spy(_=> Promise.resolve());
-        installGlobalMock('browser.storage.sync.set', setSyncStorage);
-        installGlobalMock('browser.storage.sync.get', () => ({settings:{}}));
-
-        test_saveSetting('someKey', false)
-            .map(() => {
-                assertThat(setSyncStorage, wasCalledWith({settings:{someKey: false}}));
-                done();
-            });
-    });
-
-    it("given stored settings with removeOnStartup=true, ifRemoveCookiesOnStartup() returns a truthly maybe", function (done) {
-        let getStorage = spy(() => ({settings: {removeOnStartup: true}}));
-        installGlobalMock('browser.storage.sync.get', getStorage);
-
-        ifRemoveCookiesOnStartup()
-            .map(() => {
-                assertThat(getStorage, wasCalled());
-                done();
-            });
-    });
-
-    it("setRemoveCookiesOnStartup(true) stores removeOnStartup=true, even when it was false before", function (done) {
-        let setSyncStorage = spy(_=> Promise.resolve());
-        installGlobalMock('browser.storage.sync.get', () => ({settings: {removeOnStartup: false}}));
-        installGlobalMock('browser.storage.sync.set', setSyncStorage);
-
-        setRemoveCookiesOnStartup(true)
-            .map(() => {
-                assertThat(setSyncStorage, wasCalledWith({settings: {removeOnStartup: true}}));
-                done();
-            });
-    });
-
     it("given stored settings with notifyOnRemovedCookies=true, ifNotifyOnRemovedCookies() returns a truthly maybe", function (done) {
         let getStorage = spy(() => ({settings: {notifyCookiesRemoved: true}}));
         installGlobalMock('browser.storage.sync.get', getStorage);
@@ -83,18 +36,6 @@ describe("settings", function () {
         ifNotifyOnRemovedCookies()
             .map(() => {
                 assertThat(getStorage, wasCalled());
-                done();
-            });
-    });
-
-    it("setNotifyOnRemovedCookies(true) stores notifyOnRemovedCookies=true, even when it was false before", function (done) {
-        let setSyncStorage = spy(_=> Promise.resolve());
-        installGlobalMock('browser.storage.sync.get', () => ({settings: {notifyCookiesRemoved: false}}));
-        installGlobalMock('browser.storage.sync.set', setSyncStorage);
-
-        setNotifyCookiesRemoved(true)
-            .map(() => {
-                assertThat(setSyncStorage, wasCalledWith({settings: {notifyCookiesRemoved: true}}));
                 done();
             });
     });
