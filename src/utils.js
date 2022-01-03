@@ -1,6 +1,5 @@
 import {Maybe} from 'wellmaybe';
 
-export const returnTrue = () => true;
 export const safeMaybeOf = fn => {
     try {
         return Maybe.of(fn());

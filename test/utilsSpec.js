@@ -1,18 +1,12 @@
-import {assertThat, is} from 'hamjest';
+import {assertThat} from 'hamjest';
 import {spy, wasCalled, wasCalledWith, wasNotCalled} from 'spyjest';
 import {uninstallGlobalMocks} from './globalMock';
 
-import {returnTrue, safeMaybeOf} from '../src/utils';
+import {safeMaybeOf} from '../src/utils';
 
 describe("utils", function () {
 
     afterEach(uninstallGlobalMocks);
-
-    it("returnTrue always returns true", function () {
-        assertThat(returnTrue(false), is(true));
-        assertThat(returnTrue(''), is(true));
-        assertThat(returnTrue(true), is(true));
-    });
 
     it("safeMaybeOf returns the result of a function as a maybe", function () {
         let onSuccess = spy();

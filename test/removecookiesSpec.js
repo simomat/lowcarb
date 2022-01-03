@@ -1,8 +1,10 @@
 import {assertThat, anything} from 'hamjest';
 import {spy, wasCalled, wasCalledWith, wasNotCalled} from 'spyjest';
 import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
+import {NOTIFICATION_COOKIES_REMOVED} from '../src/notify';
 
 import {removeCookies} from '../src/removecookies';
+
 
 describe("removecookies", function () {
 
@@ -27,7 +29,7 @@ describe("removecookies", function () {
                 assertThat(remove, wasCalledWith({url: 'fizz', storeId: 2, name: 'buzz'}));
 
                 assertThat(notify, wasCalled().times(1));
-                assertThat(notify, wasCalledWith('lowcarb-cookies-removed', anything()));
+                assertThat(notify, wasCalledWith(NOTIFICATION_COOKIES_REMOVED, anything()));
                 done();
             });
     });
@@ -66,7 +68,7 @@ describe("removecookies", function () {
                 assertThat(remove, wasCalledWith({url: 'fizz', storeId: 2, name: 'buzz'}));
 
                 assertThat(notify, wasCalled().times(1));
-                assertThat(notify, wasCalledWith('lowcarb-cookies-removed', anything()));
+                assertThat(notify, wasCalledWith(NOTIFICATION_COOKIES_REMOVED, anything()));
                 done();
             });
     });

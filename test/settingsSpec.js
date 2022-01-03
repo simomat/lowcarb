@@ -30,12 +30,12 @@ describe("settings", function () {
     });
 
     it("given stored settings with notifyOnRemovedCookies=true, ifNotifyOnRemovedCookies() returns a truthly maybe", function (done) {
-        let getStorage = spy(() => ({settings: {notifyCookiesRemoved: true}}));
-        installGlobalMock('browser.storage.sync.get', getStorage);
+        let getSyncStorage = spy(() => ({settings: {notifyCookiesRemoved: true}}));
+        installGlobalMock('browser.storage.sync.get', getSyncStorage);
 
         ifNotifyOnRemovedCookies()
             .map(() => {
-                assertThat(getStorage, wasCalled());
+                assertThat(getSyncStorage, wasCalled());
                 done();
             });
     });

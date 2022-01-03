@@ -1,21 +1,22 @@
 import {assertThat, anything} from 'hamjest';
-import {spy, wasCalled, wasCalledWith, wasNotCalled} from 'spyjest';
+import {spy, wasCalledWith, wasNotCalled} from 'spyjest';
 import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 
-import {notifyCookiesRemoved} from '../src/notify';
+import {notifyCookiesRemoved, NOTIFICATION_COOKIES_REMOVED} from '../src/notify';
 
 describe("notify", function () {
 
     afterEach(uninstallGlobalMocks);
 
-    it("notifyCookiesRemoved calls API", function () {
+    it("notifyCookiesRemoved calls API", async function () {
         let notify = spy(_=> Promise.resolve());
         installGlobalMock('browser.notifications.create', notify);
         installGlobalMock('browser.storage.sync.get', () => ({settings:{notifyCookiesRemoved:true}}));
+        installGlobalMock('browser.alarms.get', _=> Promise.resolve([123]));
 
-        notifyCookiesRemoved(['x']);
+        await notifyCookiesRemoved(['x']);
 
-        assertThat(notify, wasCalledWith('lowcarb-cookies-removed', anything()));
+        assertThat(notify, wasCalledWith(NOTIFICATION_COOKIES_REMOVED, anything()));
     });
 
     it("notifyCookiesRemoved does not call API if notification is disabled", function () {
