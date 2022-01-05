@@ -2,7 +2,7 @@ import {assertThat, is, equalTo} from 'hamjest';
 import {spy, wasCalled } from 'spyjest';
 import {installGlobalMock, uninstallGlobalMocks} from './globalMock';
 
-import {ifNotifyOnRemovedCookies, test_loadSettings, test_saveSetting} from '../src/settings';
+import {test_loadSettings, test_saveSetting} from '../src/settings';
 
 describe("settings", function () {
 
@@ -25,17 +25,6 @@ describe("settings", function () {
         test_loadSettings()
             .map(settings => {
                 assertThat(settings, equalTo({someKey: 'bla'}));
-                done();
-            });
-    });
-
-    it("given stored settings with notifyOnRemovedCookies=true, ifNotifyOnRemovedCookies() returns a truthly maybe", function (done) {
-        let getSyncStorage = spy(() => ({settings: {notifyCookiesRemoved: true}}));
-        installGlobalMock('browser.storage.sync.get', getSyncStorage);
-
-        ifNotifyOnRemovedCookies()
-            .map(() => {
-                assertThat(getSyncStorage, wasCalled());
                 done();
             });
     });

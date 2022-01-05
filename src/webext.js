@@ -9,9 +9,11 @@ export const getIntMessage = browser.i18n.getMessage;
 export const createNotification = (id, param) => browser.notifications.create(id, param).then(() => true);
 export const clearNotification = id => browser.notifications.clear(id);
 
+export const setSyncStorage = object => safeMaybeOf(() => browser.storage.sync.set(object).then(() => true));
 export const getSyncStorage = key => safeMaybeOf(() => browser.storage.sync.get(key));
 
 export const onBrowserActionClicked = listener => browser.browserAction.onClicked.addListener(listener);
 
 export const createAlarm = browser.alarms.create;
+export const getAlarm = browser.alarms.get
 export const onAlarm = browser.alarms.onAlarm.addListener;

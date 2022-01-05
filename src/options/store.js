@@ -1,47 +1,7 @@
 import { createStore } from 'vuex';
 
-import { normalizeDomain } from '../domain';
-
-
-const toListItem = isApplied => name => ({ name, isApplied });
-
-const addToMap = (map, domain) => map.set(domain.name, domain);
-
-function createListItems(cookies, whitelistDomains) {
-
-    let itemMap = cookies
-        .map(cookie => cookie.domain)
-        .map(normalizeDomain)
-        .map(toListItem(false))
-        .reduce(addToMap, new Map());
-
-    itemMap = whitelistDomains
-        .map(normalizeDomain)
-        .map(toListItem(true))
-        .reduce(addToMap, itemMap);
-
-    return Array.from(itemMap.values());
-}
-
-const DEFAULT_SETTINGS = {
-    removeOnStartup: false,
-    notifyCookiesRemoved: false
-}
-
-const mutateStoredWhitelistDomains = mutator =>
-    browser.storage.sync.get({ 'whitelistDomains': [] })
-        .then(storage => {
-            let whitelistDomains = new Set(storage.whitelistDomains);
-            mutator(whitelistDomains);
-            browser.storage.sync.set({ whitelistDomains: Array.from(whitelistDomains) });
-        });
-
-const mutateSettings = mutator =>
-    browser.storage.sync.get({ 'settings': {} })
-    .then(storage => {
-        mutator(storage.settings);
-        browser.storage.sync.set({ settings: storage.settings });
-    });
+import { getDomains, mutateStoredWhitelistDomains } from './domains';
+import { getSettings, mutateSettings } from './settings';
 
 export const store = createStore({
     state() {
@@ -50,63 +10,35 @@ export const store = createStore({
             settings: {}
         }
     },
-
     mutations: {
-        setDomains(state, domains) {
-            
-            state.domains = domains;
-        },
-        changeSetting(state, settings) {
-            state.settings = { ...state.settings, ... settings}
-        },
-        setApplied(state, domain, isApplied) {
-            let domainFromStore = state.domains.find(d => d.name === domain.name);
-            domainFromStore.isApplied = isApplied;
-        }
+        setDomains: (state, domains) => state.domains = domains,
+        changeSetting: (state, settings) => state.settings = { ...state.settings, ...settings },
+        setApplied: (state, {domain, apply}) => state.domains.find(d => d.name === domain.name).isApplied = apply,
     },
     getters: {
         domains: state => state.domains,
         settings: state=> state.settings
     },
     actions: {
-        async loadDomains({ commit }) {
-            const [cookies, whitelistDomains] = await Promise.all([
-                browser.cookies.getAll({}),
-                browser.storage.sync.get('whitelistDomains') // was kommt hier wenn nichts gespeichert ist?
-                    .then(storage => storage.whitelistDomains)
-                    .then(domainNames => Array.from(new Set(domainNames)))
-            ]);
+        loadDomains: async ({ commit }) => commit('setDomains', await getDomains()),
+        loadSettings: async ({commit}) => commit('changeSetting', await getSettings()),
+        toggleApplied: ({ commit }, domain) => {
+            let apply = ! domain.isApplied;
 
-            
-            const newLocal = createListItems(cookies, whitelistDomains);
-            commit('setDomains', newLocal)
-
-        },
-        async toggleApplied({ dispatch, commit }, domain) {
-            let newIsApplied = ! domain.isApplied;
-            commit('setApplied', domain, newIsApplied)
-            await mutateStoredWhitelistDomains(
-                newIsApplied
+            commit('setApplied', {domain, apply})
+            mutateStoredWhitelistDomains(
+                apply
                     ? whitelistDomains => whitelistDomains.add(domain.name)
                     : whitelistDomains => whitelistDomains.delete(domain.name));
 
-            dispatch('loadDomains');
-
         },
-        async loadSettings({commit}) {
-            let savedSettings = await browser.storage.sync.get('settings')
-            commit('changeSetting', {...DEFAULT_SETTINGS, ...savedSettings.settings })
-
-        },
-        setRemoveOnStartup({commit}, removeOnStartup) {
+        setRemoveOnStartup: ({commit}, removeOnStartup) => {
             commit('changeSetting', {removeOnStartup})
             mutateSettings(settings => {
                 settings.removeOnStartup = removeOnStartup
             })
-            
-
         },
-        setNotifyCookiesRemoved({commit}, notifyCookiesRemoved) {
+        setNotifyCookiesRemoved: ({commit}, notifyCookiesRemoved) => {
             commit('changeSetting', {notifyCookiesRemoved})
             mutateSettings(settings => settings.notifyCookiesRemoved = notifyCookiesRemoved)
         },
