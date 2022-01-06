@@ -10,5 +10,3 @@ const extractSettings = storage => Maybe.of(storage.settings).orElse(() => ({...
 
 export const loadSettings = () => getSyncStorage('settings').map(extractSettings);
 export const saveSettings = settings => setSyncStorage({settings});
-export const ifNotifyOnRemovedCookies = () => loadSettings().map(settings => settings.notifyCookiesRemoved);
-export const test_loadSettings = loadSettings;

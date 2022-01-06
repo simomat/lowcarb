@@ -51,8 +51,7 @@
     "webpack-dev-server": "^4.6.0"
   },
   "browserslist": [
-    "firefox > 52",
-    "not dead"
+    "firefox > 52"
   ],
   "private": true
 }

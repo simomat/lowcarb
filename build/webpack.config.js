@@ -50,7 +50,6 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-       //     options: { hmr: !env.production } // ????????
           },
           'css-loader'
         ]
@@ -69,11 +68,7 @@ module.exports = {
       excludeChunks: ['background'],
     }),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin(
-    //   {
-    //   filename: '[name].css'
-    // }
-    ),
+    new MiniCssExtractPlugin(),
   ],
   
   optimization: {
