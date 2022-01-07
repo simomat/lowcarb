@@ -1,12 +1,12 @@
-import {Maybe} from 'wellmaybe';
-import {getSyncStorage, setSyncStorage} from './webext';
+import { Maybe } from 'wellmaybe';
+import { getSyncStorage, setSyncStorage } from './webext';
 
 const defaultSettings = Object.freeze({
-    removeOnStartup: false,
-    notifyCookiesRemoved: false
+  removeOnStartup: false,
+  notifyCookiesRemoved: false
 });
 
-const extractSettings = storage => Maybe.of(storage.settings).orElse(() => ({...defaultSettings }));
+const extractSettings = storage => Maybe.of(storage.settings).orElse(() => ({ ...defaultSettings }));
 
 export const loadSettings = () => getSyncStorage('settings').map(extractSettings);
-export const saveSettings = settings => setSyncStorage({settings});
+export const saveSettings = settings => setSyncStorage({ settings });

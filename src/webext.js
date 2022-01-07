@@ -1,5 +1,6 @@
-import {safeMaybeOf} from './utils';
+import { safeMaybeOf } from './utils';
 
+/* eslint-disable no-undef */
 export const getAllCookies = () => safeMaybeOf(() => browser.cookies.getAll({}));
 export const removeCookie = param => browser.cookies.remove(param);
 export const openOptionsPage = () => browser.runtime.openOptionsPage();
@@ -15,5 +16,5 @@ export const getSyncStorage = key => safeMaybeOf(() => browser.storage.sync.get(
 export const onBrowserActionClicked = listener => browser.browserAction.onClicked.addListener(listener);
 
 export const createAlarm = browser.alarms.create;
-export const getAlarm = browser.alarms.get
 export const onAlarm = browser.alarms.onAlarm.addListener;
+/* eslint-enable no-undef */

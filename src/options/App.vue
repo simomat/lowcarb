@@ -68,44 +68,43 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { removeCookies } from "../removecookies";
+import { mapActions } from 'vuex'
+import { removeCookies } from '../removecookies'
+import { getIntMessage } from '../webext'
 
 export default {
   computed: {
-    domains() {
-      return this.$store.getters.domains;
+    domains () {
+      return this.$store.getters.domains
     },
     removeOnStartup: {
-      get() {
-        return this.$store.getters.settings.removeOnStartup;
+      get () {
+        return this.$store.getters.settings.removeOnStartup
       },
-      set(newValue) {
-        this.$store.dispatch("setRemoveOnStartup", newValue);
-      },
+      set (newValue) {
+        this.$store.dispatch('setRemoveOnStartup', newValue)
+      }
     },
     notifyCookiesRemoved: {
-      get() {
-        return this.$store.getters.settings.notifyCookiesRemoved;
+      get () {
+        return this.$store.getters.settings.notifyCookiesRemoved
       },
-      set(newValue) {
-        this.$store.dispatch("setNotifyCookiesRemoved", newValue);
-      },
-    },
+      set (newValue) {
+        this.$store.dispatch('setNotifyCookiesRemoved', newValue)
+      }
+    }
   },
   methods: {
-    ...mapActions(["toggleApplied"]),
-    apply() {
-      removeCookies().map(this.refresh);
+    ...mapActions(['toggleApplied']),
+    apply () {
+      removeCookies().map(this.refresh)
     },
-    refresh() {
-      this.$store.dispatch("loadDomains");
+    refresh () {
+      this.$store.dispatch('loadDomains')
     },
-    m(key) {
-      return browser.i18n.getMessage(key);
-    },
-  },
-};
+    m: getIntMessage
+  }
+}
 </script>
 
 <style>
