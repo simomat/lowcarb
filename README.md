@@ -2,7 +2,6 @@
 
 A Firefox Plugin to remove unwanted cookies but keeps your whitelisted cookies. 
 
-[![Build Status](https://travis-ci.org/simomat/lowcarb.svg?branch=master)](https://travis-ci.org/simomat/lowcarb) [![devDependency Status](https://david-dm.org/simomat/lowcarb/dev-status.svg)](https://david-dm.org/simomat/lowcarb?type=dev)
 
 [Get it from mozilla](https://addons.mozilla.org/en-US/firefox/addon/lowcarb/)
 
