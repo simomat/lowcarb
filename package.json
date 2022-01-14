@@ -1,7 +1,7 @@
 {
   "name": "lowcarb",
   "description": "A Firefox Plugin to remove unwanted cookies",
-  "version": "1.1.9",
+  "version": "2.0.0",
   "license": "MPL-2.0",
   "author": "Matthias Simon",
   "homepage": "https://github.com/simomat/lowcarb#readme",
@@ -16,13 +16,12 @@
     "eslint": "eslint --fix src/**",
     "build": "webpack --mode=production --config build/webpack.config.js",
     "serve": "webpack-dev-server --mode=development --config build/webpack.config.js",
-    "chunks": "webpack --stats-modules-space 999 --mode=development --config build/webpack.config.js",
     "test": "jest",
     "clean": "rimraf build/dist/* & rimraf build/package/*",
     "start": "web-ext run --source-dir build/dist/ --start-url about:debugging --start-url about:addons --verbose",
     "lint": "web-ext lint --source-dir build/dist/",
     "pack": "web-ext build --source-dir build/dist/ --artifacts-dir build/package --overwrite-dest",
-    "sign": "web-ext sign --source-dir build/dist/"
+    "sign": "web-ext sign --source-dir build/dist/ --artifacts-dir build/package --channel listed"
   },
   "dependencies": {
     "escape-string-regexp": "^1.0.5",
@@ -55,7 +54,7 @@
     "webpack-dev-server": "^4.6.0"
   },
   "browserslist": [
-    "firefox > 52"
+    "firefox >= 57"
   ],
   "private": true
 }
