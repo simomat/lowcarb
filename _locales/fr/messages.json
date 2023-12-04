@@ -1,0 +1,32 @@
+{
+  "extensionDescription": {
+    "message": "Retirer les cookies indésirables"
+  },
+  "actionTitle": {
+    "message": "Retirer les cookies"
+  },
+  "saveAndRemoveCookies": {
+    "message": "Appliquer"
+  },
+  "selectCookies": {
+    "message": "Sélectionner les cookies à garder"
+  },
+  "refresh": {
+    "message": "Rafraîchir"
+  },
+  "removeOnStartup": {
+    "message": "Retirer les cookies au démarrage"
+  },
+  "empty": {
+    "message": "vide"
+  },
+  "removed": {
+    "message": "retiré"
+  },
+  "removedXCookies": {
+    "message": "lowcarb supprimé les cookies $1"
+  },
+  "notifyCookiesRemoved": {
+    "message": "Notifier après retiré"
+  }
+}

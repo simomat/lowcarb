@@ -1,0 +1,32 @@
+{
+  "extensionDescription": {
+    "message": "Remove unwanted cookies"
+  },
+  "actionTitle": {
+    "message": "Remove Cookies"
+  },
+  "saveAndRemoveCookies": {
+    "message": "Apply"
+  },
+  "selectCookies": {
+    "message": "Select which cookies to keep"
+  },
+  "refresh": {
+    "message": "Refresh"
+  },
+  "removeOnStartup": {
+    "message": "Remove cookies on startup"
+  },
+  "empty": {
+    "message": "empty"
+  },
+  "removed": {
+    "message": "removed"
+  },
+  "removedXCookies": {
+    "message": "lowcarb removed $1 cookies"
+  },
+  "notifyCookiesRemoved": {
+    "message": "Notify when removed cookies"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "lowcarb",
+  "description": "__MSG_extensionDescription__",
+  "homepage_url": "https://github.com/simomat/lowcarb",
+  "author": "Matthias Simon",
+  "developer": {
+    "name": "Matthias Simon",
+    "url": "https://github.com/simomat"
+  },
+  "version": "2.0.0",
+  "manifest_version": 2,
+  "permissions": [
+    "cookies",
+    "<all_urls>",
+    "storage",
+    "notifications",
+    "tabs",
+    "alarms"
+  ],
+  "default_locale": "en",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "lowcab@infonautika.de",
+      "strict_min_version": "57.0"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "browser_style": false,
+    "chrome_style": false,
+    "default_icon": {
+      "16": "icons/scale-16.png",
+      "32": "icons/scale-32.png",
+      "64": "icons/scale-64.png"
+    },
+    "default_title": "__MSG_actionTitle__"
+  },
+  "icons": {
+    "16": "icons/scale-16.png",
+    "32": "icons/scale-32.png",
+    "64": "icons/scale-64.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  }
+}
