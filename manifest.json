@@ -1,5 +1,5 @@
 {
-  "name": "lowcarb",
+  "name": "lowcarb2",
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/simomat/lowcarb",
   "author": "Matthias Simon",
@@ -7,7 +7,7 @@
     "name": "Matthias Simon",
     "url": "https://github.com/simomat"
   },
-  "version": "2.0.0",
+  "version": "3.0.0",
   "manifest_version": 2,
   "permissions": [
     "cookies",
