@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     browser: true,
+    webextensions: true,
     es2024: true
   },
   extends: [

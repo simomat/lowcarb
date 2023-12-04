@@ -5,16 +5,41 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="options.css">
 </head>
 
-<body>
-  <div id="app">
-    Domains:
-    <div id="domains-container">
+<body id="lowcarb">
+  <header class="panel-section panel-section-header">
+    <div id="div-selectCookies" class="text-section-header"></div>
+  </header>
 
+  <div class="panel-section">
+    <div class="lc-table">
+      <div id="domains-container" class="panel-section-list"></div>
     </div>
-    </ul>
   </div>
-  <script defer src="src/options/index.js"></script>
+
+  <div class="panel-section-separator"></div>
+
+  <div class="panel-section">
+    <div class="lc-option browser-style">
+      <input id="s-removeOnStartup" type="checkbox" role="switch"/>
+      <label id="l-removeOnStartup" class="form-check-label" for="s-removeOnStartup"></label>
+    </div>
+    <div class="lc-option browser-style">
+      <input id="s-notify" type="checkbox" role="switch"/>
+      <label id="l-notifyCookiesRemoved" class="form-check-label" for="s-notify"></label>
+    </div>
+  </div>
+
+  <footer class="lc-footer panel-section panel-section-footer">
+    <button id="btn-saveAndRemoveCookies" type="button" class="lc-button browser-style panel-section-footer-button default"></button>
+
+    <div class="panel-section-footer-separator"></div>
+    <button id="btn-refresh" type="button" class="lc-button browser-style panel-section-footer-button"></button>
+  </footer>
+
+  <script src="src/options/translate.js"></script>
+  <script type="module" src="src/options/index.js"></script>
 </body>
 </html>

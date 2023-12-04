@@ -1,0 +1,37 @@
+#lowcarb {
+  width: 98%;
+  margin: 0 auto;
+}
+
+.lc-table {
+  overflow-y: scroll;
+  height: 15em;
+  width: 100vw;
+  border-left: 1px solid #e2e3e2;
+  border-right: 1px solid #e2e3e2;
+}
+
+.lc-footer {
+  margin-bottom: 5px;
+}
+
+.lc-button {
+  height: inherit;
+}
+
+.lc-option {
+  margin: 1em;
+}
+
+.panel-list-item {
+  height: 2em;
+  border-bottom: 1px solid #e2e3e2;
+}
+
+.lc-active {
+  font-weight: bolder;
+}
+
+.panel-section-list {
+  font-weight: lighter;
+}

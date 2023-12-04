@@ -4,7 +4,7 @@
   "description": "CHANGEME",
   "main": "index.js",
   "scripts": {
-    "dev": "web-ext run",
+    "dev": "web-ext run --browser-console --devtools",
     "lint": "eslint -c .eslintrc.js --fix '**/*.{js,html}'"
   },
   "author": "",
