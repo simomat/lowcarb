@@ -1,20 +1,23 @@
+import { toggleDomainApplied } from './actions.js'
+
 export class DomainElement extends HTMLDivElement {
-  constructor (domains) {
+  constructor (domain) {
     super()
-    this.domains = domains
-    this.textContent = domains.name
+    this.domain = domain
+    this.textContent = domain.name
     this.classList.add('panel-list-item')
     this.setActiveClass()
 
     this.addEventListener('click', () => {
-      this.domains.isApplied = !this.domains.isApplied
+      this.domain.isApplied = !this.domain.isApplied
+      toggleDomainApplied(this.domain)
       this.setActiveClass()
     })
   }
 
   setActiveClass () {
     const clazz = 'lc-active'
-    if (this.domains.isApplied) {
+    if (this.domain.isApplied) {
       this.classList.add(clazz)
     } else {
       this.classList.remove(clazz)
