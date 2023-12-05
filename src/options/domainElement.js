@@ -1,4 +1,4 @@
-import { toggleDomainApplied } from './actions.js'
+import { toggleDomainApplied } from '../actions.js'
 
 export class DomainElement extends HTMLDivElement {
   constructor (domain) {

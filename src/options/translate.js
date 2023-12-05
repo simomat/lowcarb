@@ -1,4 +1,4 @@
-const translate = browser.i18n.getMessage
+import { translate } from '../browser.js'
 
 document.getElementById('div-selectCookies').innerText = translate('selectCookies')
 document.getElementById('l-removeOnStartup').innerText = translate('removeOnStartup')

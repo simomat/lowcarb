@@ -2,6 +2,7 @@ export const getWhitelistDomains = async () => (await browser.storage.sync.get({
 export const setWhitelistDomains = whitelistDomains => browser.storage.sync.set({ whitelistDomains })
 export const getCookies = () => browser.cookies.getAll({})
 
+export const saveSettings = async settings => browser.storage.sync.set({ settings })
 export const getSettings = async () => {
   const storage = await browser.storage.sync.get('settings')
   return storage.settings ?? {
@@ -12,7 +13,15 @@ export const getSettings = async () => {
   }
 }
 
-export const saveSettings = async settings => browser.storage.sync.set({ settings })
+export function openOptionsPageOnbrowserAction () {
+  browser.browserAction.onClicked.addListener(() => browser.runtime.openOptionsPage())
+}
+
+export const createNotification = (id, param) => browser.notifications.create(id, param)
+export const clearNotification = id => browser.notifications.clear(id)
+export const createAlarm = browser.alarms.create
+export const onAlarm = browser.alarms.onAlarm.addListener
+export const translate = browser.i18n.getMessage
 
 export const normalizeDomain = domain => {
   domain = domain.toLowerCase()

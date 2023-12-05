@@ -1,6 +1,6 @@
 import { buildDomainModel } from './domainModel.js'
 import { DomainElement, updateDomainElements } from './domainElement.js'
-import { removeCookies } from './actions.js'
+import { removeCookies } from '../actions.js'
 import { getSettings, saveSettings } from '../browser.js'
 
 window.customElements.define('domain-element', DomainElement, { extends: 'div' })
