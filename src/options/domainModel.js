@@ -1,8 +1,9 @@
+import { getWhitelistDomains, getCookies } from '../browser.js'
 import { domainCompare } from './domaincompare.js'
 
 export async function buildDomainModel () {
   const cookieDomains = await getCookieDomains()
-  const whitelistDomains = await getWhitelistDomains()
+  const whitelistDomains = (await getWhitelistModel())
 
   const modelMap = [
     ...cookieDomains,
@@ -14,16 +15,13 @@ export async function buildDomainModel () {
   return model
 }
 
-async function getWhitelistDomains () {
-  const storage = await browser.storage.sync.get({ whitelistDomains: [] })
-  if (!storage || !storage.whitelistDomains) {
-    return []
-  }
-  return [...new Set(storage.whitelistDomains)].map(d => ({ name: d, isApplied: true }))
+async function getWhitelistModel () {
+  const whitelistDomains = await getWhitelistDomains()
+  return [...new Set(whitelistDomains)].map(d => ({ name: d, isApplied: true }))
 }
 
 async function getCookieDomains () {
-  const cookies = await browser.cookies.getAll({})
+  const cookies = await getCookies()
   return cookies.map(c => ({ name: normalizeDomain(c.domain), isApplied: false }))
 }
 

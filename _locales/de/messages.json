@@ -5,7 +5,7 @@
   "actionTitle": {
     "message": "Cookies Löschen"
   },
-  "saveAndRemoveCookies": {
+  "removeCookies": {
     "message": "Übernehmen"
   },
   "selectCookies": {
