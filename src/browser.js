@@ -13,10 +13,7 @@ export const getSettings = async () => {
   }
 }
 
-export function openOptionsPageOnbrowserAction () {
-  browser.browserAction.onClicked.addListener(() => browser.runtime.openOptionsPage())
-}
-
+export const openOptionsPageOnBrowserAction = () => browser.browserAction.onClicked.addListener(() => browser.runtime.openOptionsPage())
 export const createNotification = (id, param) => browser.notifications.create(id, param)
 export const clearNotification = id => browser.notifications.clear(id)
 export const createAlarm = browser.alarms.create

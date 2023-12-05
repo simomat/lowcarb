@@ -1,8 +1,17 @@
 {
-  "name": "lc2",
-  "version": "0.0.1",
-  "description": "CHANGEME",
-  "main": "index.js",
+  "name": "lowcarb",
+  "description": "A Firefox Plugin to remove unwanted cookies",
+  "version": "3.0.0",
+  "license": "MPL-2.0",
+  "author": "Matthias Simon",
+  "homepage": "https://github.com/simomat/lowcarb#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simomat/lowcarb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/simomat/lowcarb/issues"
+  },
   "scripts": {
     "dev": "web-ext run --start-url about:debugging --start-url about:addons --browser-console --devtools --profile-create-if-missing --keep-profile-changes --firefox-profile=/tmp/lowcab-test",
     "lint:es": "eslint -c .eslintrc.js --fix '**/*.{js,html}'",
@@ -10,8 +19,6 @@
     "build": "web-ext build --artifacts-dir build/ --overwrite-dest",
     "sign": "web-ext sign --artifacts-dir build/ --channel listed"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "eslint": "^8.55.0",
     "eslint-config-standard": "^17.1.0",
