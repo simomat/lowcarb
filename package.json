@@ -4,8 +4,11 @@
   "description": "CHANGEME",
   "main": "index.js",
   "scripts": {
-    "dev": "web-ext run --browser-console --devtools --profile-create-if-missing --keep-profile-changes --firefox-profile=/tmp/lowcab-test",
-    "lint": "eslint -c .eslintrc.js --fix '**/*.{js,html}'"
+    "dev": "web-ext run --start-url about:debugging --start-url about:addons --browser-console --devtools --profile-create-if-missing --keep-profile-changes --firefox-profile=/tmp/lowcab-test",
+    "lint:es": "eslint -c .eslintrc.js --fix '**/*.{js,html}'",
+    "lint:webext": "web-ext lint",
+    "build": "web-ext build --artifacts-dir build/ --overwrite-dest",
+    "sign": "web-ext sign --artifacts-dir build/ --channel listed"
   },
   "author": "",
   "license": "ISC",
