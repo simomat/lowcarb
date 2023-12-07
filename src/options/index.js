@@ -9,16 +9,14 @@ async function updateListModel () {
   updateDomainElements((await buildDomainModel()))
 }
 
-function bindButtons () {
+async function bindControls () {
   document.getElementById('btn-removeCookies').addEventListener('click', async () => {
     await removeCookies()
     updateListModel()
   })
 
   document.getElementById('btn-refresh').addEventListener('click', updateListModel)
-}
 
-async function bindCheckboxes () {
   const settings = await getSettings()
 
   const toggleClickHandler = handler => event => {
@@ -44,6 +42,5 @@ async function bindCheckboxes () {
   notify.setAttribute('aria-pressed', settings.notifyCookiesRemoved)
 }
 
-bindButtons()
-bindCheckboxes()
+bindControls()
 updateListModel()
