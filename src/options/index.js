@@ -21,21 +21,27 @@ function bindButtons () {
 async function bindCheckboxes () {
   const settings = await getSettings()
 
-  const removeOnStartup = document.getElementById('s-removeOnStartup')
-  removeOnStartup.addEventListener('click', async () => {
-    const settings = await getSettings()
-    settings.removeOnStartup = removeOnStartup.checked
-    saveSettings(settings)
-  })
-  removeOnStartup.checked = settings.removeOnStartup
+  const toggleClickHandler = handler => event => {
+    const newState = event.target.getAttribute('aria-pressed') !== 'true'
+    event.target.setAttribute('aria-pressed', newState)
+    handler(newState)
+  }
 
-  const notify = document.getElementById('s-notify')
-  notify.addEventListener('click', async () => {
+  const removeOnStartup = document.getElementById('btn-removeOnStartup')
+  removeOnStartup.addEventListener('click', toggleClickHandler(async newVal => {
     const settings = await getSettings()
-    settings.notifyCookiesRemoved = notify.checked
+    settings.removeOnStartup = newVal
     saveSettings(settings)
-  })
-  notify.checked = settings.notifyCookiesRemoved
+  }))
+  removeOnStartup.setAttribute('aria-pressed', settings.removeOnStartup)
+
+  const notify = document.getElementById('btn-notify')
+  notify.addEventListener('click', toggleClickHandler(async newVal => {
+    const settings = await getSettings()
+    settings.notifyCookiesRemoved = newVal
+    saveSettings(settings)
+  }))
+  notify.setAttribute('aria-pressed', settings.notifyCookiesRemoved)
 }
 
 bindButtons()

@@ -15,7 +15,7 @@
     "storage",
     "notifications",
     "tabs",
-    "alarms"
+        "alarms"
   ],
   "default_locale": "en",
   "browser_specific_settings": {
@@ -45,6 +45,6 @@
   },
   "options_ui": {
     "page": "options.html",
-    "browser_style": true
+    "browser_style": false
   }
 }

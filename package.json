@@ -13,7 +13,7 @@
     "url": "https://github.com/simomat/lowcarb/issues"
   },
   "scripts": {
-    "dev": "web-ext run --start-url about:debugging --start-url about:addons --browser-console --devtools --profile-create-if-missing --keep-profile-changes --firefox-profile=/tmp/lowcab-test",
+    "dev": "web-ext run --start-url about:addons --devtools --profile-create-if-missing --keep-profile-changes --firefox-profile=/tmp/lowcab-test",
     "lint:es": "eslint -c .eslintrc.js --fix '**/*.{js,html}'",
     "lint:webext": "web-ext lint",
     "build": "web-ext build --artifacts-dir build/ --overwrite-dest",

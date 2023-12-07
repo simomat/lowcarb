@@ -1,3 +1,51 @@
+:root {
+  --color-white: #ffffff;
+  --color-blue-50: #0060df;
+  --color-blue-60: #0250bb;
+  --color-blue-70: #054096;
+
+  --color-cyan-20: #aaf2ff;
+  --color-cyan-30: #80ebff;
+  --color-cyan-50: #00ddff;
+
+  --color-gray-50: #bfbfc9;
+  --color-gray-60: #8f8f9d;
+  --color-gray-90: #1c1b22;
+
+  --in-content-page-background: #fff;
+  --in-content-page-color: rgb(21, 20, 26);
+  --in-content-border-color: #d7d7db;
+  --brand-color-accent: var(--color-blue-50);
+  --brand-color-accent-hover: var(--color-blue-60);
+  --brand-color-accent-active: var(--color-blue-70);
+  --border-interactive-color: var(--color-gray-60);
+  --color-canvas: var(--color-white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --in-content-page-background: rgb(28, 27, 34);
+    --in-content-page-color: rgb(251, 251, 254);
+    --in-content-border-color: rgba(249, 249, 250, 0.2);
+    --brand-color-accent: var(--color-cyan-50);
+    --brand-color-accent-hover: var(--color-cyan-30);
+    --brand-color-accent-active: var(--color-cyan-20);
+    --border-interactive-color: var(--color-gray-50);
+    --color-canvas: var(--color-gray-90);
+  }
+}
+
+:root {
+  font: message-box;
+  color: var(--in-content-page-color);
+  background: var(--in-content-page-background);
+}
+
+header {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 #lowcarb {
   width: 98%;
   margin: 0 auto;
@@ -5,10 +53,8 @@
 
 .lc-table {
   overflow-y: scroll;
-  height: 15em;
-  width: 100vw;
-  border-left: 1px solid #e2e3e2;
-  border-right: 1px solid #e2e3e2;
+  height: 20em;
+  border: 1px solid var(--in-content-border-color);
 }
 
 .lc-footer {
@@ -25,7 +71,7 @@
 
 .panel-list-item {
   height: 2em;
-  border-bottom: 1px solid #e2e3e2;
+  border-bottom: 1px solid var(--in-content-border-color);
 }
 
 .lc-active {
@@ -34,4 +80,127 @@
 
 .panel-section-list {
   font-weight: lighter;
+}
+
+/* form styles */
+
+:root {
+
+  --focus-outline-width: 2px;
+  --focus-outline-color: var(--color-accent-primary);
+
+  --button-background-color: color-mix(in srgb, currentColor 7%, transparent);
+  --button-background-color-hover: color-mix(in srgb, currentColor 14%, transparent);
+  --button-background-color-active: color-mix(in srgb, currentColor 21%, transparent);
+  --color-accent-primary: var(--brand-color-accent);
+  --color-accent-primary-hover: var(--brand-color-accent-hover);
+  --color-accent-primary-active: var(--brand-color-accent-active);
+
+  --border-radius-circle: 9999px;
+  --border-width: 1px;
+  --size-item-small: 16px;
+  --size-item-large: 32px;
+
+  --focus-outline: var(--focus-outline-width) solid var(--focus-outline-color);
+  --focus-outline-offset: 2px;
+
+}
+
+/* toggle-button: inspired by moz-toggle */
+
+.toggle-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-button {
+  --toggle-background-color: var(--button-background-color);
+  --toggle-background-color-hover: var(--button-background-color-hover);
+  --toggle-background-color-active: var(--button-background-color-active);
+  --toggle-background-color-pressed: var(--color-accent-primary);
+  --toggle-background-color-pressed-hover: var(--color-accent-primary-hover);
+  --toggle-background-color-pressed-active: var(--color-accent-primary-active);
+  --toggle-border-color: var(--border-interactive-color);
+  --toggle-border-radius: var(--border-radius-circle);
+  --toggle-border-width: var(--border-width);
+  --toggle-height: var(--size-item-small);
+  --toggle-width: var(--size-item-large);
+  --toggle-dot-background-color: var(--toggle-border-color);
+  --toggle-dot-background-color-on-pressed: var(--color-canvas);
+  --toggle-dot-margin: 1px;
+  --toggle-dot-height: calc(var(--toggle-height) - 2 * var(--toggle-dot-margin) - 2 * var(--toggle-border-width));
+  --toggle-dot-width: var(--toggle-dot-height);
+  --toggle-dot-transform-x: calc(var(--toggle-width) - 4 * var(--toggle-dot-margin) - var(--toggle-dot-width));
+}
+
+.toggle-button {
+  appearance: none;
+  padding: 0;
+  margin: 0;
+  border: var(--toggle-border-width) solid var(--toggle-border-color);
+  height: var(--toggle-height);
+  width: var(--toggle-width);
+  border-radius: var(--toggle-border-radius);
+  background: var(--toggle-background-color);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.toggle-button:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.toggle-button:enabled:hover {
+  background: var(--toggle-background-color-hover);
+  border-color: var(--toggle-border-color);
+}
+
+.toggle-button:enabled:active {
+  background: var(--toggle-background-color-active);
+  border-color: var(--toggle-border-color);
+}
+
+.toggle-button[aria-pressed="true"] {
+  background: var(--toggle-background-color-pressed);
+  border-color: transparent;
+}
+
+.toggle-button[aria-pressed="true"]:enabled:hover {
+  background: var(--toggle-background-color-pressed-hover);
+  border-color: transparent;
+}
+
+.toggle-button[aria-pressed="true"]:enabled:active {
+  background: var(--toggle-background-color-pressed-active);
+  border-color: transparent;
+}
+
+.toggle-button::before {
+  display: block;
+  content: "";
+  background-color: var(--toggle-dot-background-color);
+  height: var(--toggle-dot-height);
+  width: var(--toggle-dot-width);
+  margin: var(--toggle-dot-margin);
+  border-radius: var(--toggle-border-radius);
+  translate: 0;
+  transition: translate 100ms;
+}
+
+.toggle-button[aria-pressed="true"]::before {
+  translate: var(--toggle-dot-transform-x);
+  background-color: var(--toggle-dot-background-color-on-pressed);
+}
+
+.toggle-button[aria-pressed="true"]:enabled:hover::before,
+.toggle-button[aria-pressed="true"]:enabled:active::before {
+  background-color: var(--toggle-dot-background-color-on-pressed);
+}
+
+.toggle-button[aria-pressed="true"]:-moz-locale-dir(rtl)::before,
+.toggle-button[aria-pressed="true"]:dir(rtl)::before {
+  translate: calc(-1 * var(--toggle-dot-transform-x));
 }
