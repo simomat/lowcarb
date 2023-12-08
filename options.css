@@ -21,7 +21,6 @@
   --in-content-page-background: #fff;
   --in-content-page-color: rgb(21, 20, 26);
   --in-content-border-color: #d7d7db;
-  --in-content-text-color: var(--in-content-page-color);
 
   --border-interactive-color: var(--color-gray-60);
 
@@ -34,6 +33,9 @@
   --in-content-primary-button-border-color: transparent;
   --in-content-primary-button-border-hover: transparent;
   --in-content-primary-button-border-active: transparent;
+  --in-content-item-hover: color-mix(in srgb, var(--in-content-primary-button-background) 20%, transparent);
+  --in-content-box-background: #fff;
+  --in-content-box-background-odd: rgba(12, 12, 13, 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,6 +56,8 @@
     --in-content-primary-button-background: rgb(0, 221, 255);
     --in-content-primary-button-background-hover: rgb(128, 235, 255);
     --in-content-primary-button-background-active: rgb(170, 242, 255);
+    --in-content-box-background: rgb(35, 34, 43);
+    --in-content-box-background-odd: rgba(249,249,250,0.05);
   }
 }
 
@@ -61,35 +65,56 @@
   font: message-box;
   color: var(--in-content-page-color);
   background: var(--in-content-page-background);
+  scale: 92%; /* scale / vertical scrollbar fix */
 }
 
 header {
-  margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
 
 #lowcarb {
-  width: 98%;
   margin: 0 auto;
+  scale: 102%;
 }
 
 .lc-table {
   overflow-y: scroll;
-  height: 20em;
+  height: 30rem;
   border: 1px solid var(--in-content-border-color);
+  border-radius: 4px;
+  background-color: var(--in-content-box-background);
+  margin-bottom: 1rem;
+}
+
+#domains-container > .lc-list-item:nth-child(odd) {
+  background-color: var(--in-content-box-background-odd);
+}
+
+#domains-container > .lc-list-item:hover {
+  background-color: var(--in-content-item-hover);
+}
+
+.lc-settings-container {
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+
+.toggle-label {
+  padding: 0.8rem;
 }
 
 .lc-footer {
-  margin-bottom: 5px;
+  display: flex;
+  gap: 2rem;
+  margin-left: 1rem;
+  padding-bottom: 2rem;
 }
 
-.lc-option {
-  margin: 1em;
-}
-
-.panel-list-item {
-  height: 2em;
-  border-bottom: 1px solid var(--in-content-border-color);
+.lc-list-item {
+  height: var(--size-item-large);
+  padding-left: 2rem;
+  display: flex;
+  align-items: center;
 }
 
 .lc-active {
@@ -181,9 +206,8 @@ header {
 
 .toggle-label {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 1rem;
 }
 
 .toggle-button {

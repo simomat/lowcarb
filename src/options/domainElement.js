@@ -5,7 +5,7 @@ export class DomainElement extends HTMLDivElement {
     super()
     this.domain = domain
     this.textContent = domain.name
-    this.classList.add('panel-list-item')
+    this.classList.add('lc-list-item')
     this.setActiveClass()
 
     this.addEventListener('click', () => {
