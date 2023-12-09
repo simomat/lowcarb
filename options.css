@@ -112,13 +112,22 @@ header {
 
 .lc-list-item {
   height: var(--size-item-large);
-  padding-left: 2rem;
   display: flex;
   align-items: center;
 }
 
-.lc-active {
+.lc-list-item:not(.lc-selected) {
+  padding-left: 1.8rem;
+}
+
+.lc-selected {
   font-weight: bolder;
+}
+
+.lc-selected::before {
+  content:  '✓';
+  width: 1.3rem;
+  padding-left: 0.5rem;
 }
 
 .panel-section-list {

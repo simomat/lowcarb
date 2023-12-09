@@ -16,7 +16,7 @@ export class DomainElement extends HTMLDivElement {
   }
 
   setActiveClass () {
-    const clazz = 'lc-active'
+    const clazz = 'lc-selected'
     if (this.domain.isApplied) {
       this.classList.add(clazz)
     } else {
