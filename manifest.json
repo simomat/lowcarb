@@ -15,7 +15,7 @@
     "storage",
     "notifications",
     "tabs",
-        "alarms"
+    "alarms"
   ],
   "default_locale": "en",
   "browser_specific_settings": {

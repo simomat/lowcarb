@@ -23,16 +23,12 @@ export async function toggleDomainApplied (domain) {
 }
 
 export async function removeCookies () {
-  const whitelistDomains = [...new Set(await getWhitelistDomains())]
-  if (whitelistDomains.length === 0) {
-    return
-  }
-
   const cookies = await getCookies()
   if (cookies.lengt === 0) {
     return
   }
 
+  const whitelistDomains = [...new Set(await getWhitelistDomains())]
   const domainMatchers = whitelistDomains.map(toDomainMatchers)
   const deletedCookiesCount = cookies
     .filter(c => !domainMatchers.some(matcher => matcher.test(c.domain)))
@@ -44,6 +40,10 @@ export async function removeCookies () {
 }
 
 async function notifyCookiesRemoved (count) {
+  if (!count) {
+    return
+  }
+
   const settings = await getSettings()
   if (!settings.notifyCookiesRemoved) {
     return
