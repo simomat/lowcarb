@@ -9,6 +9,17 @@ module.exports = {
     'eslint:recommended'
   ],
   plugins: [
-    'html'
-  ]
+    'html',
+    '@html-eslint'
+  ],
+  overrides: [
+    {
+      files: ['*.html'],
+      parser: '@html-eslint/parser',
+      extends: ['plugin:@html-eslint/recommended']
+    }
+  ],
+  rules: {
+    '@html-eslint/indent': ['error', 2]
+  }
 }

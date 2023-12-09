@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" id="html">
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="options.css">
-</head>
+  <head>
+    <title>Lowcarb</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="options.css">
+  </head>
 
-<body id="lowcarb">
-  <header>
-    <h3 id="div-selectCookies"></h3>
-  </header>
+  <body id="lowcarb">
+    <header>
+      <h3 id="div-selectCookies"></h3>
+    </header>
 
-  <div class="lc-table">
-    <div id="domains-container"></div>
-  </div>
+    <div class="lc-table">
+      <div id="domains-container"></div>
+    </div>
 
-  <div class="lc-settings-container">
-    <label class="toggle-label" for="btn-removeOnStartup">
-      <button id="btn-removeOnStartup" class="toggle-button" aria-pressed="false"></button>
-      <span id="l-removeOnStartup"></span>
-    </label>
+    <div class="lc-settings-container">
+      <label class="toggle-label" for="btn-removeOnStartup">
+        <button id="btn-removeOnStartup" class="toggle-button" aria-pressed="false"></button>
+        <span id="l-removeOnStartup"></span>
+      </label>
 
-    <label class="toggle-label" for="btn-notify">
-      <button id="btn-notify" class="toggle-button" aria-pressed="false"></button>
-      <span id="l-notifyCookiesRemoved"></span>
-    </label>
-  </div>
+      <label class="toggle-label" for="btn-notify">
+        <button id="btn-notify" class="toggle-button" aria-pressed="false"></button>
+        <span id="l-notifyCookiesRemoved"></span>
+      </label>
+    </div>
 
-  <footer class="lc-footer">
-    <button id="btn-removeCookies" type="button" class="lc-button"></button>
-    <button id="btn-refresh" type="button" class="lc-button"></button>
-  </footer>
+    <footer class="lc-footer">
+      <button id="btn-removeCookies" type="button" class="lc-button"></button>
+      <button id="btn-refresh" type="button" class="lc-button"></button>
+    </footer>
 
-  <script type="module" src="src/options/translate.js"></script>
-  <script type="module" src="src/options/index.js"></script>
-</body>
+    <script type="module" src="src/options/translate.js"></script>
+    <script type="module" src="src/options/index.js"></script>
+  </body>
 </html>
