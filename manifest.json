@@ -7,7 +7,7 @@
     "name": "Matthias Simon",
     "url": "https://github.com/simomat"
   },
-  "version": "3.0.0",
+  "version": "3.0.1",
   "manifest_version": 2,
   "permissions": [
     "cookies",
