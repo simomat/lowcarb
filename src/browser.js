@@ -7,7 +7,7 @@ export const getSettings = async () => {
   const storage = await browser.storage.sync.get('settings')
   return storage.settings ?? {
     ...{
-      removeOnStartup: true,
+      removeOnStartup: false,
       notifyCookiesRemoved: false
     }
   }
