@@ -5,6 +5,7 @@
   "license": "MPL-2.0",
   "author": "Matthias Simon",
   "homepage": "https://github.com/simomat/lowcarb#readme",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/simomat/lowcarb.git"
@@ -14,20 +15,20 @@
   },
   "scripts": {
     "dev": "web-ext run --start-url about:addons --devtools --profile-create-if-missing --keep-profile-changes --firefox-profile=/tmp/lowcab-test",
-    "lint:es": "eslint -c .eslintrc.js --fix '**/*.{js,html}'",
+    "lint:es": "eslint --fix '**/*.{js,html}'",
     "lint:webext": "web-ext lint",
     "build": "web-ext build --artifacts-dir build/ --overwrite-dest",
     "sign": "web-ext sign --artifacts-dir build/ --channel listed"
   },
   "devDependencies": {
-    "web-ext": "^7.11.0",
-    "@html-eslint/eslint-plugin": "^0.24.0",
-    "@html-eslint/parser": "^0.24.0",
-    "eslint": "^8.57.0",
+    "web-ext": "^8.1.0",
+    "@html-eslint/eslint-plugin": "^0.24.1",
+    "@html-eslint/parser": "^0.24.1",
+    "eslint": "^9.4.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-html": "^8.0.0",
+    "eslint-plugin-html": "^8.1.1",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.1.1"
+    "eslint-plugin-n": "^17.8.1",
+    "eslint-plugin-promise": "^6.2.0"
   }
 }

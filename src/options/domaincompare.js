@@ -1,7 +1,7 @@
 function * reverseIterateParts (domain) {
   let currentEnd = domain.length
   for (let index = currentEnd - 1; index >= -1; index--) {
-    /* eslint-disable-next-line eqeqeq */
+     
     if (index == -1 || domain[index] == '.') {
       yield domain.substring(index + 1, currentEnd)
       currentEnd = index
