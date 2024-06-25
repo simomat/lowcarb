@@ -1,12 +1,14 @@
 import { buildDomainModel } from './domainModel.js'
-import { DomainElement, updateDomainElements } from './domainElement.js'
+import { DomainElement } from './domainElement.js'
+import { DomainElementList } from './domainElementList.js'
 import { removeCookies } from '../actions.js'
 import { getSettings, saveSettings } from '../browser.js'
 
 window.customElements.define('domain-element', DomainElement, { extends: 'div' })
+window.customElements.define('domain-element-list', DomainElementList, { extends: 'div' })
 
 async function updateListModel () {
-  updateDomainElements((await buildDomainModel()))
+  document.getElementById('domains-container').updateDomainElements(await buildDomainModel())
 }
 
 async function bindControls () {
