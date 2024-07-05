@@ -7,7 +7,7 @@ const elementSorterSelectedAsc = (itemA, itemB) => itemA.domain.isApplied ? (ite
 export class DomainElementList extends HTMLDivElement {
   constructor () {
     super()
-    
+
     const header = document.createElement('div');
     header.classList.add('lc-table-header')
     
@@ -15,8 +15,6 @@ export class DomainElementList extends HTMLDivElement {
     headSelect.classList.add('lc-header-select')
     headSelect.addEventListener('click', () => this.updateSorting('selected'))
     header.appendChild(headSelect)
-
-    header.appendChild(document.createTextNode('〡'))
 
     const headDomain = document.createElement('div');
     headDomain.classList.add('lc-header-domain')

@@ -36,6 +36,10 @@
   --in-content-item-hover: color-mix(in srgb, var(--in-content-primary-button-background) 20%, transparent);
   --in-content-box-background: #fff;
   --in-content-box-background-odd: rgba(12, 12, 13, 0.05);
+
+  --in-content-button-background: color-mix(in srgb, currentColor 7%, transparent);
+  --in-content-button-background-hover: color-mix(in srgb, currentColor 14%, transparent);
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -118,6 +122,11 @@ header {
   border: 1px solid var(--in-content-border-color);
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  background-color: var(--in-content-button-background)
+}
+
+.lc-table-header > div:hover {
+  background-color: var(--in-content-button-background-hover);
 }
 
 .lc-header-select {
@@ -126,6 +135,7 @@ header {
   height: var(--size-item-large);
   display: flex;
   align-items: center;
+  border-right: 1px solid var(--in-content-border-color);
 }
 
 .lc-header-domain {
@@ -133,15 +143,18 @@ header {
   align-items: center;
   width: 100%;
   height: var(--size-item-large);
-  margin-right: 0.5rem;
 }
 
 .lc-sort-asc::after {
   content:  '🞁';
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .lc-sort-desc::after {
   content:  '🞃';
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .lc-list-item {
