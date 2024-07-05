@@ -1,5 +1,4 @@
 import { getWhitelistDomains, getCookies } from '../browser.js'
-import { domainCompare } from './domaincompare.js'
 
 export async function buildDomainModel () {
   const cookieDomains = await getCookieDomains()
@@ -11,7 +10,6 @@ export async function buildDomainModel () {
   ].reduce((map, domain) => map.set(domain.name, domain), new Map())
 
   const model = [...modelMap.values()]
-  model.sort((a, b) => domainCompare(a.name, b.name))
   return model
 }
 

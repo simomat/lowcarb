@@ -8,7 +8,7 @@ window.customElements.define('domain-element', DomainElement, { extends: 'div' }
 window.customElements.define('domain-element-list', DomainElementList, { extends: 'div' })
 
 async function updateListModel () {
-  document.getElementById('domains-container').updateDomainElements(await buildDomainModel())
+  document.getElementsByTagName('domain-element-list')[0].updateDomainElements(await buildDomainModel())
 }
 
 async function bindControls () {
