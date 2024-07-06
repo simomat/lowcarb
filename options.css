@@ -146,15 +146,13 @@ header {
 }
 
 .lc-sort-asc::after {
-  content:  '🞁';
+  content:  '▴';
   margin-right: 0.5rem;
-  font-size: 0.9rem;
 }
 
 .lc-sort-desc::after {
-  content:  '🞃';
+  content:  '▾';
   margin-right: 0.5rem;
-  font-size: 0.9rem;
 }
 
 .lc-list-item {
