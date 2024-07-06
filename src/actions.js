@@ -30,13 +30,27 @@ export async function removeCookies () {
 
   const whitelistDomains = [...new Set(await getWhitelistDomains())]
   const domainMatchers = whitelistDomains.map(toDomainMatchers)
-  const deletedCookiesCount = cookies
+  
+  const cookieRemoveParams = cookies
     .filter(c => !domainMatchers.some(matcher => matcher.test(c.domain)))
     .map(toRemoveParameter)
-    .map(async cookie => await browser.cookies.remove(cookie))
-    .filter(prom => prom !== null)
+  
+  logRemoveParams(cookieRemoveParams)
+  
+  const deletes = await Promise.all(cookieRemoveParams
+    .map(async cookieParam => {
+      try {
+        if (await browser.cookies.remove(cookieParam) !== null) {
+          return 1
+        } 
+        console.warn(`cookie to remove not found for ${cookieParam.url}`)
+      } catch (error) {
+        console.error(`could not remove cookie ${JSON.stringify(cookieParam)}: ${error}`)
+      }
+      return 0
+    }))
 
-  notifyCookiesRemoved(deletedCookiesCount.length)
+  notifyCookiesRemoved(deletes.reduce((sum, current) => sum + current, 0))
 }
 
 async function notifyCookiesRemoved (count) {
@@ -64,3 +78,10 @@ async function notifyCookiesRemoved (count) {
     }
   })
 }
+
+const logRemoveParams = cookieRemoveParams =>
+  Object.entries(Object.groupBy(cookieRemoveParams, param => param.url))
+    .forEach(([url, byUrl]) => 
+      Object.entries(Object.groupBy(byUrl, p => p.storeId))
+        .forEach(([storeId, byUrlAndStore]) => 
+          console.info(`removing cookies for ${url} in store ${storeId}, count: ${byUrlAndStore.length}`)))

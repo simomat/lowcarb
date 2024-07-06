@@ -21,7 +21,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "lowcab@infonautika.de",
-      "strict_min_version": "112.0"
+      "strict_min_version": "119.0"
     }
   },
   "background": {
