@@ -9,8 +9,7 @@ export async function buildDomainModel () {
     ...whitelistDomains
   ].reduce((map, domain) => map.set(domain.name, domain), new Map())
 
-  const model = [...modelMap.values()]
-  return model
+  return [...modelMap.values()]
 }
 
 async function getWhitelistModel () {
