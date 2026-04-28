@@ -17,6 +17,7 @@ export const openOptionsPageOnBrowserAction = () => browser.browserAction.onClic
 export const createNotification = (id, param) => browser.notifications.create(id, param)
 export const clearNotification = id => browser.notifications.clear(id)
 export const createAlarm = browser.alarms.create
+export const clearAlarm = browser.alarms.onAlarm.removeListener
 export const onAlarm = browser.alarms.onAlarm.addListener
 export const translate = browser.i18n.getMessage
 

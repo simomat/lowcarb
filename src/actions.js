@@ -9,6 +9,7 @@ import {
   translate,
   createAlarm,
   onAlarm,
+  clearAlarm,
   clearNotification
 } from './browser.js'
 
@@ -24,7 +25,7 @@ export async function toggleDomainApplied (domain) {
 
 export async function removeCookies () {
   const cookies = await getCookies()
-  if (cookies.lengt === 0) {
+  if (cookies.length === 0) {
     return
   }
 
@@ -71,12 +72,14 @@ async function notifyCookiesRemoved (count) {
       title: 'Firefox Cookies ' + translate('removed'),
       message: translate('removedXCookies', count)
     })
-  createAlarm(ALARM_NOTIFICATION_EXPIRED, { delayInMinutes: 0.5 })
-  onAlarm(alarm => {
+  const alarmHandler = alarm => {
     if (alarm.name === ALARM_NOTIFICATION_EXPIRED) {
       clearNotification(NOTIFICATION_COOKIES_REMOVED)
+      clearAlarm(alarmHandler)
     }
-  })
+  }
+  onAlarm(alarmHandler)
+  createAlarm(ALARM_NOTIFICATION_EXPIRED, { delayInMinutes: 0.5 })
 }
 
 const logRemoveParams = cookieRemoveParams =>
