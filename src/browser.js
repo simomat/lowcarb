@@ -29,7 +29,7 @@ export const normalizeDomain = domain => {
   return domain
 }
 
-export const toDomainMatchers = domain => new RegExp(`^\\.?${domain.replace('\\.', '\\\\.')}$`, 'i')
+export const toDomainMatchers = domain => new RegExp(`^\\.?${RegExp.escape(domain)}$`, 'i')
 
 export const toRemoveParameter = cookie => ({
   url: urlOfCookie(cookie),
