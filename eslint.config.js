@@ -1,10 +1,11 @@
 import globals from 'globals'
 import js from "@eslint/js"
-import html from 'eslint-plugin-html'
 import htmlEslint from '@html-eslint/eslint-plugin'
+import promise from 'eslint-plugin-promise'
 
 export default [
   js.configs.recommended,
+  promise.configs['flat/recommended'],
   {
     languageOptions: {
       ecmaVersion: 2024,
@@ -15,16 +16,28 @@ export default [
       }
     },
     plugins: {
-      html,
       "@html-eslint": htmlEslint,
     },
     rules: {
-      indent: ["error", 2],
-      '@html-eslint/indent': ['error', 2]
+      'no-promise-executor-return': 'error',
+      'promise/no-return-in-finally': 'error',
+      'promise/valid-params': 'error'
+    }
+  },
+  {
+    files: ["**/*.js"],
+    rules: {
+      indent: ["error", 2]
     }
   },
   {
     ...htmlEslint.configs["flat/recommended"],
     files: ["**/*.html"],
+  },
+  {
+    files: ["**/*.html"],
+    rules: {
+      '@html-eslint/indent': ['error', 2]
+    }
   },
 ]
